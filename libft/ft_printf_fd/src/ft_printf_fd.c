@@ -15,7 +15,7 @@ int	ft_printf(int fd, const char *str, ...)
 		if (*s == '%')
 			numb_char += select_formats(args, &s, fd);
 		if (*s && *s != '%')
-			numb_char += ft_pf_putchar(*s++);
+			numb_char += ft_pf_putchar_fd(*s++, fd);
 	}
 	va_end(args);
 	return (numb_char);
