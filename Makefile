@@ -3,7 +3,7 @@ CC = cc
 INCLUDES = -I includes
 SRC_DIR = src
 OBJ_DIR = obj
-SRC = main.c
+SRC = main.c handle_input.c init_mlx.c free_exit.c keys.c
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 NAME = Cub3d
@@ -26,7 +26,7 @@ $(MLX_ARC):
 	@$(MAKE) -C $(MLX_DIR)
 
 $(NAME): $(OBJS) $(LIBFT_ARC) $(MLX_ARC)
-	$(CC) $(FLAGS) $(MLX_FLAGS) $(OBJS) -o $(NAME) -L$(LIBFT_DIR) -lft
+	$(CC) $(FLAGS) $(OBJS) -o $(NAME) $(MLX_FLAGS) -L$(LIBFT_DIR) -lft
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
@@ -36,11 +36,12 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 clean:
 	rm -rf $(OBJ_DIR)
-	@$(MAKE) -C $(LIBFT_DIR) clean
+	$(MAKE) -C $(LIBFT_DIR) clean
+	$(MAKE) -C $(MLX_DIR) clean
 
 fclean: clean
 	rm -f $(NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean
-	rm -r -f $(MLX_DIR)
+	rm -rf $(MLX_DIR)
 
 re: fclean all
