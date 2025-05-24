@@ -3,7 +3,7 @@
 int	main(int ac, char **av)
 {
 	t_cub	cub;
-	
+
 	if (handle_input(ac, av, &cub))
 		return (1);
 	if (init_mlx(&cub))
@@ -46,8 +46,3 @@ C 225,30,0
 11110111 1110101 101111010001
 11111111 1111111 111111111111
 */
-
-/*
-
-*/
-
