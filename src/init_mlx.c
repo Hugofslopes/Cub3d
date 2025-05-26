@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:25:56 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/26 19:05:47 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/05/26 22:07:59 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,21 @@
 
 char    **test_Array(t_cub *cub);
 
-void	first_render(t_cub *cub){
+void	first_render(t_cub *cub)
+{
 	(void)cub;
+}
+
+void	draw_extra(t_cub *cub)
+{
+	size_t x = 0 , y = 0;
+	while (x <  WWIDTH ){
+		put_pixel(cub, x++, y++, 8000);
+	}
+	x =WWIDTH, y =0;
+	while (x > 0 ){
+		put_pixel(cub, x--, y++, 8000);
+	}
 }
 
 int	build_next_frame(t_cub *cub)
@@ -32,6 +45,7 @@ int	build_next_frame(t_cub *cub)
 		ft_memset(cub->img.addr, 0, WHEIGHT * cub->img.line_len);
 		set_floor_ceiling(cub);
 		draw_c_f(cub, 0, 0);
+		draw_extra(cub);
 	/* 	ft_cast_rays(cub);
 		if (game->map->show_map)
 			ft_display_minimap(game);
