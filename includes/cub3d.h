@@ -22,6 +22,14 @@ typedef struct s_player
 	int	rot_r;
 }	t_player;
 
+typedef struct s_config
+{
+	char	*no_path;
+	char	*so_path;
+	char	*we_path;
+	char	*ea_path;
+}	t_config;
+
 typedef struct s_cub
 {
 	char		**map;
@@ -34,6 +42,8 @@ typedef struct s_cub
 # define WHEIGHT 1080
 # define ERROF "Error\n"
 # define NOPERMISION "the map does not have permission"
+# define EXTENSION_ERR "Scene file must have .cub extension"
+# define READ_FILE_ERR "Failed opening file"
 
 //				PARSE
 int		handle_input(int ac, char **av, t_cub *cub);
