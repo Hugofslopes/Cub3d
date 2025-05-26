@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 20:02:20 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/24 08:58:36 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/05/26 11:18:50 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,5 @@ size_t			ft_pf_putstr_fd(char *str, int fd);
 size_t			ft_pf_putnbr_p_fd(unsigned long n, char *base, int fd);
 size_t			select_formats(va_list args, char **format, int fd);
 void			*pf_bzero(void *ptr, size_t n);
+int				ft_printf_fd(int fd, const char *str, ...);
 #endif

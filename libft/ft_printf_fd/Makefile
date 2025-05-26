@@ -6,7 +6,7 @@
 #    By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/26 09:37:48 by hfilipe-          #+#    #+#              #
-#    Updated: 2025/05/23 20:20:57 by hfilipe-         ###   ########.fr        #
+#    Updated: 2025/05/26 11:17:12 by hfilipe-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,18 +16,12 @@ SRC_DIR = src
 OBJ_DIR = obj
 INCLUDES = -I includes
 
-
 SRC = ft_printf_fd.c ft_pf_putchar.c ft_pf_putnbr_hex.c ft_pf_putnbr_p.c \
-ft_pf_putnbr_ui.c ft_pf_putnbr.c ft_putstr_fd.c
-
-MAIN_SRCS = main.c
+    ft_pf_putnbr_ui.c ft_pf_putnbr.c ft_putstr_fd.c pf_bzero.c
 
 OBJ = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC))
-BONUS_OBJ = $(patsubst %.c, $(OBJ_DIR)/%.o, $(BONUS_SRCS))
-MAIN_OBJ = $(patsubst %.c, $(OBJ_DIR)/%.o, $(MAIN_SRCS))
 
 NAME = ft_printf_fd.a
-EXEC = main
 
 all: $(NAME)
 
@@ -42,6 +36,6 @@ clean:
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@rm -f $(NAME) $(EXEC)
+	@rm -f $(NAME)
 
 re: fclean all

@@ -1,5 +1,7 @@
 #include "../includes/cub3d.h"
 
+char	**test_Array(void);
+
 int	main(int ac, char **av)
 {
 	t_cub	cub;
@@ -7,7 +9,8 @@ int	main(int ac, char **av)
 	if (handle_input(ac, av, &cub))
 		return (1);
 	if (init_mlx(&cub))
-		return (1);
+		return(1);
+	test_Array();
 	return (0);
 }
 /* 
@@ -22,6 +25,7 @@ int	main(int ac, char **av)
 -- WE path to west texture (check if is valid and redeable)
 -- EA path to east texture (check if is valid and redeable)
 -- F flor olors in rgb (must be > 0 < 255)
+-- Floor and ceeling must be diferent
 -- C cealing colors
 -- Errors Error\n , message error
 
@@ -34,7 +38,7 @@ C 225,30,0
 1111111111111111111111111
 1000000000110000000000001
 1011000001110000000000001
-1001000000000000000000001
+10010000000000000000000011111111
 111111111011000001110000000000001
 100000000011000001110111111111111
 11110111111111011100000010001

@@ -6,13 +6,13 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 08:58:57 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/24 08:59:55 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/05/26 10:29:00 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf_fd.h"
 
-int	ft_printf(int fd, const char *str, ...)
+int	ft_printf_fd(int fd, const char *str, ...)
 {
 	va_list	args;
 	size_t	numb_char;

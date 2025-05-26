@@ -32,6 +32,8 @@ typedef struct s_cub
 # define MAX_COLOR 0xFFFFFF
 # define WWIDTH 1920
 # define WHEIGHT 1080
+# define ERROF "Error\n"
+# define NOPERMISION "the map does not have permission"
 
 //				PARSE
 int		handle_input(int ac, char **av, t_cub *cub);
