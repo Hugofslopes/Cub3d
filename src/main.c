@@ -6,11 +6,14 @@ int	main(int ac, char **av)
 {
 	t_cub	cub;
 
+	ft_bzero(&cub, sizeof(cub)); // added this to start values from 0 or NULL
+				     // or make a function (void init_cub(t_cub *cub) and call it from main)
 	if (handle_input(ac, av, &cub))
 		return (1);
 	if (init_mlx(&cub))
 		return(1);
 	test_Array();
+//	free_config(&cub.config);
 	return (0);
 }
 /* 

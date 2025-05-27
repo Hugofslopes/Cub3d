@@ -45,9 +45,9 @@ typedef struct s_cub
 # define WHEIGHT 1080
 # define ERROF "Error\n"
 # define NOPERMISION "the map does not have permission"
-# define EXTENSION_ERR "Scene file must have .cub extension"
-# define READ_FILE_ERR "Failed opening file"
-# define CONF_ENTR_ERR "Missing or invalid config entries"
+# define EXTENSION_ERR "Scene file must have .cub extension\n"
+# define READ_FILE_ERR "Failed opening file\n"
+# define CONF_ENTR_ERR "Missing or invalid config entries\n"
 
 //				PARSE
 int		handle_input(int ac, char **av, t_cub *cub);
@@ -61,6 +61,7 @@ int		mouse_close(t_cub *cub);
 
 //				UTILS
 void	free_exit(t_cub *cub);
+void	free_config(t_config *cfg);
 
 //				PARSING_P
 int	open_scene_file(const char *filename, int *fd);

@@ -15,11 +15,13 @@ int	check_cub_extension(const char *file)
 // function to open .cub file
 int	open_scene_file(const char *filename, int *fd)
 {
+	printf("Entered open_scene_file\n");
 	if (!check_cub_extension(filename))
 		return (ft_printf_fd(2, ERROF EXTENSION_ERR, 1));
 	*fd = open(filename, O_RDONLY);
 	if (*fd < 0)
 		return (ft_printf_fd(2, ERROF READ_FILE_ERR, 1));
+	printf("Exit open_scene_file\n");
 	return (0);
 }
 
@@ -90,6 +92,7 @@ int	set_texture_path(char **dst, char *path_start)
 	if (*dst)
 		return (0);
 	*dst = ft_strdup(path_start);
+	//*dst = path_start;
 	return (*dst != NULL);
 }
 
@@ -100,6 +103,7 @@ int	set_color(char **dst, char *color_start)
 	if (*dst)
 		return (0);
 	*dst = ft_strdup(color_start);
+	//*dst = color_start;
 	return (*dst != NULL);
 }
 
@@ -108,14 +112,17 @@ int	parse_config_line(char *line, t_config *cfg)
 {
 	while (*line == ' ' || *line == '\t')
 		line++;
-	if (!ft_strncmp(line, "NO", 3))
+	if (!ft_strncmp(line, "NO ", 3))
+	{
+		printf("NO HAS BEEN FOUND\n");
 		return (set_texture_path(&cfg->no_path, line + 3));
-	if (!ft_strncmp(line, "SO", 3))
+	}
+	if (!ft_strncmp(line, "SO ", 3))
 		return (set_texture_path(&cfg->so_path, line + 3));
-	if (!ft_strncmp(line, "WE", 3))
+	if (!ft_strncmp(line, "WE ", 3))
 		return (set_texture_path(&cfg->we_path, line + 3));
-	if (!ft_strncmp(line, "EA", 3))
-		return (set_texture_path(&cfg->we_path, line + 3));
+	if (!ft_strncmp(line, "EA ", 3))
+		return (set_texture_path(&cfg->ea_path, line + 3));
 	if (!ft_strncmp(line, "F ", 2))
 		return (set_color(&cfg->floor_color_set, line + 2));
 	if (!ft_strncmp(line, "C ", 2))
@@ -137,27 +144,50 @@ int	parse_scene_file(int *fd, t_cub *cub)
 	char	*buffer;
 	int		map_started;
 
+	buffer = NULL;
 	map_started = 0;
+	printf("Entered parse_scene_file\n");
 	while ((line = get_next_line(*fd, &buffer)))
 	{
+		if (!line)
+			break;
+		if (is_line_empty(line))
+		{
+			free(line);
+			break;
+		}
 		if (!map_started && is_line_empty(line))
 		{
+			printf("First free\n");
 			free(line);
 			continue ;
 		}
 		if (!map_started && is_config_line(line))
 		{
 			if (!parse_config_line(line, &cub->config))
+			{
+				if (buffer)
+					free(buffer);
+				printf("Second Free\n");
+				//free_config(&cub->config);
 				return (free(line), 1);
+			}
 		}
 		else
 		{
 			map_started = 1;
 			if (!append_map_line(cub, line))
+			{
+				if (buffer)
+					free(buffer);
+				printf("Third Free\n");
 				return (free(line), 1);
+			}
 		}
+		printf("Forth free\n");
 		free(line);
 	}
+	printf("Gets past while parse_scene_file\n");
 	free(buffer);
 	if (!validate_config(&cub->config))
 		return (ft_printf_fd(2, ERROF CONF_ENTR_ERR, 1));

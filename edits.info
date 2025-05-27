@@ -1,0 +1,13 @@
+23:19 27 May 2025
+Updated cube3d.h
+Somehow, there was duplicated functions being compiled (ft_strlen and ft_calloc) at Libft and get_next_line,
+I renamed Libfts
+	modified:   includes/cub3d.h
+	modified:   libft/includes/libft.h
+	modified:   libft/src/ft_calloc.c
+	modified:   libft/src/ft_strlen.c
+	modified:   src/free_exit.c
+	modified:   src/handle_input.c
+	modified:   src/main.c
+	modified:   src/parser_handler.c
+----------------------------------------------------
