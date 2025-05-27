@@ -22,13 +22,35 @@ int	open_scene_file(const char *filename, int *fd)
 	return (0);
 }
 
+int	is_space_char(char c)
+{
+	return (c == ' ' || (c >= 9 &&  c <= 13));
+}
+
+int	is_line_empty(char *line)
+{
+	int	i;
+
+	i = 0;
+	if (!line)
+		return (1);
+	while (line[i])
+	{
+		if (!is_space_char(line[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	parse_scene_file(int *fd, t_cub *cub)
 {
 	char	*line;
+	char	*buffer;
 	int		map_started;
 
 	map_started = 0;
-	while ((line = get_next_line(*fd)))
+	while ((line = get_next_line(*fd, &buffer)))
 	{
 		if (!map_started && is_line_empty(line))
 		{
@@ -48,6 +70,7 @@ int	parse_scene_file(int *fd, t_cub *cub)
 		}
 		free(line);
 	}
+	free(buffer);
 	return (0);
 }
 

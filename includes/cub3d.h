@@ -60,4 +60,5 @@ void	free_exit(t_cub *cub);
 
 //				PARSING_P
 int	open_scene_file(const char *filename, int *fd);
+int	parse_scene_file(int *fd, t_cub *cub);
 #endif
