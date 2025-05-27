@@ -1,5 +1,6 @@
 #include "../includes/cub3d.h"
 
+// function to check whether it is a file with .cub extension
 int	check_cub_extension(const char *file)
 {
 	size_t	len;
@@ -11,7 +12,7 @@ int	check_cub_extension(const char *file)
 		return (0);
 	return (1);
 }
-
+// function to open .cub file
 int	open_scene_file(const char *filename, int *fd)
 {
 	if (!check_cub_extension(filename))
@@ -27,6 +28,7 @@ int	is_space_char(char c)
 	return (c == ' ' || (c >= 9 &&  c <= 13));
 }
 
+// function to check if a line is empty
 int	is_line_empty(char *line)
 {
 	int	i;
@@ -43,6 +45,92 @@ int	is_line_empty(char *line)
 	return (1);
 }
 
+// function to check the expression at config file exists
+int	is_config_line(char *line)
+{
+	while (*line == ' ' || *line == '\t')
+		line++;
+
+	if (!ft_strncmp(line, "NO ", 3))
+		return (1);
+	if (!ft_strncmp(line, "SO ", 3))
+		return (1);
+	if (!ft_strncmp(line, "EA ", 3))
+		return (1);
+	if (!ft_strncmp(line, "WE ", 3))
+		return (1);
+	if (!ft_strncmp(line, "F ", 2))
+		return (1);
+	if (!ft_strncmp(line, "C ", 2))
+		return (1);
+	return (0);
+}
+// function to check whether t_config variable are null
+int	validate_config(t_config *cfg)
+{
+	if (!cfg->no_path)
+		return (ft_printf_fd(2, "Error: NO texture missing\n"), 0);
+	if (!cfg->so_path)
+		return (0);
+	if (!cfg->we_path)
+		return (0);
+	if (!cfg->ea_path)
+		return (0);
+	if (!cfg->floor_color_set)
+		return (0);
+	if (!cfg->ceiling_color_set)
+		return (0);
+	return (1);
+}
+
+int	set_texture_path(char **dst, char *path_start)
+{
+	while (*path_start == ' ' || *path_start == '\t')
+        	path_start++;
+	if (*dst)
+		return (0);
+	*dst = ft_strdup(path_start);
+	return (*dst != NULL);
+}
+
+int	set_color(char **dst, char *color_start)
+{
+	while (*color_start == ' ' || *color_start == '\t')
+		color_start++;
+	if (*dst)
+		return (0);
+	*dst = ft_strdup(color_start);
+	return (*dst != NULL);
+}
+
+// function to store the path or color in each field of t_config
+int	parse_config_line(char *line, t_config *cfg)
+{
+	while (*line == ' ' || *line == '\t')
+		line++;
+	if (!ft_strncmp(line, "NO", 3))
+		return (set_texture_path(&cfg->no_path, line + 3));
+	if (!ft_strncmp(line, "SO", 3))
+		return (set_texture_path(&cfg->so_path, line + 3));
+	if (!ft_strncmp(line, "WE", 3))
+		return (set_texture_path(&cfg->we_path, line + 3));
+	if (!ft_strncmp(line, "EA", 3))
+		return (set_texture_path(&cfg->we_path, line + 3));
+	if (!ft_strncmp(line, "F ", 2))
+		return (set_color(&cfg->floor_color_set, line + 2));
+	if (!ft_strncmp(line, "C ", 2))
+		return (set_color(&cfg->ceiling_color_set, line + 2));
+	return (0);
+}
+
+int	append_map_line(t_cub *cub, char *line)
+{
+	(void)cub;
+	(void)line;
+	return (1);
+}
+
+// base function to parse the scene file
 int	parse_scene_file(int *fd, t_cub *cub)
 {
 	char	*line;
@@ -71,6 +159,8 @@ int	parse_scene_file(int *fd, t_cub *cub)
 		free(line);
 	}
 	free(buffer);
+	if (!validate_config(&cub->config))
+		return (ft_printf_fd(2, ERROF CONF_ENTR_ERR, 1));
 	return (0);
 }
 

@@ -28,6 +28,8 @@ typedef struct s_config
 	char	*so_path;
 	char	*we_path;
 	char	*ea_path;
+	char	*floor_color_set;
+	char	*ceiling_color_set;
 }	t_config;
 
 typedef struct s_cub
@@ -35,6 +37,7 @@ typedef struct s_cub
 	char		**map;
 	t_mlx		mlx_s;
 	t_player	t_player;
+	t_config	config;
 }	t_cub;
 
 # define MAX_COLOR 0xFFFFFF
@@ -44,6 +47,7 @@ typedef struct s_cub
 # define NOPERMISION "the map does not have permission"
 # define EXTENSION_ERR "Scene file must have .cub extension"
 # define READ_FILE_ERR "Failed opening file"
+# define CONF_ENTR_ERR "Missing or invalid config entries"
 
 //				PARSE
 int		handle_input(int ac, char **av, t_cub *cub);
