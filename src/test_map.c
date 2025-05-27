@@ -30,7 +30,8 @@ char    **test_Array(t_cub *cub)
 	cub->floor.r = 2;
 	cub->floor.g = 20;
 	cub->floor.b = 20;
-	
+	cub->player.pos_x = 3;
+	cub->player.pos_x = 5;
 	return (test);
 }
 

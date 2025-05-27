@@ -9,7 +9,7 @@ int	main(int ac, char **av)
 	if (handle_input(ac, av, &cub))
 		return (1);
 	if (init_mlx(&cub))
-		return(1);
+		return (1);
 	test_Array();
 	return (0);
 }

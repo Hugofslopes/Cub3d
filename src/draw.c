@@ -6,13 +6,13 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:53:03 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/26 17:56:21 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:38:06 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void    put_pixel(t_cub *cub, int x, int y, int color)
+void	put_pixel(t_cub *cub, int x, int y, int color)
 {
 	char	*pxl;
 

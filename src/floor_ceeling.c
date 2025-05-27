@@ -6,18 +6,18 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:46:01 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/26 19:02:55 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:37:37 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
 void	draw_c_f(t_cub *cub, size_t x, size_t y)
-{ 
-	while (x <  WWIDTH )
+{
+	while (x < WWIDTH)
 	{
 		y = 0;
-		while (y < WHEIGHT / 2) 
+		while (y < WHEIGHT / 2)
 			put_pixel(cub, x, y++, cub->game.ceiling);
 		x++;
 	}
@@ -26,7 +26,7 @@ void	draw_c_f(t_cub *cub, size_t x, size_t y)
 	while (x < WWIDTH)
 	{
 		y = WHEIGHT;
-		while (y > WHEIGHT / 2) 
+		while (y > WHEIGHT / 2)
 			put_pixel(cub, x, y--, cub->game.floor);
 		x++;
 	}

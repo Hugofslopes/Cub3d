@@ -2,6 +2,6 @@
 
 void	init(t_cub *cub)
 {
-    cub->game.gamestarted = 0;
-    init_mlx(cub);
+	cub->game.gamestarted = 0;
+	init_mlx(cub);
 }

@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:25:56 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/26 22:07:59 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:41:04 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,8 @@ int	build_next_frame(t_cub *cub)
 		set_floor_ceiling(cub);
 		draw_c_f(cub, 0, 0);
 		draw_extra(cub);
-	/* 	ft_cast_rays(cub);
-		if (game->map->show_map)
-			ft_display_minimap(game);
-		ft_update_gates(game); */
+		ray(cub, 0, 45); 
+		renderFrame(cub, cub->player.pos_x, cub->player.pos_y); 
 		mlx_put_image_to_window(cub->mlx_s.mlx, cub->mlx_s.window, \
 			cub->img.img, 0, 0);
 	//}
@@ -72,7 +70,8 @@ int	init_mlx(t_cub *cub)
 {
 	cub->mlx_s.mlx = mlx_init();
 	cub->mlx_s.window = mlx_new_window(cub->mlx_s.mlx, WWIDTH, WHEIGHT, "Cub");
-	test_Array(cub);
+	cub->map = test_Array(cub);
+	init_textures(cub, 0);
 	build_next_frame(cub);
 	
 	/* 
