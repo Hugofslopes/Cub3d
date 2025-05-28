@@ -14,7 +14,6 @@ typedef enum e_textures{
 }	t_textures;
 
 typedef enum {
-    NO_WALL,
     NORTH,
     SOUTH,
     EAST,
@@ -40,17 +39,13 @@ typedef struct s_mlx
 
 typedef struct s_player
 {
-	int		move_l;
-	int		move_r;
-	int		move_u;
-	int		move_d;
-	int		rot_l;
-	int		rot_r;
-	double	pos_x;
-	double	pos_y;
+	char	start_position;
+	float	pos_x;
+	float	pos_y;
 	double	ray_x;
 	double	ray_y;
 	double	ray_angle;
+	double	angle;
 }	t_player;
 
 typedef struct s_f_c
@@ -67,8 +62,11 @@ typedef struct s_game
 	int		ceiling;
 	int		mapx;
 	int		mapy;
-	double	ray_values[55];
+	int		map_with;
+	int		map_height;
+	double	ray_values[5000];
 	float	hitPositions[1920];
+	WallDirection wall_directions[1920];
 } t_game;	
 
 typedef struct s_cub
@@ -90,16 +88,21 @@ typedef struct s_cub
 # define ERROR "Error\n"
 # define NOPERMISION "the map does not have permission"
 # define PI 3.14159
-# define CELLSIZE 64
+# define CELLSIZE 1
+# define MOVE_SPEED 0.5
+# define ROTATION_SPEED 0.5
+#define NUM_RAYS WWIDTH
+#define FOV_ANGLE 90.0 
 
 //				PARSE
 int		handle_input(int ac, char **av, t_cub *cub);
 
 //				INIT
 void	init(t_cub *cub);
+void	init_textures(t_cub *cub, size_t i);
 
 //				MLX
-int		init_mlx(t_cub *cub);
+void		init_mlx(t_cub *cub);
 
 //				KEYS
 int		key_pressed(int key, t_cub *cub);
@@ -114,7 +117,20 @@ void    put_pixel(t_cub *cub, int x, int y, int color);
 void	draw_c_f(t_cub *cub, size_t x, size_t y);
 
 //				RAYCAST/ RENDER
-void	ray(t_cub *cub, size_t i, int angle);
-void	renderFrame(t_cub *cub, size_t x, size_t y);
+void	raycast_all(t_cub *cub, size_t i, int angle_start, int angle_end, int angle_step);
+void	ray(t_cub *cub);
+void	renderFrame(t_cub *cub);
+int		is_wall(t_cub *cub, int mapX, int mapY);
+int		build_next_frame(t_cub *cub);
 
+//				PLAYER
+void	move_forward(t_cub *cub);
+void	move_back(t_cub *cub);
+void	move_left(t_cub *cub);
+void	move_right(t_cub *cub);
+void	rotate_right(t_cub *cub);
+void	rotate_left(t_cub *cub);
+
+//			UTILS
+double  deg_to_rad(double degrees);
 #endif

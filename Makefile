@@ -4,7 +4,7 @@ INCLUDES = -I includes
 SRC_DIR = src
 OBJ_DIR = obj
 SRC = main.c handle_input.c init_mlx.c free_exit.c keys.c test_map.c draw.c floor_ceeling.c \
-raycast.c render.c
+raycast.c render.c player_rotates.c player_moves.c init.c
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 NAME = cub3D

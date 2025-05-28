@@ -1,0 +1,5 @@
+warning: Currently logging to gdb.txt.  Turn the logging off and on to make the new setting effective.
+warning: Currently logging to gdb.txt.  Turn the logging off and on to make the new setting effective.
+.gdbinit:32: Error in sourced command file:
+cub3d: No such file or directory.
+No breakpoints or watchpoints.
