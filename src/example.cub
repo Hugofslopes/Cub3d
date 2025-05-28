@@ -1,7 +1,7 @@
-NO ./north.xpm
-SO ./south.xpm
-WE ./west.xpm
-EA ./east.xpm
+NO src/north.xpm
+SO src/south.xpm
+WE src/west.xpm
+EA src/east.xpm
 F 220,100,0
 C 225,30,0
 

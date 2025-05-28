@@ -25,6 +25,7 @@ int	open_scene_file(const char *filename, int *fd)
 	return (0);
 }
 
+// function to check if it is space.
 int	is_space_char(char c)
 {
 	return (c == ' ' || (c >= 9 &&  c <= 13));
@@ -68,10 +69,30 @@ int	is_config_line(char *line)
 	return (0);
 }
 // function to check whether t_config variable are null
+#include <unistd.h>
+
+static int	check_texture(const char *path, const char *name)
+{
+	if (!path)
+		return (ft_printf_fd(2, "Error: %s texture missing\n", name), 0);
+	if (access(path, F_OK) == -1)
+		return (ft_printf_fd(2, "Error: NO texture file not found at '%s'\n", name, path), 0);
+	return (1);
+}
+
 int	validate_config(t_config *cfg)
+{
+	if (!check_texture(cfg->no_path, "NO"))
+		return (0);
+	return (1);
+}
+/*int	validate_config(t_config *cfg)
 {
 	if (!cfg->no_path)
 		return (ft_printf_fd(2, "Error: NO texture missing\n"), 0);
+	if (access(cfg->no_path, F_OK) == -1)
+		return (ft_printf_fd(2, "Error: NO texture file not found\n"), 0);
+
 	if (!cfg->so_path)
 		return (0);
 	if (!cfg->we_path)
@@ -83,7 +104,7 @@ int	validate_config(t_config *cfg)
 	if (!cfg->ceiling_color_set)
 		return (0);
 	return (1);
-}
+}*/
 
 int	set_texture_path(char **dst, char *path_start)
 {
@@ -91,8 +112,8 @@ int	set_texture_path(char **dst, char *path_start)
         	path_start++;
 	if (*dst)
 		return (0);
-	*dst = ft_strdup(path_start);
-	//*dst = path_start;
+	//*dst = ft_strdup(path_start);
+	dst = path_start;
 	return (*dst != NULL);
 }
 
@@ -102,8 +123,8 @@ int	set_color(char **dst, char *color_start)
 		color_start++;
 	if (*dst)
 		return (0);
-	*dst = ft_strdup(color_start);
-	//*dst = color_start;
+	//*dst = ft_strdup(color_start);
+	*dst = color_start;
 	return (*dst != NULL);
 }
 
@@ -165,13 +186,16 @@ int	parse_scene_file(int *fd, t_cub *cub)
 		if (!map_started && is_config_line(line))
 		{
 			if (!parse_config_line(line, &cub->config))
+				free(line);
+
+			/*if (!parse_config_line(line, &cub->config))
 			{
 				if (buffer)
 					free(buffer);
 				printf("Second Free\n");
 				//free_config(&cub->config);
 				return (free(line), 1);
-			}
+			}*/
 		}
 		else
 		{
@@ -190,7 +214,7 @@ int	parse_scene_file(int *fd, t_cub *cub)
 	printf("Gets past while parse_scene_file\n");
 	free(buffer);
 	if (!validate_config(&cub->config))
-		return (ft_printf_fd(2, ERROF CONF_ENTR_ERR, 1));
+		return (0);
 	return (0);
 }
 
