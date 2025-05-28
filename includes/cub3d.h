@@ -92,7 +92,7 @@ typedef struct s_cub
 # define MOVE_SPEED 0.5
 # define ROTATION_SPEED 0.5
 #define NUM_RAYS WWIDTH
-#define FOV_ANGLE 90.0 
+#define FOV_ANGLE 110.0 
 
 //				PARSE
 int		handle_input(int ac, char **av, t_cub *cub);

@@ -19,15 +19,11 @@ char **test_Array(t_cub *cub)
     cub->player.start_position = 'N';
 
     cub->textures = malloc(sizeof(char *) * 5);
-    if (!cub->textures) {
-        fprintf(stderr, "Memory allocation failed for textures array\n");
-        exit(EXIT_FAILURE);
-    }
 
-    cub->textures[0] = ft_strdup("N");
-    cub->textures[1] = ft_strdup("S");
-    cub->textures[2] = ft_strdup("E");
-    cub->textures[3] = ft_strdup("W");
+    cub->textures[0] = ft_strdup("textures/N");
+    cub->textures[1] = ft_strdup("textures/S");
+    cub->textures[2] = ft_strdup("textures/E");
+    cub->textures[3] = ft_strdup("textures/W");
     cub->textures[4] = NULL; 
 
     cub->ceiling.r = 20;

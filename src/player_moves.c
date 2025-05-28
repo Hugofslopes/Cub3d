@@ -9,7 +9,7 @@ double round_increment(double value, double increment)
 
 #define MOVE_INCREMENT 0.5
 
-void move_forward(t_cub *cub)
+void move_back(t_cub *cub)
 {
     double dx = cos(cub->player.angle) * MOVE_SPEED;
     double dy = sin(cub->player.angle) * MOVE_SPEED;
@@ -30,7 +30,7 @@ void move_forward(t_cub *cub)
     }
 }
 
-void move_back(t_cub *cub)
+void move_forward(t_cub *cub)
 {
     double dx = cos(cub->player.angle) * MOVE_SPEED;
     double dy = sin(cub->player.angle) * MOVE_SPEED;
