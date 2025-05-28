@@ -76,7 +76,11 @@ static int	check_texture(const char *path, const char *name)
 	if (!path)
 		return (ft_printf_fd(2, "Error: %s texture missing\n", name), 0);
 	if (access(path, F_OK) == -1)
-		return (ft_printf_fd(2, "Error: NO texture file not found at '%s'\n", name, path), 0);
+	/*{
+		printf("Error: NORTH (NO) texture file not found at '%s' '%s'", name, path);
+		return (1);
+	}*/
+		return (ft_printf_fd(2, "Error: NO texture file not found at %s - %s", name, path), 1);
 	return (1);
 }
 
@@ -106,16 +110,34 @@ int	validate_config(t_config *cfg)
 	return (1);
 }*/
 
-int	set_texture_path(char **dst, char *path_start)
+int set_texture_path(char **dst, char *raw)
+{
+	char	*trimmed;
+
+	if (!raw)
+		return (0);
+	trimmed = ft_strtrim(raw, " \t\n");
+	if (!trimmed)
+		return (0);
+	free(*dst);
+	*dst = ft_strdup(trimmed);
+	//*dst = trimmed;
+	free(trimmed);
+	if (!*dst)
+		return (0);
+	return (1);
+}
+
+/*int	set_texture_path(char **dst, char *path_start)
 {
 	while (*path_start == ' ' || *path_start == '\t')
         	path_start++;
 	if (*dst)
 		return (0);
-	//*dst = ft_strdup(path_start);
-	dst = path_start;
+	*dst = ft_strdup(path_start);
+	*dst = path_start;
 	return (*dst != NULL);
-}
+}*/
 
 int	set_color(char **dst, char *color_start)
 {

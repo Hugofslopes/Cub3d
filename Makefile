@@ -6,7 +6,7 @@ OBJ_DIR = obj
 SRC = main.c handle_input.c init_mlx.c free_exit.c keys.c test_map.c parser_handler.c
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
-NAME = Cub3d
+NAME = cub3d
 DEPS = $(OBJS:.o=.d)
 MLX_DIR = mlx
 MLX_ARC = $(MLX_DIR)/libmlx.a

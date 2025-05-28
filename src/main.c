@@ -13,7 +13,7 @@ int	main(int ac, char **av)
 	if (init_mlx(&cub))
 		return(1);
 	test_Array();
-//	free_config(&cub.config);
+	free_config(&cub.config);
 	return (0);
 }
 /* 
