@@ -6,12 +6,11 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:25:56 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/28 16:59:54 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:08:18 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
 
 void	first_render(t_cub *cub)
 {

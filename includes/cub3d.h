@@ -50,9 +50,9 @@ typedef struct s_player
 
 typedef struct s_f_c
 {
-	int			r;
-	int 		g;
-	int			b;
+	int	r;
+	int g;
+	int	b;
 }	t_f_c;
 
 typedef struct s_game
@@ -88,11 +88,13 @@ typedef struct s_cub
 # define ERROR "Error\n"
 # define NOPERMISION "the map does not have permission"
 # define PI 3.14159
-# define CELLSIZE 1
+# define CELLSIZE 0.5
 # define MOVE_SPEED 0.5
-# define ROTATION_SPEED 0.5
-#define NUM_RAYS WWIDTH
-#define FOV_ANGLE 110.0 
+# define ROTATION_SPEED 90
+# define NUM_RAYS WWIDTH
+# define FOV_ANGLE 110.0 
+# define FIXED_POINT 256
+# define HALF_FIXED 128
 
 //				PARSE
 int		handle_input(int ac, char **av, t_cub *cub);

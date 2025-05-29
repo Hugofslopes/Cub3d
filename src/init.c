@@ -22,7 +22,7 @@ void	init(t_cub *cub)
 	init_mlx(cub);
 	init_textures(cub, 0);
 	mlx_loop_hook(cub->mlx_s.mlx, build_next_frame, cub);
-	mlx_key_hook(cub->mlx_s.window, key_pressed, cub);
+	mlx_hook(cub->mlx_s.window, 2, 1L << 0, key_pressed, cub);
 	mlx_hook(cub->mlx_s.window, 17, 0, mouse_close, cub);
 	mlx_loop(cub->mlx_s.mlx);
 }
