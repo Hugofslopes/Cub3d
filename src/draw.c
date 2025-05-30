@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:53:03 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/30 10:26:00 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/05/30 20:26:25 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	put_pixel(t_cub *cub, int x, int y, int color)
 
 	if (x >= 0 && x < WWIDTH && y >= 0 && y < WHEIGHT)
 	{
-		pxl = cub->img.addr + (y *  cub->img.line_len + x * \
+		pxl = cub->img.addr + (y * cub->img.line_len + x * \
 		(cub->img.bytes_p_pixel / 8));
 		*(unsigned int *)pxl = color;
 	}

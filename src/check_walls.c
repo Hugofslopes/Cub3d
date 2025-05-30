@@ -1,0 +1,45 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_walls.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/30 18:27:00 by hfilipe-          #+#    #+#             */
+/*   Updated: 2025/05/30 18:33:40 by hfilipe-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/cub3d.h"
+
+int	is_wall_move(t_cub *cub, int dir_x, int dir_y)
+{
+	double	offset;
+	double	check_x;
+	double	check_y;
+	int		check_mapx;
+	int		check_mapy;
+
+	offset = 0.15;
+	check_x = (cub->moves.nx / cub->game.cellsize) + (dir_x * offset);
+	check_y = (cub->moves.ny / cub->game.cellsize) + (dir_y * offset);
+	check_mapx = (int)check_x;
+	check_mapy = (int)check_y;
+	if (check_mapx < 0 || check_mapx >= cub->game.map_with || \
+		check_mapy < 0 || check_mapy >= cub->game.map_height)
+		return (1);
+	if (cub->map[check_mapy][check_mapx] == '1')
+		return (1);
+	return (0);
+}
+
+int	is_wall(t_cub *cub, int mapX, int mapY)
+{
+	if (mapX < 0 || mapX >= cub->game.map_with || \
+		mapY < 0 || mapY >= cub->game.map_height)
+		return (1);
+	if (cub->map[mapY][mapX] == '1')
+		return (1);
+	else
+		return (0);
+}

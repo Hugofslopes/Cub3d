@@ -1,41 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/30 16:53:43 by hfilipe-          #+#    #+#             */
+/*   Updated: 2025/05/30 21:01:01 by hfilipe-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
-char    **test_Array(t_cub *cub);
+char	**test_array(t_cub *cub);
 
-void init_player_angle(t_cub *cub)
+void	init_player_angle(t_cub *cub)
 {
-    if (cub->player.start_position == 'N')
-        cub->player.angle = 270.0;
-    else if (cub->player.start_position == 'S')
-        cub->player.angle = 90.0;
-    else if (cub->player.start_position == 'E')
-        cub->player.angle = 0.0;
-    else if (cub->player.start_position == 'W')
-        cub->player.angle = 180.0;
+	if (cub->player.start_position == 'N')
+		cub->player.angle = 270.0;
+	else if (cub->player.start_position == 'S')
+		cub->player.angle = 90.0;
+	else if (cub->player.start_position == 'E')
+		cub->player.angle = 0.0;
+	else if (cub->player.start_position == 'W')
+		cub->player.angle = 180.0;
 }
 
-
-void	init_keys(t_cub *cub, size_t i){
-	char *key[] = {
-    "keys/w.xpm",
-    "keys/s.xpm",
-    "keys/a.xpm",
-    "keys/d.xpm",
-	"keys/base.xpm",
-	"keys/rl.xpm",
-	"keys/rr.xpm",
-	"keys/rlf.xpm",
-	"keys/b.xpm",
-	"keys/nb.xpm"
-};
-
-	while (i < 10)
+void	init_textures(t_cub *cub, size_t i)
+{
+	while (i < 4)
 	{
-		cub->keys[i].img = mlx_xpm_file_to_image(cub->mlx_s.mlx, \
-		key[i], &cub->keys[i].width, &cub->keys[i].height);
-		cub->keys[i].addr = mlx_get_data_addr(cub->keys[i].img, \
-		&cub->keys[i].bytes_p_pixel, &cub->keys[i].line_len, \
-		&cub->keys[i].endian);
+		cub->texture[i].img = mlx_xpm_file_to_image(cub->mlx_s.mlx, \
+		cub->textures[i], &cub->texture[i].width, &cub->texture[i].height);
+		cub->texture[i].addr = mlx_get_data_addr(cub->texture[i].img, \
+		&cub->texture[i].bytes_p_pixel, &cub->texture[i].line_len, \
+		&cub->texture[i].endian);
 		i++;
 	}
 }
@@ -45,7 +44,7 @@ void	init(t_cub *cub)
 	cub->game.gamestarted = 0;
 	cub->game.cellsize = 3;
 	cub->player.speed = 0.3;
-	cub->map = test_Array(cub);
+	cub->map = test_array(cub);
 	init_player_angle(cub);
 	init_mlx(cub);
 	init_keys(cub, 0);

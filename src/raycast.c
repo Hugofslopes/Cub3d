@@ -1,136 +1,121 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycast.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/30 19:10:39 by hfilipe-          #+#    #+#             */
+/*   Updated: 2025/05/30 20:57:32 by hfilipe-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
-double deg_to_rad(double degrees)
-{
-	return (degrees * PI / 180.0);
-}
-
-double normalize_angle(double angle)
-{
-	angle = fmod(angle, 360.0);
-	if (angle < 0)
-		angle += 360.0;
-	return angle;
-}
-
-int is_wall(t_cub *cub, int mapX, int mapY)
-{
-	if (mapX < 0 || mapX >= cub->game.map_with ||
-		mapY < 0 || mapY >= cub->game.map_height)
-		return 1;
-	if (cub->map[mapY][mapX] == '1')
-		return (1);
-	else
-		return (0);
-	/* return (cub->map[mapY][mapX] == '1'); */
-}
-
-  double cast_ray(t_cub *cub, double angle_deg, WallDirection *wall_side, int ray_index)
+void	init_raycast_val(t_cub *cub, double angle_deg)
 {
 	angle_deg = normalize_angle(angle_deg);
-	double angle = deg_to_rad(angle_deg);
+	cub->rayc.angle = deg_to_rad(angle_deg);
+	cub->rayc.mapx = (int)(cub->player.pos_x / cub->game.cellsize);
+	cub->rayc.mapy = (int)(cub->player.pos_y / cub->game.cellsize);
+	cub->rayc.raydirx = cos(cub->rayc.angle);
+	cub->rayc.raydiry = sin(cub->rayc.angle);
+	cub->rayc.deltadistx = fabs(1 / cub->rayc.raydirx);
+	cub->rayc.deltadisty = fabs(1 / cub->rayc.raydiry);
+	cub->rayc.hit = 0;
+	cub->rayc.side = -1;
+}
 
-	// Map position
-	int mapX = (int)(cub->player.pos_x / cub->game.cellsize);
-	int mapY = (int)(cub->player.pos_y / cub->game.cellsize);
-
-	// Direction vector
-	double rayDirX = cos(angle);
-	double rayDirY = sin(angle);
-
-	// Length to next gridline (delta distance)
-	double deltaDistX = fabs(1 / rayDirX);
-	double deltaDistY = fabs(1 / rayDirY);
-
-	int stepX, stepY;
-	double sideDistX, sideDistY;
-
-	// Calculate step and initial sideDist
-	if (rayDirX < 0)
+void	cast_ray2(t_cub *cub)
+{
+	if (cub->rayc.raydirx < 0)
 	{
-		stepX = -1;
-		sideDistX = (cub->player.pos_x - mapX * cub->game.cellsize) / cub->game.cellsize * deltaDistX;
+		cub->rayc.stepx = -1;
+		cub->rayc.side_dstx = (cub->player.pos_x - cub->rayc.mapx * \
+			cub->game.cellsize) / cub->game.cellsize * cub->rayc.deltadistx;
 	}
 	else
 	{
-		stepX = 1;
-		sideDistX = ((mapX + 1) * cub->game.cellsize - cub->player.pos_x) / cub->game.cellsize * deltaDistX;
+		cub->rayc.stepx = 1;
+		cub->rayc.side_dstx = ((cub->rayc.mapx + 1) * \
+		cub->game.cellsize - cub->player.pos_x) / cub->game.cellsize * \
+		cub->rayc.deltadistx;
 	}
-
-	if (rayDirY < 0)
+	if (cub->rayc.raydiry < 0)
 	{
-		stepY = -1;
-		sideDistY = (cub->player.pos_y - mapY * cub->game.cellsize) / cub->game.cellsize * deltaDistY;
+		cub->rayc.stepy = -1;
+		cub->rayc.side_dsty = (cub->player.pos_y - cub->rayc.mapy * \
+			cub->game.cellsize) / cub->game.cellsize * cub->rayc.deltadisty;
 	}
 	else
 	{
-		stepY = 1;
-		sideDistY = ((mapY + 1) * cub->game.cellsize - cub->player.pos_y) / cub->game.cellsize * deltaDistY;
+		cub->rayc.stepy = 1;
+		cub->rayc.side_dsty = ((cub->rayc.mapy + 1) * \
+		cub->game.cellsize - cub->player.pos_y) / cub->game.cellsize * \
+		cub->rayc.deltadisty;
 	}
+}
 
-	// DDA loop
-	int hit = 0;
-	int side = -1; // 0 for X-side, 1 for Y-side
-
-	while (!hit)
+void	dda_loop(t_cub *cub)
+{
+	while (!cub->rayc.hit)
 	{
-		if (sideDistX < sideDistY)
+		if (cub->rayc.side_dstx < cub->rayc.side_dsty)
 		{
-			sideDistX += deltaDistX;
-			mapX += stepX;
-			side = 0;
+			cub->rayc.side_dstx += cub->rayc.deltadistx;
+			cub->rayc.mapx += cub->rayc.stepx;
+			cub->rayc.side = 0;
 		}
 		else
 		{
-			sideDistY += deltaDistY;
-			mapY += stepY;
-			side = 1;
+			cub->rayc.side_dsty += cub->rayc.deltadisty;
+			cub->rayc.mapy += cub->rayc.stepy;
+			cub->rayc.side = 1;
 		}
-
-		if (is_wall(cub, mapX, mapY))
-			hit = 1;
+		if (is_wall(cub, cub->rayc.mapx, cub->rayc.mapy))
+			cub->rayc.hit = 1;
 	}
+}
 
-	// Calculate distance to the wall
-	double wall_dist;
-	if (side == 0)
-		wall_dist = (sideDistX - deltaDistX) * cub->game.cellsize;
-	else
-		wall_dist = (sideDistY - deltaDistY) * cub->game.cellsize;
-
-	// Save wall hit position (for texture offset)
-	double wall_hit;
-	if (side == 0)
-		wall_hit = fmod((cub->player.pos_y + wall_dist * rayDirY), cub->game.cellsize) / cub->game.cellsize;
-	else
-		wall_hit = fmod((cub->player.pos_x + wall_dist * rayDirX), cub->game.cellsize) / cub->game.cellsize;
-
-	cub->game.hitPositions[ray_index] = wall_hit;
-
-	// Determine wall direction
-	if (side == 0)
-		*wall_side = (rayDirX > 0) ?  EAST : WEST ;
-	else
-		*wall_side = (rayDirY > 0) ? SOUTH : NORTH;
-
-	return wall_dist;
-} 
-
-
-
-void ray(t_cub *cub)
+double	cast_ray(t_cub *cub, double angle_deg, t_wall_direction *wall_side, \
+	int ray_index)
 {
-	double start_angle = cub->player.angle - (FOV_ANGLE / 2.0);
-	double angle_step = FOV_ANGLE / NUM_RAYS;
+	init_raycast_val(cub, angle_deg);
+	cast_ray2(cub);
+	dda_loop(cub);
+	if (cub->rayc.side == 0)
+		cub->rayc.wall_dist = (cub->rayc.side_dstx - cub->rayc.deltadistx) * \
+		cub->game.cellsize;
+	else
+		cub->rayc.wall_dist = (cub->rayc.side_dsty - cub->rayc.deltadisty) * \
+		cub->game.cellsize;
+	if (cub->rayc.side == 0)
+		cub->rayc.wall_hit = fmod((cub->player.pos_y + cub->rayc.wall_dist * \
+			cub->rayc.raydiry), cub->game.cellsize) / cub->game.cellsize;
+	else
+		cub->rayc.wall_hit = fmod((cub->player.pos_x + cub->rayc.wall_dist * \
+			cub->rayc.raydirx), cub->game.cellsize) / cub->game.cellsize;
+	cub->game.hit_positions[ray_index] = cub->rayc.wall_hit;
+	set_wall_side(cub, wall_side);
+	return (cub->rayc.wall_dist);
+}
 
-	for (int i = 0; i < NUM_RAYS; i++)
+void	ray(t_cub *cub, int i)
+{
+	double				start_angle;
+	double				angle_step;
+	double				ray_angle;
+	double				distance;
+	t_wall_direction	wall_dir;
+
+	start_angle = cub->player.angle - (FOV_ANGLE / 2.0);
+	angle_step = FOV_ANGLE / NUM_RAYS;
+	while (i < NUM_RAYS)
 	{
-		double ray_angle = start_angle + i * angle_step;
-		WallDirection wall_dir;
-
-		double distance = cast_ray(cub, ray_angle, &wall_dir, i);
-
+		ray_angle = start_angle + i * angle_step;
+		distance = cast_ray(cub, ray_angle, &wall_dir, i);
 		cub->game.ray_values[i] = distance;
 		cub->game.wall_directions[i] = wall_dir;
+		i++;
 	}
 }
