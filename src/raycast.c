@@ -1,6 +1,5 @@
 #include "../includes/cub3d.h"
 
-
 double deg_to_rad(double degrees)
 {
 	return (degrees * PI / 180.0);
@@ -16,20 +15,24 @@ double normalize_angle(double angle)
 
 int is_wall(t_cub *cub, int mapX, int mapY)
 {
-	if (mapX < 0 || mapX >= cub->game.map_with - 1||
-		mapY < 0 || mapY >= cub->game.map_height - 1 )
+	if (mapX < 0 || mapX >= cub->game.map_with ||
+		mapY < 0 || mapY >= cub->game.map_height)
 		return 1;
-	return (cub->map[mapY][mapX] == '1');
+	if (cub->map[mapY][mapX] == '1')
+		return (1);
+	else
+		return (0);
+	/* return (cub->map[mapY][mapX] == '1'); */
 }
 
-double cast_ray(t_cub *cub, double angle_deg, WallDirection *wall_side, int ray_index)
+  double cast_ray(t_cub *cub, double angle_deg, WallDirection *wall_side, int ray_index)
 {
 	angle_deg = normalize_angle(angle_deg);
 	double angle = deg_to_rad(angle_deg);
 
 	// Map position
-	int mapX = (int)(cub->player.pos_x / CELLSIZE);
-	int mapY = (int)(cub->player.pos_y / CELLSIZE);
+	int mapX = (int)(cub->player.pos_x / cub->game.cellsize);
+	int mapY = (int)(cub->player.pos_y / cub->game.cellsize);
 
 	// Direction vector
 	double rayDirX = cos(angle);
@@ -46,23 +49,23 @@ double cast_ray(t_cub *cub, double angle_deg, WallDirection *wall_side, int ray_
 	if (rayDirX < 0)
 	{
 		stepX = -1;
-		sideDistX = (cub->player.pos_x - mapX * CELLSIZE) / CELLSIZE * deltaDistX;
+		sideDistX = (cub->player.pos_x - mapX * cub->game.cellsize) / cub->game.cellsize * deltaDistX;
 	}
 	else
 	{
 		stepX = 1;
-		sideDistX = ((mapX + 1) * CELLSIZE - cub->player.pos_x) / CELLSIZE * deltaDistX;
+		sideDistX = ((mapX + 1) * cub->game.cellsize - cub->player.pos_x) / cub->game.cellsize * deltaDistX;
 	}
 
 	if (rayDirY < 0)
 	{
 		stepY = -1;
-		sideDistY = (cub->player.pos_y - mapY * CELLSIZE) / CELLSIZE * deltaDistY;
+		sideDistY = (cub->player.pos_y - mapY * cub->game.cellsize) / cub->game.cellsize * deltaDistY;
 	}
 	else
 	{
 		stepY = 1;
-		sideDistY = ((mapY + 1) * CELLSIZE - cub->player.pos_y) / CELLSIZE * deltaDistY;
+		sideDistY = ((mapY + 1) * cub->game.cellsize - cub->player.pos_y) / cub->game.cellsize * deltaDistY;
 	}
 
 	// DDA loop
@@ -91,27 +94,29 @@ double cast_ray(t_cub *cub, double angle_deg, WallDirection *wall_side, int ray_
 	// Calculate distance to the wall
 	double wall_dist;
 	if (side == 0)
-		wall_dist = (sideDistX - deltaDistX) * CELLSIZE;
+		wall_dist = (sideDistX - deltaDistX) * cub->game.cellsize;
 	else
-		wall_dist = (sideDistY - deltaDistY) * CELLSIZE;
+		wall_dist = (sideDistY - deltaDistY) * cub->game.cellsize;
 
 	// Save wall hit position (for texture offset)
 	double wall_hit;
 	if (side == 0)
-		wall_hit = fmod((cub->player.pos_y + wall_dist * rayDirY), CELLSIZE) / CELLSIZE;
+		wall_hit = fmod((cub->player.pos_y + wall_dist * rayDirY), cub->game.cellsize) / cub->game.cellsize;
 	else
-		wall_hit = fmod((cub->player.pos_x + wall_dist * rayDirX), CELLSIZE) / CELLSIZE;
+		wall_hit = fmod((cub->player.pos_x + wall_dist * rayDirX), cub->game.cellsize) / cub->game.cellsize;
 
 	cub->game.hitPositions[ray_index] = wall_hit;
 
 	// Determine wall direction
 	if (side == 0)
-		*wall_side = (rayDirX > 0) ? WEST : EAST;
+		*wall_side = (rayDirX > 0) ?  EAST : WEST ;
 	else
-		*wall_side = (rayDirY > 0) ? NORTH : SOUTH;
+		*wall_side = (rayDirY > 0) ? SOUTH : NORTH;
 
 	return wall_dist;
-}
+} 
+
+
 
 void ray(t_cub *cub)
 {

@@ -1,135 +1,51 @@
 
-/* 
-#define MOVE_INCREMENT 0.5  // Optional, you can remove round_increment for smooth movement
-
-// Helper: rounds value to nearest increment (optional)
-double round_increment(double value, double increment)
-{
-    return round(value / increment) * increment;
-}
-
-void move_forward(t_cub *cub)
-{
-    double dx = cos(cub->player.angle) * MOVE_SPEED;
-    double dy = sin(cub->player.angle) * MOVE_SPEED;
-
-    // Optional rounding (comment out if you want smooth movement)
-    dx = round_increment(dx, MOVE_INCREMENT);
-    dy = round_increment(dy, MOVE_INCREMENT);
-
-    double nx = cub->player.pos_x + dx;
-    double ny = cub->player.pos_y + dy;
-
-    int mx = (int)(nx / CELLSIZE);
-    int my = (int)(ny / CELLSIZE);
-
-    if (!is_wall(cub, mx, my))
-    {
-        cub->player.pos_x = nx;
-        cub->player.pos_y = ny;
-    }
-}
-
-void move_back(t_cub *cub)
-{
-    double dx = cos(cub->player.angle) * MOVE_SPEED;
-    double dy = sin(cub->player.angle) * MOVE_SPEED;
-
-    dx = round_increment(dx, MOVE_INCREMENT);
-    dy = round_increment(dy, MOVE_INCREMENT);
-
-    double nx = cub->player.pos_x - dx;
-    double ny = cub->player.pos_y - dy;
-
-    int mx = (int)(nx / CELLSIZE);
-    int my = (int)(ny / CELLSIZE);
-
-    if (!is_wall(cub, mx, my))
-    {
-        cub->player.pos_x = nx;
-        cub->player.pos_y = ny;
-    }
-}
-
-void move_right(t_cub *cub)
-{
-    // Right strafe is +90 degrees from facing angle
-    double dx = sin(cub->player.angle) * MOVE_SPEED;
-    double dy = -cos(cub->player.angle) * MOVE_SPEED;
-
-    dx = round_increment(dx, MOVE_INCREMENT);
-    dy = round_increment(dy, MOVE_INCREMENT);
-
-    double nx = cub->player.pos_x + dx;
-    double ny = cub->player.pos_y + dy;
-
-    int mx = (int)(nx / CELLSIZE);
-    int my = (int)(ny / CELLSIZE);
-
-    if (!is_wall(cub, mx, my))
-    {
-        cub->player.pos_x = nx;
-        cub->player.pos_y = ny;
-    }
-}
-
-void move_left(t_cub *cub)
-{
-    // Left strafe is -90 degrees from facing angle
-    double dx = sin(cub->player.angle) * MOVE_SPEED;
-    double dy = -cos(cub->player.angle) * MOVE_SPEED;
-
-    dx = round_increment(dx, MOVE_INCREMENT);
-    dy = round_increment(dy, MOVE_INCREMENT);
-
-    double nx = cub->player.pos_x - dx;
-    double ny = cub->player.pos_y - dy;
-
-    int mx = (int)(nx / CELLSIZE);
-    int my = (int)(ny / CELLSIZE);
-
-    if (!is_wall(cub, mx, my))
-    {
-        cub->player.pos_x = nx;
-        cub->player.pos_y = ny;
-    }
-}
- */
-
 #include "../includes/cub3d.h"
 
-void move_forward(t_cub *cub)
+void print_cub(t_cub *cub, double mapX, double mapY)
 {
-    double angle_rad = deg_to_rad(cub->player.angle);
-    double dx = cos(angle_rad) * MOVE_SPEED;
-    double dy = sin(angle_rad) * MOVE_SPEED;
+    printf("X- %f\nY-%f\n", mapX, mapY);
+	for (int i = 0; cub->map[i] != NULL; i++)
+        printf("%s\n", cub->map[i]);
+	printf("\n\n");	
+}
 
-    double nx = cub->player.pos_x + dx;
-    double ny = cub->player.pos_y + dy;
 
-    int mx = (int)(nx / CELLSIZE);
-    int my = (int)(ny / CELLSIZE);
+int is_wall_move(t_cub *cub, double x, double y, int dirX, int dirY)
+{
+    double offset = 0.15;
+    double checkX = x + (dirX * offset);
+    double checkY = y + (dirY * offset);
 
-    if (!is_wall(cub, mx, my))
-    {
-        cub->player.pos_x = nx;
-        cub->player.pos_y = ny;
-    }
+    int checkMapX = (int)checkX;
+    int checkMapY = (int)checkY;
+
+    if (checkMapX < 0 || checkMapX >= cub->game.map_with ||
+        checkMapY < 0 || checkMapY >= cub->game.map_height)
+        return 1;
+
+    if (cub->map[checkMapY][checkMapX] == '1')
+        return 1;
+
+    return 0;
 }
 
 void move_back(t_cub *cub)
 {
+    cub->keys_.s = 1;
+
     double angle_rad = deg_to_rad(cub->player.angle);
-    double dx = cos(angle_rad) * MOVE_SPEED;
-    double dy = sin(angle_rad) * MOVE_SPEED;
+    double dx = cos(angle_rad) * cub->player.speed;
+    double dy = sin(angle_rad) * cub->player.speed;
 
     double nx = cub->player.pos_x - dx;
     double ny = cub->player.pos_y - dy;
 
-    int mx = (int)(nx / CELLSIZE);
-    int my = (int)(ny / CELLSIZE);
+    // Direction signs
+    int dirX = (dx < 0) ? 1 : (dx > 0) ? -1 : 0;
+    int dirY = (dy < 0) ? 1 : (dy > 0) ? -1 : 0;
 
-    if (!is_wall(cub, mx, my))
+    print_cub(cub, nx / cub->game.cellsize, ny / cub->game.cellsize);
+    if (!is_wall_move(cub, nx / cub->game.cellsize, ny / cub->game.cellsize, dirX, dirY))
     {
         cub->player.pos_x = nx;
         cub->player.pos_y = ny;
@@ -138,18 +54,20 @@ void move_back(t_cub *cub)
 
 void move_right(t_cub *cub)
 {
-    // Strafe right: angle + 90 degrees
+    cub->keys_.d = 1;
+
     double angle_rad = deg_to_rad(cub->player.angle + 90);
-    double dx = cos(angle_rad) * MOVE_SPEED;
-    double dy = sin(angle_rad) * MOVE_SPEED;
+    double dx = cos(angle_rad) * cub->player.speed;
+    double dy = sin(angle_rad) * cub->player.speed;
 
     double nx = cub->player.pos_x + dx;
     double ny = cub->player.pos_y + dy;
 
-    int mx = (int)(nx / CELLSIZE);
-    int my = (int)(ny / CELLSIZE);
+    int dirX = (dx > 0) ? 1 : (dx < 0) ? -1 : 0;
+    int dirY = (dy > 0) ? 1 : (dy < 0) ? -1 : 0;
 
-    if (!is_wall(cub, mx, my))
+    print_cub(cub, nx / cub->game.cellsize, ny / cub->game.cellsize);
+    if (!is_wall_move(cub, nx / cub->game.cellsize, ny / cub->game.cellsize, dirX, dirY))
     {
         cub->player.pos_x = nx;
         cub->player.pos_y = ny;
@@ -158,36 +76,45 @@ void move_right(t_cub *cub)
 
 void move_left(t_cub *cub)
 {
-    // Strafe left: angle - 90 degrees
+    cub->keys_.a = 1;
+
     double angle_rad = deg_to_rad(cub->player.angle - 90);
-    double dx = cos(angle_rad) * MOVE_SPEED;
-    double dy = sin(angle_rad) * MOVE_SPEED;
+    double dx = cos(angle_rad) * cub->player.speed;
+    double dy = sin(angle_rad) * cub->player.speed;
 
     double nx = cub->player.pos_x + dx;
     double ny = cub->player.pos_y + dy;
 
-    int mx = (int)(nx / CELLSIZE);
-    int my = (int)(ny / CELLSIZE);
 
-    if (!is_wall(cub, mx, my))
+    int dirX = (dx > 0) ? 1 : (dx < 0) ? -1 : 0;
+    int dirY = (dy > 0) ? 1 : (dy < 0) ? -1 : 0;
+
+    print_cub(cub, nx / cub->game.cellsize, ny / cub->game.cellsize);
+    if (!is_wall_move(cub, nx / cub->game.cellsize, ny / cub->game.cellsize, dirX, dirY))
     {
         cub->player.pos_x = nx;
         cub->player.pos_y = ny;
     }
 }
 
-// Rotate left by ROTATE_SPEED degrees
-void rotate_left(t_cub *cub)
+void move_forward(t_cub *cub)
 {
-    cub->player.angle -= ROTATION_SPEED ;
-    if (cub->player.angle < 0)
-        cub->player.angle += 360;
-}
+    cub->keys_.w = 1;
 
-// Rotate right by ROTATION_SPEED  degrees
-void rotate_right(t_cub *cub)
-{
-    cub->player.angle += ROTATION_SPEED ;
-    if (cub->player.angle >= 360)
-        cub->player.angle -= 360;
+    double angle_rad = deg_to_rad(cub->player.angle);
+    double dx = cos(angle_rad) * cub->player.speed;
+    double dy = sin(angle_rad) * cub->player.speed;
+
+    double nx = cub->player.pos_x + dx;
+    double ny = cub->player.pos_y + dy;
+
+    // Movement direction sign (-1, 0 or 1)
+    int dirX = (dx > 0) ? 1 : (dx < 0) ? -1 : 0;
+    int dirY = (dy > 0) ? 1 : (dy < 0) ? -1 : 0;
+
+    if (!is_wall_move(cub, nx / cub->game.cellsize, ny / cub->game.cellsize, dirX, dirY))
+    {
+        cub->player.pos_x = nx;
+        cub->player.pos_y = ny;
+    }
 }

@@ -7,6 +7,45 @@ int	mouse_close(t_cub *cub)
 	return (0);
 }
 
+int can_zoom(t_cub *cub)
+{
+	int grid_x = (int)(cub->player.pos_x + 0.1);
+	int grid_y = (int)(cub->player.pos_y + 0.1);
+
+	if (grid_x < 0 || grid_x >= cub->game.map_with ||
+	    grid_y < 0 || grid_y >= cub->game.map_height)
+		return 0;
+
+	if (cub->map[grid_y][grid_x] == '1')
+		return 0; // You're standing in a wall
+
+	return 1; // You're in a valid tile
+}
+
+void	i_speed(t_cub *cub)
+{
+	cub->player.speed += 0.1;
+}
+
+void	d_speed(t_cub *cub)
+{
+	cub->player.speed -= 0.1;
+}
+
+void zoom_in(t_cub *cub)
+{
+	/* if (can_zoom(cub)) */
+		if (cub->game.cellsize <= 5)
+			++cub->game.cellsize;
+}
+
+void zoom_out(t_cub *cub)
+{
+	/* if (can_zoom(cub)) */
+		if (cub->game.cellsize >= 3)
+			--cub->game.cellsize;
+}
+
 int	key_pressed(int key, t_cub *cub)
 {
 	if (key == 65307)
@@ -22,9 +61,19 @@ int	key_pressed(int key, t_cub *cub)
 		move_back(cub);
 	else if (key == 'd' || key == 'D')
 		move_right(cub);
+	else if (key == 'r' || key == 'R')
+		i_speed(cub);
+	else if (key == 't' || key == 't')
+		d_speed(cub);
 	else if (key == 65361)
 		rotate_left(cub);
 	else if (key == 65363)
-		printf("angle- %f \n", cub->player.angle),	rotate_right(cub);
+		rotate_right(cub);
+	//printf("angle- %f \n", cub->player.angle), printf("X- %f \n", cub->player.pos_x), printf("Y- %f \n", cub->player.pos_y);
+	else if (key == 65362)
+		zoom_in(cub);
+	else if (key == 65364)
+		zoom_out(cub);
+	printf("CELL-%d\n",cub->game.cellsize);
 	return (0);
 }

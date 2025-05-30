@@ -8,15 +8,15 @@ char **test_Array(t_cub *cub)
     
     test[0] ="11111111";
 	test[1] ="10000001";
-	test[2] ="10111101";
-	test[3] ="10100001";
+	test[2] ="10000001";
+	test[3] ="10011001";
 	test[4] ="10100001";
-	test[5] ="10100001";
+	test[5] ="10000001";
 	test[6] ="10000001";
 	test[7] ="11111111";
     test[8] = NULL;
 
-    cub->player.start_position = 'N';
+    cub->player.start_position = 'S';
 
     cub->textures = malloc(sizeof(char *) * 5);
 
@@ -33,8 +33,9 @@ char **test_Array(t_cub *cub)
     cub->floor.g = 20;
     cub->floor.b = 20;
 
-	cub->player.pos_x = 3 * CELLSIZE + CELLSIZE / 2;
-  	cub->player.pos_y = 5 * CELLSIZE + CELLSIZE / 2;
+	cub->player.pos_x = 1 * cub->game.cellsize + cub->game.cellsize / 2;
+cub->player.pos_y = 1 * cub->game.cellsize + cub->game.cellsize / 2;
+
 	cub->game.map_with = 8;
 	cub->game.map_height = 8;
 

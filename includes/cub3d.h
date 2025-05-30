@@ -46,6 +46,7 @@ typedef struct s_player
 	double	ray_y;
 	double	ray_angle;
 	double	angle;
+	float	speed;	
 }	t_player;
 
 typedef struct s_f_c
@@ -55,6 +56,16 @@ typedef struct s_f_c
 	int	b;
 }	t_f_c;
 
+typedef struct s_keys
+{
+	int	w;
+	int s;
+	int	a;
+	int	d;
+	int rl;
+	int rr;
+}	t_keys;
+
 typedef struct s_game
 {
 	int		gamestarted;
@@ -62,6 +73,7 @@ typedef struct s_game
 	int		ceiling;
 	int		mapx;
 	int		mapy;
+	int		cellsize;
 	int		map_with;
 	int		map_height;
 	double	ray_values[5000];
@@ -76,6 +88,8 @@ typedef struct s_cub
 	t_player	player;
 	t_img_		img;
 	t_img_		texture[4];
+	t_img_		keys[8];
+	t_keys		keys_;
 	char		**textures;
 	t_f_c		floor;
 	t_f_c		ceiling;
@@ -88,11 +102,9 @@ typedef struct s_cub
 # define ERROR "Error\n"
 # define NOPERMISION "the map does not have permission"
 # define PI 3.14159
-# define CELLSIZE 0.5
-# define MOVE_SPEED 0.5
-# define ROTATION_SPEED 90
-# define NUM_RAYS WWIDTH
-# define FOV_ANGLE 110.0 
+# define ROTATION_SPEED 45
+# define NUM_RAYS 1920
+# define FOV_ANGLE 90.0 
 # define FIXED_POINT 256
 # define HALF_FIXED 128
 
@@ -135,4 +147,7 @@ void	rotate_left(t_cub *cub);
 
 //			UTILS
 double  deg_to_rad(double degrees);
+
+// mINI
+void draw_minimap(t_cub *cub);
 #endif
