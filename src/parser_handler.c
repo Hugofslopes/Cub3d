@@ -69,46 +69,27 @@ int	is_config_line(char *line)
 	return (0);
 }
 // function to check whether t_config variable are null
-#include <unistd.h>
+//#include <unistd.h>
 
 static int	check_texture(const char *path, const char *name)
 {
 	if (!path)
-		return (ft_printf_fd(2, "Error: %s texture missing\n", name), 0);
+		return (ft_printf_fd(2, "Error: %s texture missing\n", name), 1);
 	if (access(path, F_OK) == -1)
 	/*{
 		printf("Error: NORTH (NO) texture file not found at '%s' '%s'", name, path);
 		return (1);
 	}*/
 		return (ft_printf_fd(2, "Error: NO texture file not found at %s - %s", name, path), 1);
-	return (1);
+	return (0);
 }
 
 int	validate_config(t_config *cfg)
 {
 	if (!check_texture(cfg->no_path, "NO"))
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }
-/*int	validate_config(t_config *cfg)
-{
-	if (!cfg->no_path)
-		return (ft_printf_fd(2, "Error: NO texture missing\n"), 0);
-	if (access(cfg->no_path, F_OK) == -1)
-		return (ft_printf_fd(2, "Error: NO texture file not found\n"), 0);
-
-	if (!cfg->so_path)
-		return (0);
-	if (!cfg->we_path)
-		return (0);
-	if (!cfg->ea_path)
-		return (0);
-	if (!cfg->floor_color_set)
-		return (0);
-	if (!cfg->ceiling_color_set)
-		return (0);
-	return (1);
-}*/
 
 int set_texture_path(char **dst, char *raw)
 {
@@ -121,23 +102,11 @@ int set_texture_path(char **dst, char *raw)
 		return (0);
 	free(*dst);
 	*dst = ft_strdup(trimmed);
-	//*dst = trimmed;
 	free(trimmed);
 	if (!*dst)
 		return (0);
 	return (1);
 }
-
-/*int	set_texture_path(char **dst, char *path_start)
-{
-	while (*path_start == ' ' || *path_start == '\t')
-        	path_start++;
-	if (*dst)
-		return (0);
-	*dst = ft_strdup(path_start);
-	*dst = path_start;
-	return (*dst != NULL);
-}*/
 
 int	set_color(char **dst, char *color_start)
 {
@@ -145,8 +114,8 @@ int	set_color(char **dst, char *color_start)
 		color_start++;
 	if (*dst)
 		return (0);
-	//*dst = ft_strdup(color_start);
-	*dst = color_start;
+	*dst = ft_strdup(color_start);
+	//*dst = color_start;
 	return (*dst != NULL);
 }
 
@@ -186,19 +155,29 @@ int	parse_scene_file(int *fd, t_cub *cub)
 	char	*line;
 	char	*buffer;
 	int		map_started;
-
+	
 	buffer = NULL;
 	map_started = 0;
+	line = get_next_line(*fd, &buffer);
 	printf("Entered parse_scene_file\n");
-	while ((line = get_next_line(*fd, &buffer)))
+	while (line)
 	{
-		if (!line)
-			break;
 		if (is_line_empty(line))
 		{
 			free(line);
 			break;
 		}
+/*		if (!map_started && is_config_line(line))
+		{
+			if (!parse_config_line(line, &cub->config))
+			{
+				printf("Second Free\n");
+				free(line);
+//				free_config(&cub->config); // ✅ only on parse failure
+				return (free(buffer), 1);  // ✅ early return on error
+			}
+		}*/
+
 		if (!map_started && is_line_empty(line))
 		{
 			printf("First free\n");
@@ -208,16 +187,10 @@ int	parse_scene_file(int *fd, t_cub *cub)
 		if (!map_started && is_config_line(line))
 		{
 			if (!parse_config_line(line, &cub->config))
-				free(line);
-
-			/*if (!parse_config_line(line, &cub->config))
 			{
-				if (buffer)
-					free(buffer);
 				printf("Second Free\n");
-				//free_config(&cub->config);
-				return (free(line), 1);
-			}*/
+				free(line);
+			}
 		}
 		else
 		{
@@ -226,17 +199,24 @@ int	parse_scene_file(int *fd, t_cub *cub)
 			{
 				if (buffer)
 					free(buffer);
+//				free_config(&cub->config);
 				printf("Third Free\n");
 				return (free(line), 1);
 			}
 		}
 		printf("Forth free\n");
 		free(line);
+		line = get_next_line(*fd, &buffer);
+		//free_config(&cub->config);
 	}
 	printf("Gets past while parse_scene_file\n");
 	free(buffer);
+	//free_config(&cub->config);
 	if (!validate_config(&cub->config))
-		return (0);
+	{
+//		free_config(&cub->config);
+		return (1);
+	}
 	return (0);
 }
 

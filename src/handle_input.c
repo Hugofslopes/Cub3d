@@ -13,7 +13,13 @@ int	handle_input(int ac, char **av, t_cub *cub)
 	}
 	printf("Moving on to parse_scene_file\n");
 	if (parse_scene_file(&fd, cub))
+	{
+		close(fd);
+		free_config(&cub->config);
 		return (1);
+	}
+	//free_config(&cub->config);	
+	printf("Moving on to open_scene_file\n");
 	close(fd);
 	return (0);
 }
