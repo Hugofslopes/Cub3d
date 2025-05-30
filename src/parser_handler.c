@@ -51,11 +51,14 @@ int	is_line_empty(char *line)
 // function to check the expression at config file exists
 int	is_config_line(char *line)
 {
+	printf("Entered is_config_line function\n");
 	while (*line == ' ' || *line == '\t')
 		line++;
-
 	if (!ft_strncmp(line, "NO ", 3))
+	{
+		printf("NEW_ENTER\n");
 		return (1);
+	}
 	if (!ft_strncmp(line, "SO ", 3))
 		return (1);
 	if (!ft_strncmp(line, "EA ", 3))
@@ -68,26 +71,33 @@ int	is_config_line(char *line)
 		return (1);
 	return (0);
 }
-// function to check whether t_config variable are null
-//#include <unistd.h>
 
 static int	check_texture(const char *path, const char *name)
 {
 	if (!path)
 		return (ft_printf_fd(2, "Error: %s texture missing\n", name), 1);
 	if (access(path, F_OK) == -1)
-	/*{
-		printf("Error: NORTH (NO) texture file not found at '%s' '%s'", name, path);
-		return (1);
-	}*/
-		return (ft_printf_fd(2, "Error: NO texture file not found at %s - %s", name, path), 1);
+		return (ft_printf_fd(2, "Error: NO texture file found at %s - %s", name, path), 1);
 	return (0);
 }
 
 int	validate_config(t_config *cfg)
 {
-	if (!check_texture(cfg->no_path, "NO"))
+	if (check_texture(cfg->no_path, "NO "))
+	{
+		printf("Entered \n");
 		return (1);
+	}
+	if (check_texture(cfg->so_path, "SO "))
+		return (1);
+	if (check_texture(cfg->we_path, "WE "))
+		return (1);
+	if (check_texture(cfg->ea_path, "EA "))
+		return (1);
+	if (!cfg->floor_color_set)
+		return (ft_printf_fd(2, "Error: floor color not set\n"), 1);
+	if (!cfg->ceiling_color_set)
+		return (ft_printf_fd(2, "Error: Ceiling color not set\n"), 1);
 	return (0);
 }
 
@@ -115,30 +125,74 @@ int	set_color(char **dst, char *color_start)
 	if (*dst)
 		return (0);
 	*dst = ft_strdup(color_start);
-	//*dst = color_start;
 	return (*dst != NULL);
 }
 
-// function to store the path or color in each field of t_config
-int	parse_config_line(char *line, t_config *cfg)
+static int	handle_no(t_config *cfg, t_config_flags *flags, char *value)
+{
+	if (flags->no_set)
+		return (ft_printf_fd(2, "Error: Duplicate NO texture\n"), 0);
+	flags->no_set = 1;
+	return (set_texture_path(&cfg->no_path, value));
+}
+
+static int	handle_so(t_config *cfg, t_config_flags *flags, char *value)
+{
+	if (flags->so_set)
+		return (ft_printf_fd(2, "Error: Duplicate SO texture\n"), 0);
+	flags->so_set = 1;
+	return (set_texture_path(&cfg->so_path, value));
+}
+
+static int	handle_we(t_config *cfg, t_config_flags *flags, char *value)
+{
+	if (flags->we_set)
+		return (ft_printf_fd(2, "Error: Duplicate WE texture\n"), 0);
+	flags->we_set = 1;
+	return (set_texture_path(&cfg->we_path, value));
+}
+
+static int	handle_ea(t_config *cfg, t_config_flags *flags, char *value)
+{
+	if (flags->ea_set)
+		return (ft_printf_fd(2, "Error: Duplicate EA texture\n"), 0);
+	flags->ea_set = 1;
+	return (set_texture_path(&cfg->ea_path, value));
+}
+
+static int	handle_floor(t_config *cfg, t_config_flags *flags, char *value)
+{
+	if (flags->f_set)
+		return (ft_printf_fd(2, "Error: Duplicate F texture\n"), 0);
+	flags->f_set = 1;
+	return (set_texture_path(&cfg->floor_color_set, value));
+}
+
+static int	handle_ceiling(t_config *cfg, t_config_flags *flags, char *value)
+{
+	if (flags->c_set)
+		return (ft_printf_fd(2, "Error: Duplicate F texture\n"), 0);
+	flags->c_set = 1;
+	return (set_texture_path(&cfg->ceiling_color_set, value));
+}
+
+int	parse_config_line(char *line, t_config *cfg, t_config_flags *flags)
 {
 	while (*line == ' ' || *line == '\t')
 		line++;
 	if (!ft_strncmp(line, "NO ", 3))
-	{
-		printf("NO HAS BEEN FOUND\n");
-		return (set_texture_path(&cfg->no_path, line + 3));
-	}
+		return handle_no(cfg, flags, line + 3);
 	if (!ft_strncmp(line, "SO ", 3))
-		return (set_texture_path(&cfg->so_path, line + 3));
+		return handle_so(cfg, flags, line + 3);
 	if (!ft_strncmp(line, "WE ", 3))
-		return (set_texture_path(&cfg->we_path, line + 3));
+		return handle_we(cfg, flags, line + 3);
 	if (!ft_strncmp(line, "EA ", 3))
-		return (set_texture_path(&cfg->ea_path, line + 3));
+		return handle_ea(cfg, flags, line + 3);
 	if (!ft_strncmp(line, "F ", 2))
-		return (set_color(&cfg->floor_color_set, line + 2));
+		return handle_floor(cfg, flags, line + 2);
 	if (!ft_strncmp(line, "C ", 2))
-		return (set_color(&cfg->ceiling_color_set, line + 2));
+		return handle_ceiling(cfg, flags, line + 2);
+
 	return (0);
 }
 
@@ -167,17 +221,6 @@ int	parse_scene_file(int *fd, t_cub *cub)
 			free(line);
 			break;
 		}
-/*		if (!map_started && is_config_line(line))
-		{
-			if (!parse_config_line(line, &cub->config))
-			{
-				printf("Second Free\n");
-				free(line);
-//				free_config(&cub->config); // ✅ only on parse failure
-				return (free(buffer), 1);  // ✅ early return on error
-			}
-		}*/
-
 		if (!map_started && is_line_empty(line))
 		{
 			printf("First free\n");
@@ -186,10 +229,12 @@ int	parse_scene_file(int *fd, t_cub *cub)
 		}
 		if (!map_started && is_config_line(line))
 		{
-			if (!parse_config_line(line, &cub->config))
+			if (!parse_config_line(line, &cub->config, &cub->flags))
 			{
 				printf("Second Free\n");
 				free(line);
+				free(buffer);
+				return (1);
 			}
 		}
 		else
@@ -199,7 +244,6 @@ int	parse_scene_file(int *fd, t_cub *cub)
 			{
 				if (buffer)
 					free(buffer);
-//				free_config(&cub->config);
 				printf("Third Free\n");
 				return (free(line), 1);
 			}
@@ -207,16 +251,11 @@ int	parse_scene_file(int *fd, t_cub *cub)
 		printf("Forth free\n");
 		free(line);
 		line = get_next_line(*fd, &buffer);
-		//free_config(&cub->config);
 	}
 	printf("Gets past while parse_scene_file\n");
 	free(buffer);
-	//free_config(&cub->config);
-	if (!validate_config(&cub->config))
-	{
-//		free_config(&cub->config);
+	if (validate_config(&cub->config))
 		return (1);
-	}
 	return (0);
 }
 

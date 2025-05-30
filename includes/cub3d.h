@@ -22,6 +22,16 @@ typedef struct s_player
 	int	rot_r;
 }	t_player;
 
+typedef struct s_config_flags
+{
+	int	no_set;
+	int	so_set;
+	int	we_set;
+	int	ea_set;
+	int	f_set;
+	int	c_set;
+} t_config_flags;
+
 typedef struct s_config
 {
 	char	*no_path;
@@ -38,6 +48,7 @@ typedef struct s_cub
 	t_mlx		mlx_s;
 	t_player	t_player;
 	t_config	config;
+	t_config_flags	flags;
 }	t_cub;
 
 # define MAX_COLOR 0xFFFFFF

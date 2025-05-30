@@ -1,8 +1,8 @@
 NO src/north.xpm
 SO src/south.xpm
 WE src/west.xpm
-EA src/east.xpm
-F 220,100,0
+E src/east.xpm
+Fi 220,100,0
 C 225,30,0
 
 111111
