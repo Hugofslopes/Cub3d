@@ -24,10 +24,12 @@ void	init_keys(t_cub *cub, size_t i){
 	"keys/base.xpm",
 	"keys/rl.xpm",
 	"keys/rr.xpm",
-	"keys/rlf.xpm"
+	"keys/rlf.xpm",
+	"keys/b.xpm",
+	"keys/nb.xpm"
 };
 
-	while (i < 8)
+	while (i < 10)
 	{
 		cub->keys[i].img = mlx_xpm_file_to_image(cub->mlx_s.mlx, \
 		key[i], &cub->keys[i].width, &cub->keys[i].height);

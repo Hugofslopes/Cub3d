@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:25:56 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/30 11:18:17 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/05/30 11:57:30 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void set_keys(t_cub *cub)
 	cub->keys_.w = 0;
 	cub->keys_.rl = 0;
 	cub->keys_.rr = 0;
+	cub->keys_.b = 0;
+	cub->keys_.nb = 0;
 }
 
 void	first_render(t_cub *cub)
@@ -106,6 +108,35 @@ void	check_put_rotation(t_cub *cub)
 	}
 }
 
+void draw_boot(t_cub *cub)
+{
+		int i;
+	if (!cub->keys_.b && !cub->keys_.nb)
+		return;
+	if (cub->keys_.b == 1)
+		i = 8;
+	else if (cub->keys_.nb == 1)
+		i=  9;
+
+
+	int start_x = 10; // 10 pixels from left edge
+	int start_y = (WHEIGHT / 2) - (cub->keys[i].height / 2); // vertically centered
+
+	for (int y = 0; y < cub->keys[i].height; y++)
+	{
+		for (int x = 0; x < cub->keys[i].width; x++)
+		{
+			char *src_pixel = cub->keys[i].addr + (y * cub->keys[i].line_len + x * (cub->keys[i].bytes_p_pixel / 8));
+			unsigned int color = *(unsigned int *)src_pixel;
+
+			// Skip transparency (you can adjust this based on your image format)
+			if ((color & 0x00FFFFFF) != 0)
+			{
+				put_pixel(cub, start_x + x, start_y + y, color);
+			}
+		}
+	}
+}
 
 
 int	build_next_frame(t_cub *cub)
@@ -127,6 +158,7 @@ int	build_next_frame(t_cub *cub)
 		check_put_key(cub);
 		check_put_rotation(cub);
 		draw_minimap(cub);
+		draw_boot(cub);
 		mlx_put_image_to_window(cub->mlx_s.mlx, cub->mlx_s.window, \
 			cub->img.img, 0, 0);
 		set_keys(cub);

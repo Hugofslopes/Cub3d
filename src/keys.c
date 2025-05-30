@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   keys.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/30 11:31:47 by hfilipe-          #+#    #+#             */
+/*   Updated: 2025/05/30 11:51:26 by hfilipe-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 int	mouse_close(t_cub *cub)
@@ -24,11 +36,13 @@ int can_zoom(t_cub *cub)
 
 void	i_speed(t_cub *cub)
 {
+	cub->keys_.b = 1;
 	cub->player.speed += 0.1;
 }
 
 void	d_speed(t_cub *cub)
 {
+	cub->keys_.nb = 1;
 	cub->player.speed -= 0.1;
 }
 

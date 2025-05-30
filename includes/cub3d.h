@@ -64,6 +64,8 @@ typedef struct s_keys
 	int	d;
 	int rl;
 	int rr;
+	int b;
+	int nb;
 }	t_keys;
 
 typedef struct s_game
@@ -88,7 +90,7 @@ typedef struct s_cub
 	t_player	player;
 	t_img_		img;
 	t_img_		texture[4];
-	t_img_		keys[8];
+	t_img_		keys[10];
 	t_keys		keys_;
 	char		**textures;
 	t_f_c		floor;
