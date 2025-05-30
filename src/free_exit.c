@@ -15,7 +15,5 @@ void	free_config(t_config *cfg)
 	free(cfg->so_path);
 	free(cfg->we_path);
 	free(cfg->ea_path);
-	free(cfg->floor_color_set);
-	free(cfg->ceiling_color_set);
 	ft_bzero(cfg, sizeof(*cfg));
 }

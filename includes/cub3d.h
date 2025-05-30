@@ -22,6 +22,13 @@ typedef struct s_player
 	int	rot_r;
 }	t_player;
 
+typedef struct s_rgb
+{
+	int	r;
+	int	g;
+	int	b;
+}	t_rgb;
+
 typedef struct s_config_flags
 {
 	int	no_set;
@@ -38,8 +45,10 @@ typedef struct s_config
 	char	*so_path;
 	char	*we_path;
 	char	*ea_path;
-	char	*floor_color_set;
-	char	*ceiling_color_set;
+	int 	floor_color_set;
+	int	ceiling_color_set;
+	t_rgb	floor_color;
+	t_rgb	ceiling_color;
 }	t_config;
 
 typedef struct s_cub
