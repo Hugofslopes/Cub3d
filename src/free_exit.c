@@ -6,11 +6,24 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:25:34 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/30 20:25:38 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/05/31 10:22:42 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+void	free_exit_keys(t_cub *cub)
+{
+	free(cub->map);
+	free(cub->textures);
+	exit(1);
+}
+
+void	free_exit_textures(t_cub *cub)
+{
+	free(cub->textures);
+	exit(1);
+}
 
 void	free_array(char **str)
 {

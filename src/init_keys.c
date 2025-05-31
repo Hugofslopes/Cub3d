@@ -6,11 +6,32 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:56:20 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/30 20:27:51 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/05/31 10:24:28 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+int	test_key_files(t_cub *cub, char **key)
+{
+	int		fd;
+	size_t	i;
+
+	i = 0;
+	while (i < 9)
+	{
+		fd = open(key[i], O_RDONLY);
+		if (fd == -1)
+		{
+			ft_printf_fd(2, "%s %s \n%s ", IFILE, key[i], CHECKFILE);
+			free_exit_keys(cub);
+		}
+		else
+			close (fd);
+		i++;
+	}
+	return (0);
+}
 
 void	init_keys(t_cub *cub, size_t i)
 {
@@ -26,10 +47,14 @@ void	init_keys(t_cub *cub, size_t i)
 	key[7] = "keys/lr";
 	key[8] = "keys/bo";
 	key[9] = "keys/nb";
+	test_key_files(cub, key);
 	while (i < 10)
 	{
 		cub->keys[i].img = mlx_xpm_file_to_image(cub->mlx_s.mlx, \
 		key[i], &cub->keys[i].width, &cub->keys[i].height);
+		if (cub->keys[i].img == NULL)
+			return (ft_printf_fd(2, "%s %s \n%s ", CIMAGE, key[i], CHECKFILE), \
+			free_exit_keys(cub));
 		cub->keys[i].addr = mlx_get_data_addr(cub->keys[i].img, \
 		&cub->keys[i].bytes_p_pixel, &cub->keys[i].line_len, \
 		&cub->keys[i].endian);

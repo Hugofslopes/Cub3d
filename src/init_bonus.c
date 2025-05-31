@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/30 16:53:43 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/31 10:30:22 by hfilipe-         ###   ########.fr       */
+/*   Created: 2025/05/31 10:29:54 by hfilipe-          #+#    #+#             */
+/*   Updated: 2025/05/31 10:29:54 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	init(t_cub *cub)
 	cub->map = test_array(cub);
 	init_player_angle(cub);
 	init_mlx(cub);
+	init_keys(cub, 0);
 	init_textures(cub, 0);
 	mlx_loop_hook(cub->mlx_s.mlx, build_next_frame, cub);
 	mlx_hook(cub->mlx_s.window, 2, 1L << 0, key_pressed, cub);

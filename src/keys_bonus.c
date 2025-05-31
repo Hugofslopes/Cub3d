@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys.c                                             :+:      :+:    :+:   */
+/*   keys_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/30 11:31:47 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/31 10:41:20 by hfilipe-         ###   ########.fr       */
+/*   Created: 2025/05/31 11:28:59 by hfilipe-          #+#    #+#             */
+/*   Updated: 2025/05/31 11:29:03 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,13 @@ int	key_pressed(int key, t_cub *cub)
 		rotate_left(cub);
 	else if (key == 65363)
 		rotate_right(cub);
+	else if (key == 'r' || key == 'R')
+		i_speed(cub);
+	else if (key == 't' || key == 't')
+		d_speed(cub);
+	else if (key == 65362)
+		zoom_in(cub);
+	else if (key == 65364)
+		zoom_out(cub);
 	return (0);
 }

@@ -164,6 +164,9 @@ typedef struct s_cub
 # define WHEIGHT 1080
 # define ERROR "Error\n"
 # define NOPERMISION "the map does not have permission"
+# define IFILE "Invalid file: "
+# define CIMAGE "Failed to creat new image: "
+# define CHECKFILE "Check if the file exists and is in the right folder!\n"
 # define PI 3.14159
 # define ROTATION_SPEED 45
 # define NUM_RAYS 1920
@@ -187,6 +190,8 @@ int		mouse_close(t_cub *cub);
 
 //				CLOSE PROGRAM
 void	free_exit(t_cub *cub, int value);
+void	free_exit_textures(t_cub *cub);
+void	free_exit_keys(t_cub *cub);
 
 //				GAME
 void	set_floor_ceiling(t_cub *cub);
@@ -212,20 +217,6 @@ void	rotate_left(t_cub *cub);
 double	deg_to_rad(double degrees);
 double	normalize_angle(double angle);
 void	set_wall_side(t_cub *cub, t_wall_direction *wall_side);
-
-//				mINI
-void	draw_minimap(t_cub *cub, int y, int x, unsigned int color);
-
-//				EXTRA IMAGE
-void	check_put_key(t_cub *cub, size_t i, int x, int y);
-void	check_put_rotation(t_cub *cub, size_t i, int x, int y);
-void	draw_boot(t_cub *cub, int i, int x, int y);
-void	init_keys(t_cub *cub, size_t i);
-
-//			EXTRA OPTIONS
-void	i_speed(t_cub *cub);
-void	d_speed(t_cub *cub);
-void	zoom_in(t_cub *cub);
-void	zoom_out(t_cub *cub);
+int		is_out_of_map(t_cub *cub, double x, double y);
 
 #endif

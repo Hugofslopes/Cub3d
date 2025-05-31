@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 19:10:39 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/30 20:57:32 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/05/31 09:45:11 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@ void	cast_ray2(t_cub *cub)
 	else
 	{
 		cub->rayc.stepx = 1;
-		cub->rayc.side_dstx = ((cub->rayc.mapx + 1) * \
-		cub->game.cellsize - cub->player.pos_x) / cub->game.cellsize * \
-		cub->rayc.deltadistx;
+		cub->rayc.side_dstx = ((cub->rayc.mapx + 1) * cub->game.cellsize - \
+		cub->player.pos_x) / cub->game.cellsize * cub->rayc.deltadistx;
 	}
 	if (cub->rayc.raydiry < 0)
 	{
@@ -50,9 +49,8 @@ void	cast_ray2(t_cub *cub)
 	else
 	{
 		cub->rayc.stepy = 1;
-		cub->rayc.side_dsty = ((cub->rayc.mapy + 1) * \
-		cub->game.cellsize - cub->player.pos_y) / cub->game.cellsize * \
-		cub->rayc.deltadisty;
+		cub->rayc.side_dsty = ((cub->rayc.mapy + 1) * cub->game.cellsize - \
+		cub->player.pos_y) / cub->game.cellsize * cub->rayc.deltadisty;
 	}
 }
 
