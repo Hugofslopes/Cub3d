@@ -6,11 +6,11 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:29:54 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/31 10:29:54 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/01 12:32:11 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 char	**test_array(t_cub *cub);
 
@@ -50,6 +50,7 @@ void	init(t_cub *cub)
 	cub->game.cellsize = 3;
 	cub->player.speed = 0.3;
 	cub->map = test_array(cub);
+	cub->keys_.arms = 0;
 	init_player_angle(cub);
 	init_mlx(cub);
 	init_keys(cub, 0);

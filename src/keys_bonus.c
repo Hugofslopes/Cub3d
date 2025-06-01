@@ -6,11 +6,11 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 11:28:59 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/31 11:29:03 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/01 11:12:19 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 int	mouse_close(t_cub *cub)
 {

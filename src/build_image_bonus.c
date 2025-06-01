@@ -6,11 +6,11 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:28:00 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/31 11:30:19 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/01 12:32:19 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 void	set_keys(t_cub *cub)
 {
@@ -33,6 +33,7 @@ void	first_render(t_cub *cub)
 	draw_c_f(cub, 0, 0);
 	ray(cub, 0);
 	render_frame(cub, 0, 0);
+	check_put_arms(cub, 0, 0, 0);
 	mlx_put_image_to_window(cub->mlx_s.mlx, cub->mlx_s.window, \
 	cub->img.img, 0, 0);
 }
@@ -56,6 +57,7 @@ int	build_next_frame(t_cub *cub)
 		check_put_rotation(cub, 0, 0, 0);
 		draw_minimap(cub, 0, 0, 0);
 		draw_boot(cub, 0, 0, 0);
+		check_put_arms(cub, 0, 0, 0);
 		mlx_put_image_to_window(cub->mlx_s.mlx, cub->mlx_s.window, \
 			cub->img.img, 0, 0);
 		set_keys(cub);

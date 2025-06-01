@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:33:20 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/31 11:30:10 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/01 12:35:16 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ void	move_back(t_cub *cub, double angle_rad)
 	int		dir_y;
 
 	cub->keys_.s = 1;
+	if (!cub->keys_.arms)
+		cub->keys_.arms = 1;
+	else
+		cub->keys_.arms = 0;
 	cub->moves.dx = cos(angle_rad) * cub->player.speed;
 	cub->moves.dy = sin(angle_rad) * cub->player.speed;
 	cub->moves.nx = cub->player.pos_x - cub->moves.dx;
@@ -52,6 +56,10 @@ void	move_right(t_cub *cub, double angle_rad)
 	int		dir_y;
 
 	cub->keys_.d = 1;
+	if (!cub->keys_.arms)
+		cub->keys_.arms = 1;
+	else
+		cub->keys_.arms = 0;
 	cub->moves.dx = cos(angle_rad) * cub->player.speed;
 	cub->moves.dy = sin(angle_rad) * cub->player.speed;
 	cub->moves.nx = cub->player.pos_x + cub->moves.dx;
@@ -70,6 +78,10 @@ void	move_left(t_cub *cub, double angle_rad)
 	int		dir_y;
 
 	cub->keys_.a = 1;
+	if (!cub->keys_.arms)
+		cub->keys_.arms = 1;
+	else
+		cub->keys_.arms = 0;
 	cub->moves.dx = cos(angle_rad) * cub->player.speed;
 	cub->moves.dy = sin(angle_rad) * cub->player.speed;
 	cub->moves.nx = cub->player.pos_x + cub->moves.dx;
@@ -88,6 +100,10 @@ void	move_forward(t_cub *cub, double angle_rad)
 	int		dir_y;
 
 	cub->keys_.w = 1;
+	if (!cub->keys_.arms)
+		cub->keys_.arms = 1;
+	else
+		cub->keys_.arms = 0;
 	cub->moves.dx = cos(angle_rad) * cub->player.speed;
 	cub->moves.dy = sin(angle_rad) * cub->player.speed;
 	cub->moves.nx = cub->player.pos_x + cub->moves.dx;

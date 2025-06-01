@@ -6,12 +6,16 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 18:27:00 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/31 11:29:24 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/01 11:13:48 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+/* Receives dir_x/y that form the direction vector
+Calculates the new position
+Cheks if it is inside of the map, an then if it is a wall
+Uses offset to block the player from getting to close to the wall */
 int	is_wall_move(t_cub *cub, int dir_x, int dir_y)
 {
 	double	offset;
@@ -20,7 +24,7 @@ int	is_wall_move(t_cub *cub, int dir_x, int dir_y)
 	int		check_mapx;
 	int		check_mapy;
 
-	offset = 0.15;
+	offset = 0.25;
 	check_x = (cub->moves.nx / cub->game.cellsize) + (dir_x * offset);
 	check_y = (cub->moves.ny / cub->game.cellsize) + (dir_y * offset);
 	check_mapx = (int)check_x;
@@ -33,6 +37,7 @@ int	is_wall_move(t_cub *cub, int dir_x, int dir_y)
 	return (0);
 }
 
+/*When i already have the full coordinates*/
 int	is_wall(t_cub *cub, int mapX, int mapY)
 {
 	if (mapX < 0 || mapX >= cub->game.map_with || \
@@ -44,6 +49,10 @@ int	is_wall(t_cub *cub, int mapX, int mapY)
 		return (0);
 }
 
+/* Receives x/y that form the direction vector
+Calculates the new position
+Cheks if it is inside of the map, an then if it is a wall
+Uses offset to block the player from getting to close to the wall */
 int	is_out_of_map(t_cub *cub, double x, double y)
 {
 	int	map_x;
