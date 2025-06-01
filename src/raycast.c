@@ -6,12 +6,16 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 19:10:39 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/31 09:45:11 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/01 22:21:29 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+/*Map square where the player currently is (integer grid position)
+Ray direction vector (unit vector)
+Length of ray from one x or y-side to the next x or y-side in the map grid
+*/
 void	init_raycast_val(t_cub *cub, double angle_deg)
 {
 	angle_deg = normalize_angle(angle_deg);
@@ -26,6 +30,8 @@ void	init_raycast_val(t_cub *cub, double angle_deg)
 	cub->rayc.side = -1;
 }
 
+/*Prepare the stepping direction and initial distances to the first 
+grid lines in X and Y.*/
 void	cast_ray2(t_cub *cub)
 {
 	if (cub->rayc.raydirx < 0)
@@ -54,6 +60,8 @@ void	cast_ray2(t_cub *cub)
 	}
 }
 
+/*DDA (Digital Differential Analyzer) stepping loop to find where 
+the ray hits a wall.*/
 void	dda_loop(t_cub *cub)
 {
 	while (!cub->rayc.hit)
@@ -75,6 +83,14 @@ void	dda_loop(t_cub *cub)
 	}
 }
 
+/*If the wall was hit from the X side (side == 0), use side_dstx.
+If from the Y side (side == 1), use side_dsty.
+Subtract one step to get the exact hit distance.
+
+fmod() to get the offset inside the current wall tile
+Divides by cellsize to normalize it to a 0.0–1.0 range
+If ray hit vertical wall (side==0), use Y coordinate
+If ray hit horizontal wall (side==1), use X coordinate*/
 double	cast_ray(t_cub *cub, double angle_deg, t_wall_direction *wall_side, \
 	int ray_index)
 {
@@ -98,6 +114,9 @@ double	cast_ray(t_cub *cub, double angle_deg, t_wall_direction *wall_side, \
 	return (cub->rayc.wall_dist);
 }
 
+/*Calculate the angle for the current ray
+get how far it traveled before hitting a wall
+get which direction of the wall was hit */
 void	ray(t_cub *cub, int i)
 {
 	double				start_angle;

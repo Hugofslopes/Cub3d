@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 17:43:37 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/31 11:29:51 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/01 21:18:14 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ void	get_direction(int dx, int dy, int *dir_x, int *dir_y)
 		*dir_y = 0;
 }
 
+/*Calculate how far the player would move in the X and Y directions,
+based on their facing angle and speed;
+Substract the distance from the position that it is
+On moving forward we add the distance */
 void	move_back(t_cub *cub, double angle_rad)
 {
 	int		dir_x;

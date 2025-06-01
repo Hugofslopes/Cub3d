@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:46:01 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/27 15:37:37 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/01 21:14:00 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	draw_c_f(t_cub *cub, size_t x, size_t y)
 	}
 }
 
+/* Each color has 8 bits so shift each color plus 8 bitsS*/
 int	getcolor(t_cub *cub, char c)
 {
 	int	color;
