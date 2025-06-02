@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: hfilipe- < hfilipe-@student.42porto.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 21:00:00 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/01 11:43:21 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/02 11:20:18 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ char	**test_array(t_cub *cub)
 
 	test = malloc(sizeof(char *) * 9);
 	test[0] = "11111111";
-	test[1] = "10000001";
+	test[1] = "10000101";
 	test[2] = "10100001";
 	test[3] = "10100001";
 	test[4] = "10100101";
-	test[5] = "10000101";
-	test[6] = "10000001";
+	test[5] = "10010101";
+	test[6] = "10100101";
 	test[7] = "11111111";
 	test[8] = NULL;
 	cub->player.start_position = 'S';

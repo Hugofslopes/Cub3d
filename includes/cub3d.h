@@ -136,9 +136,9 @@ typedef struct s_game
 	int					cellsize;
 	int					map_with;
 	int					map_height;
-	double				ray_values[1920];
-	float				hit_positions[1920];
-	t_wall_direction	wall_directions[1920];
+	double				ray_values[1600];
+	float				hit_positions[1600];
+	t_wall_direction	wall_directions[1600];
 }	t_game;	
 
 typedef struct s_cub
@@ -161,8 +161,8 @@ typedef struct s_cub
 }	t_cub;
 
 # define MAX_COLOR 0xFF
-# define WWIDTH 1920
-# define WHEIGHT 1080
+# define WWIDTH 1600
+# define WHEIGHT 900
 # define ERROR "Error\n"
 # define NOPERMISION "the map does not have permission"
 # define IFILE "Invalid file: "
@@ -170,7 +170,7 @@ typedef struct s_cub
 # define CHECKFILE "Check if the file exists and is in the right folder!\n"
 # define PI 3.14159
 # define ROTATION_SPEED 45
-# define NUM_RAYS 1920
+# define NUM_RAYS 1600
 # define FOV_ANGLE 90.0 
 # define FIXED_POINT 256
 # define HALF_FIXED 128
