@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 19:51:05 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/23 19:43:03 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/03 20:22:37 by pauldos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,12 @@ char	*get_next_line(int fd, char **strgs)
 		return (NULL);
 	i = 1;
 	i = copy_fd(fd, strgs);
-	if (!i)
+	if (!i || !strgs || *strgs == NULL || **strgs == '\0')
 		return (NULL);
-	if (!strgs)
-		return (NULL);
+	//if (!i)
+	//	return (NULL);
+	//if (!strgs)
+	//	return (NULL);
 	next_line = verify_newline(strgs);
 	return (next_line);
 }

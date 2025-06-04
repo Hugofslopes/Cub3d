@@ -225,26 +225,26 @@ int	append_map_line(t_cub *cub, char *line)
 	return (1);
 }
 
-// base function to parse the scene file
+//function to parce the scene file
 int	parse_scene_file(int *fd, t_cub *cub)
 {
 	char	*line;
 	char	*buffer;
 	int		map_started;
+	int		i;
 
 	buffer = NULL;
 	map_started = 0;
 	line = get_next_line(*fd, &buffer);
 	while (line)
 	{
-		if (is_line_empty(line))
+		i = 0;
+		while (line[i] == ' ' || line[i] == '\t')
+			i++;
+		if (line[i] == '\0' || line[i] == '\n')
 		{
 			free(line);
-			break ;
-		}
-		if (!map_started && is_line_empty(line))
-		{
-			free(line);
+			line = get_next_line(*fd, &buffer);
 			continue ;
 		}
 		if (!map_started && is_config_line(line))
@@ -256,14 +256,15 @@ int	parse_scene_file(int *fd, t_cub *cub)
 				return (1);
 			}
 		}
-		else
-		{
+		else if (!map_started)
 			map_started = 1;
+		if (map_started)
+		{
 			if (!append_map_line(cub, line))
 			{
-				if (buffer)
-					free(buffer);
-				return (free(line), 1);
+				free(line);
+				free(buffer);
+				return (1);
 			}
 		}
 		free(line);
