@@ -204,24 +204,88 @@ int	parse_config_line(char *line, t_config *cfg, t_config_flags *flags)
 	while (*line == ' ' || *line == '\t')
 		line++;
 	if (!ft_strncmp(line, "NO ", 3))
+	{
+		if (flags->parse_step != 0)
+			return (ft_printf_fd(2, "Error: 'NO' must come first in config\n"), 0);
+		flags->parse_step++;
 		return (handle_no(cfg, flags, line + 3));
+	}
 	if (!ft_strncmp(line, "SO ", 3))
+	{
+		if (flags->parse_step != 1)
+			return (ft_printf_fd(2, "Error: 'SO' must come second in config\n"), 0);
+		flags->parse_step++;
 		return (handle_so(cfg, flags, line + 3));
+	}
 	if (!ft_strncmp(line, "WE ", 3))
+	{
+		if (flags->parse_step != 2)
+			return (ft_printf_fd(2, "Error: 'WE' must come third in config\n"), 0);
+		flags->parse_step++;
 		return (handle_we(cfg, flags, line + 3));
+	}
 	if (!ft_strncmp(line, "EA ", 3))
+	{
+		if (flags->parse_step != 3)
+			return (ft_printf_fd(2, "Error: 'EA' must come forth in config\n"), 0);
+		flags->parse_step++;
 		return (handle_ea(cfg, flags, line + 3));
+	}
 	if (!ft_strncmp(line, "F ", 2))
-		return (handle_floor(cfg, flags, line + 2));
+	{
+		if (flags->parse_step != 4)
+			return (ft_printf_fd(2, "Error: 'F' must come fifth in config\n"), 0);
+		flags->parse_step++;
+		return (handle_floor(cfg, flags, line + 3));
+	}
 	if (!ft_strncmp(line, "C ", 2))
-		return (handle_ceiling(cfg, flags, line + 2));
+	{
+		if (flags->parse_step != 5)
+			return (ft_printf_fd(2, "Error: 'C' must come sixth in config\n"), 0);
+		flags->parse_step++;
+		return (handle_ceiling(cfg, flags, line + 3));
+	}
 	return (0);
+}
+
+char	**ft_realloc_2d(char **old, int new_size)
+{
+	char	**new_arr;
+	int		i;
+
+	new_arr = malloc(sizeof(char *) * (new_size + 1));
+	if (!new_arr)
+		return (NULL);
+
+	i = 0;
+	while (old && old[i] && i < new_size)
+	{
+		new_arr[i] = old[i]; // transfer ownership
+		i++;
+	}
+	new_arr[i] = NULL;
+
+	// If reallocating, free old array but not its content
+	if (old)
+		free(old);
+
+	return (new_arr);
 }
 
 int	append_map_line(t_cub *cub, char *line)
 {
-	(void)cub;
-	(void)line;
+	char	*trimmed = ft_strtrim(line, "\n");
+	if (!trimmed)
+		return (0);
+
+	char	**tmp = ft_realloc_2d(cub->map, cub->map_height + 1);
+	if (!tmp)
+		return (free(trimmed), 0);
+
+	tmp[cub->map_height] = trimmed;
+	tmp[cub->map_height + 1] = NULL;
+	cub->map = tmp;
+	cub->map_height++;
 	return (1);
 }
 

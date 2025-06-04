@@ -37,6 +37,7 @@ typedef struct s_config_flags
 	int	ea_set;
 	int	f_set;
 	int	c_set;
+	int	parse_step;
 } t_config_flags;
 
 typedef struct s_config
@@ -58,6 +59,7 @@ typedef struct s_cub
 	t_player	t_player;
 	t_config	config;
 	t_config_flags	flags;
+	int		map_height;
 }	t_cub;
 
 # define MAX_COLOR 0xFFFFFF
