@@ -38,6 +38,12 @@ typedef struct s_config_flags
 	int	f_set;
 	int	c_set;
 	int	parse_step;
+	int	parsed_no;
+	int	parsed_so;
+	int	parsed_we;
+	int	parsed_ea;
+	int	parsed_f;
+	int	parsed_c;
 } t_config_flags;
 
 typedef struct s_config
@@ -84,6 +90,7 @@ int		mouse_close(t_cub *cub);
 //				UTILS
 void	free_exit(t_cub *cub);
 void	free_config(t_config *cfg);
+void	free_map(char **map);
 
 //				PARSING_P
 int	open_scene_file(const char *filename, int *fd);

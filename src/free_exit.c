@@ -6,6 +6,7 @@ void	free_exit(t_cub *cub)
 	mlx_destroy_display(cub->mlx_s.mlx);
 	free(cub->mlx_s.mlx);
 	free_config(&cub->config);
+	free_map(cub->map);
 }
 
 void	free_config(t_config *cfg)

@@ -1,19 +1,24 @@
 
 NO src/north.xpm
 
+
+
 SO src/south.xpm
-F 225,50,255
+
 
 WE src/west.xpm
 
-
 EA src/east.xpm
-C 255,30,200
 
-111111
-100001
-1000N1
-100001
-111111
-1
-1111
+F 25,200,255
+
+
+C 100,30,251
+
+111111111x
+1000000001
+1000N1111x
+100001xxxx
+111111xxxx
+1xxxxxxxxx
+1111xxxxxx

@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 08:58:57 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/26 10:29:00 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/04 16:46:39 by pauldos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ size_t	select_formats(va_list args, char **format, int fd)
 		BASE_U, fd);
 	else if (**format == '%')
 		numb_char += ft_pf_putchar_fd('%', fd);
+	(*format)++;
 	return (numb_char);
 }
