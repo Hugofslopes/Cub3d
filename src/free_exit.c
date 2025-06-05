@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:25:34 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/05 14:00:14 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:49:24 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,18 @@ void	free_config(t_config *cfg)
 	ft_bzero(cfg, sizeof(*cfg));
 }
 
+void	free_map(char **map)
+{
+	int	i;
+
+	i = 0;
+	if (!map)
+		return ;
+	while (map[i])
+		free(map[i++]);
+	free(map);
+}
+
 void	free_exit(t_cub *cub, int value)
 {
 	size_t	i;
@@ -53,6 +65,7 @@ void	free_exit(t_cub *cub, int value)
 	while (i < 4)
 		mlx_destroy_image(cub->mlx_s.mlx, cub->texture[i++].img);
 	i = 0;
+	free_map(cub->map);
 	while (i < 10)
 		mlx_destroy_image(cub->mlx_s.mlx, cub->keys[i++].img);
 	mlx_destroy_window(cub->mlx_s.mlx, cub->mlx_s.window);
@@ -63,3 +76,4 @@ void	free_exit(t_cub *cub, int value)
 	exit(value);
 	free_config(&cub->config);
 }
+

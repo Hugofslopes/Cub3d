@@ -72,14 +72,14 @@ typedef struct s_player
 	float	speed;	
 }	t_player;
 
-typedef struct s_f_c
+typedef struct s_rgb //added PS
 {
 	int	r;
 	int	g;
 	int	b;
 }	t_rgb;
 
-typedef struct s_config_flags
+typedef struct s_config_flags //added PS
 {
 	int	no_set;
 	int	so_set;
@@ -87,9 +87,16 @@ typedef struct s_config_flags
 	int	ea_set;
 	int	f_set;
 	int	c_set;
+	int	parse_step;
+	int	parsed_no;
+	int	parsed_so;
+	int	parsed_we;
+	int	parsed_ea;
+	int	parsed_f;
+	int	parsed_c;
 } t_config_flags;
 
-typedef struct s_config
+typedef struct s_config //added PS
 {
 	char	*no_path;
 	char	*so_path;
@@ -181,8 +188,10 @@ typedef struct s_cub
 	t_render	rend;
 	t_ray		rayc;
 	t_player	t_player;
-	t_config	config;
-	t_config_flags	flags;
+	t_config	config; //added PS
+	t_config_flags	flags; //added PS
+	int		map_height; //added PS
+	int		map_width; //added PS
 }	t_cub;
 
 # define MAX_COLOR 0xFF
@@ -203,6 +212,9 @@ typedef struct s_cub
 # define READ_FILE_ERR "Failed opening file\n"
 # define CONF_ENTR_ERR "Missing or invalid config entries\n"
 # define TEXTURE "texture missing\n"
+# define EXTENSION_ERR "Scene file must have .cub extension\n" //added PS
+# define READ_FILE_ERR "Failed opening file\n" //added PS
+# define CONF_ENTR_ERR "Missing or invalid config entries\n" //added PS
 
 //				PARSE
 int		handle_input(int ac, char **av, t_cub *cub);
@@ -225,6 +237,7 @@ void	free_exit(t_cub *cub, int value);
 void	free_exit_textures(t_cub *cub);
 void	free_exit_keys(t_cub *cub);
 void	free_config(t_config *cfg);
+void	free_map(char **map); //added PS
 
 //				GAME
 void	set_floor_ceiling(t_cub *cub);

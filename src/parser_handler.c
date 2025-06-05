@@ -204,57 +204,281 @@ int	parse_config_line(char *line, t_config *cfg, t_config_flags *flags)
 	while (*line == ' ' || *line == '\t')
 		line++;
 	if (!ft_strncmp(line, "NO ", 3))
+	{
+		if (flags->parsed_no)
+			return (ft_printf_fd(2, "Error: duplicate 'NO' entry\n"), 0);
+		if (flags->parse_step != 0)
+			return (ft_printf_fd(2, "Error: 'NO' must come first in config\n"), 0);
+		flags->parsed_no = 1;
+		flags->parse_step++;
 		return (handle_no(cfg, flags, line + 3));
+	}
 	if (!ft_strncmp(line, "SO ", 3))
+	{
+		if (flags->parsed_so)
+			return (ft_printf_fd(2, "Error: duplicate 'SO' entry\n"), 0);
+		if (flags->parse_step != 1)
+			return (ft_printf_fd(2, "Error: 'SO' must come second in config\n"), 0);
+		flags->parsed_so = 1;
+		flags->parse_step++;
 		return (handle_so(cfg, flags, line + 3));
+	}
 	if (!ft_strncmp(line, "WE ", 3))
+	{
+		if (flags->parsed_we)
+			return (ft_printf_fd(2, "Error: duplicate 'WE' entry\n"), 0);
+		if (flags->parse_step != 2)
+			return (ft_printf_fd(2, "Error: 'WE' must come third in config\n"), 0);
+		flags->parsed_we = 1;
+		flags->parse_step++;
 		return (handle_we(cfg, flags, line + 3));
+	}
 	if (!ft_strncmp(line, "EA ", 3))
+	{
+		if (flags->parsed_ea)
+			return (ft_printf_fd(2, "Error: duplicate 'EA' entry\n"), 0);
+		if (flags->parse_step != 3)
+			return (ft_printf_fd(2, "Error: 'EA' must come fourth in config\n"), 0);
+		flags->parsed_ea = 1;
+		flags->parse_step++;
 		return (handle_ea(cfg, flags, line + 3));
+	}
 	if (!ft_strncmp(line, "F ", 2))
+	{
+		if (flags->parsed_f)
+			return (ft_printf_fd(2, "Error: duplicate 'F' entry\n"), 0);
+		if (flags->parse_step != 4)
+			return (ft_printf_fd(2, "Error: 'F' must come fifth in config\n"), 0);
+		flags->parsed_f = 1;
+		flags->parse_step++;
 		return (handle_floor(cfg, flags, line + 2));
+	}
 	if (!ft_strncmp(line, "C ", 2))
+	{
+		if (flags->parsed_c)
+			return (ft_printf_fd(2, "Error: duplicate 'C' entry\n"), 0);
+		if (flags->parse_step != 5)
+			return (ft_printf_fd(2, "Error: 'C' must come sixth in config\n"), 0);
+		flags->parsed_c = 1;
+		flags->parse_step++;
 		return (handle_ceiling(cfg, flags, line + 2));
+	}
 	return (0);
 }
 
-int	append_map_line(t_cub *cub, char *line)
+int	check_map_no_empty_lines(char **map)
 {
-	(void)cub;
-	(void)line;
+	int	i;
+	int	j;
+
+	i = 0;
+	while (map && map[i])
+	{
+		j = 0;
+		while (map[i][j] && (map[i][j] == ' ' || map[i][j] == '\t'))
+			j++;
+		if (map[i][j] == '\0')
+			return (0);
+		i++;
+	}
 	return (1);
 }
 
-// base function to parse the scene file
+//Function to allocate memory for each new line, and clean the old one.
+char	**ft_realloc_2d(char **old, int new_size)
+{
+	char	**new_arr;
+	int		i;
+
+	new_arr = malloc(sizeof(char *) * (new_size + 1));
+	if (!new_arr)
+		return (NULL);
+	i = 0;
+	while (old && old[i] && i < new_size)
+	{
+		new_arr[i] = ft_strdup(old[i]);
+		if (!new_arr[i])
+		{
+			while (--i >= 0)
+				free(new_arr[i]);
+			free(new_arr);
+			return (NULL);
+		}
+		i++;
+	}
+	new_arr[i] = NULL;
+	if (old)
+	{
+		i = 0;
+		while (old[i])
+			free(old[i++]);
+		free(old);
+	}
+	return (new_arr);
+}
+
+//Function to add new lines to the map
+int	append_map_line(t_cub *cub, char *line)
+{
+	char	*trimmed;
+	char	**tmp;
+
+	trimmed = ft_strtrim(line, "\t\n");
+	if (!trimmed)
+		return (0);
+	tmp = ft_realloc_2d(cub->map, cub->map_height + 1);
+	if (!tmp)
+		return (free(trimmed), 0);
+	tmp[cub->map_height] = trimmed;
+	tmp[cub->map_height + 1] = NULL;
+	cub->map = tmp;
+	cub->map_height++;
+	return (1);
+}
+
+//Function to check if all configs are OK
+int	all_config_flags_set(t_config_flags *flags, t_config *config)
+{
+	if (flags->no_set && flags->so_set && flags->we_set && flags->ea_set && flags->f_set && flags->c_set)
+	{
+		if (validate_config(config))
+			return (0);
+		return (1);
+	}
+	return (0);
+}
+
+//Function helper to print portions of the map
+void	print_map_part(t_cub *cub, int start, int end)
+{
+	int	i;
+
+	if (!cub->map || start < 0 || end >= cub->map_height || start > end)
+	{
+		ft_printf_fd(2, "Invalid map range: [%d, %d]\n", start, end);
+		return ;
+	}
+	i = start;
+	while (i <= end)
+	{
+		printf("%s\n", cub->map[i]);
+		i++;
+	}
+}
+
+//Function to make map copy to regular form XxY and **map points to the new normalized map
+int	normalize_map(t_cub *cub)
+{
+	int		i;
+	int		j;
+	int		len;
+	int		max_width;
+	char	**normalized;
+
+	i = 0;
+	max_width = 0;
+	while (i < cub->map_height)
+	{
+		len = ft_strlen(cub->map[i]);
+		if (len > max_width)
+			max_width = len;
+		i++;
+	}
+
+	normalized = malloc(sizeof(char *) * (cub->map_height + 1));
+	if (!normalized)
+		return (ft_printf_fd(2, "Error normalize malloc\n", 1));
+	i = 0;
+	while (i < cub->map_height)
+	{
+		len = ft_strlen(cub->map[i]);
+		normalized[i] = malloc(max_width + 1);
+		if (!normalized[i])
+		{
+			while (--i >= 0)
+				free(normalized[i]);
+			free(normalized);
+			return (ft_printf_fd(2, "Error normalize malloc\n"), 1);
+		}
+		j = 0;
+		while (j < max_width)
+		{
+			if (j < len)
+			{
+				if (cub->map[i][j] == ' ')
+					normalized[i][j] = 'X';
+				else
+					normalized[i][j] = cub->map[i][j];
+			}
+			else
+				normalized[i][j] = 'X';
+			j++;
+		}
+		normalized[i][max_width] = '\0';
+		i++;
+	}
+	normalized[cub->map_height] = NULL;
+	free_map(cub->map);
+	cub->map = normalized;
+	cub->map_width = max_width;
+	return (0);
+}
+
+/*int	parse_map(t_cub *cub)
+{
+	if (normalize_map(cub))
+		return (1);
+	if (validate_map_chars(cub))
+		return (1);
+	if (find_player_position(cub))
+		return (1);
+	if (check_map_closed(cub))
+		return (1);
+	return (0);
+}*/
+
+//function to parce the scene file PS
 int	parse_scene_file(int *fd, t_cub *cub)
 {
 	char	*line;
 	char	*buffer;
 	int		map_started;
+	int		i;
 
 	buffer = NULL;
 	map_started = 0;
 	line = get_next_line(*fd, &buffer);
 	while (line)
 	{
-		if (!map_started && is_line_empty(line))
+		i = 0;
+		while (line[i] == ' ' || line[i] == '\t')
+			i++;
+		if (!map_started && (line[i] == '\0' || line[i] == '\n'))
 		{
 			free(line);
 			line = get_next_line(*fd, &buffer);
-			while (is_line_empty(line))
+			continue ;
+		}
+		if (!map_started)
+		{
+			if (is_config_line(line))
 			{
-				line = get_next_line(*fd, &buffer);
-				free(line);
+				if (!parse_config_line(line, &cub->config, &cub->flags))
+				{
+					free(line);
+					free(buffer);
+					return (1);
+				}
 			}
-		}
-		if (is_line_empty(line) && map_started)
-		{
-			free(line);
-			break ;
-		}
-		if (!map_started && is_config_line(line))
-		{
-			if (!parse_config_line(line, &cub->config, &cub->flags))
+			else if (validate_config(&cub->config))
+			{
+				free(line);
+				free(buffer);
+				return (1);
+			}
+			else if (all_config_flags_set(&cub->flags, &cub->config))
+				map_started = 1;
+			else
 			{
 				free(line);
 				free(buffer);
@@ -262,17 +486,13 @@ int	parse_scene_file(int *fd, t_cub *cub)
 				return (1);
 			}
 		}
-		else
+		if (map_started)
 		{
-			map_started = 1;
 			if (!append_map_line(cub, line))
 			{
-				if (buffer)
-				{
-					free(buffer);
-					buffer = NULL;
-				}
-				return (free(line), 1);
+				free(line);
+				free(buffer);
+				return (1);
 			}
 		}
 		free(line);
@@ -280,7 +500,18 @@ int	parse_scene_file(int *fd, t_cub *cub)
 		line = get_next_line(*fd, &buffer);
 	}
 	free(buffer);
-	if (validate_config(&cub->config))
+	if (!check_map_no_empty_lines(cub->map))
+	{
+		ft_printf_fd(2, "There is an empty line at the map\n");
+		free_map(cub->map);
+		cub->map = NULL;
 		return (1);
+	}
+	printf("ORIGINAL MAP\n------------\n");
+	print_map_part(cub, 0, 6);
+	if (normalize_map(cub))
+		return (1);
+	printf("\nNORMALIZED MAP\n--------------\n");
+	print_map_part(cub, 0, 6);
 	return (0);
 }
