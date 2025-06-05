@@ -11,10 +11,21 @@ void	free_exit(t_cub *cub)
 
 void	free_config(t_config *cfg)
 {
-	//(void)cfg;
 	free(cfg->no_path);
 	free(cfg->so_path);
 	free(cfg->we_path);
 	free(cfg->ea_path);
 	ft_bzero(cfg, sizeof(*cfg));
+}
+
+void	free_map(char **map)
+{
+	int	i;
+
+	i = 0;
+	if (!map)
+		return ;
+	while (map[i])
+		free(map[i++]);
+	free(map);
 }

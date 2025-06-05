@@ -1,11 +1,11 @@
 
-NO src/north.xpm
 
+NO src/north.xpm
 
 SO src/south.xpm
 WE src/west.xpm
 EA src/east.xpm
-F 200,200,255
+F 120,200,255
 C 190,30,251
 
 111111111x

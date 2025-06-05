@@ -266,7 +266,7 @@ int	parse_config_line(char *line, t_config *cfg, t_config_flags *flags)
 	return (0);
 }
 
-int check_map_no_empty_lines(char **map)
+int	check_map_no_empty_lines(char **map)
 {
 	int	i;
 	int	j;
@@ -284,17 +284,7 @@ int check_map_no_empty_lines(char **map)
 	return (1);
 }
 
-void    free_map(char **map)
-{
-    int i = 0;
-    if (!map)
-        return;
-    while (map[i])
-        free(map[i++]);
-    free(map);
-}
-
-char    **ft_realloc_2d(char **old, int new_size)
+char	**ft_realloc_2d(char **old, int new_size)
 {
 	char	**new_arr;
 	int		i;
@@ -329,14 +319,14 @@ char    **ft_realloc_2d(char **old, int new_size)
 int	append_map_line(t_cub *cub, char *line)
 {
 	char	*trimmed;
-	
+	char	**tmp;
+
 	trimmed = ft_strtrim(line, "\t\n");
 	if (!trimmed)
 		return (0);
-	char	**tmp = ft_realloc_2d(cub->map, cub->map_height + 1);
+	tmp = ft_realloc_2d(cub->map, cub->map_height + 1);
 	if (!tmp)
 		return (free(trimmed), 0);
-
 	tmp[cub->map_height] = trimmed;
 	tmp[cub->map_height + 1] = NULL;
 	cub->map = tmp;
@@ -346,23 +336,19 @@ int	append_map_line(t_cub *cub, char *line)
 
 int	all_config_flags_set(t_config_flags *flags, t_config *config)
 {
-	if (flags->no_set &&
-		flags->so_set &&
-		flags->we_set &&
-		flags->ea_set &&
-		flags->f_set &&
-		flags->c_set)
+	if (flags->no_set && flags->so_set && flags->we_set && flags->ea_set && flags->f_set && flags->c_set)
 	{
 		if (validate_config(config))
-			return 0;
-		return 1;
+			return (0);
+		return (1);
 	}
-	return 0;
+	return (0);
 }
 
 void	print_map_part(t_cub *cub, int start, int end)
 {
 	int	i;
+
 	if (!cub->map || start < 0 || end >= cub->map_height || start > end)
 	{
 		ft_printf_fd(2, "Invalid map range: [%d, %d]\n", start, end);
@@ -376,7 +362,11 @@ void	print_map_part(t_cub *cub, int start, int end)
 	}
 }
 
-//function to parce the scene file
+//Function to make map copy to regular form XxY
+
+
+
+//function to parce the scene file PS
 int	parse_scene_file(int *fd, t_cub *cub)
 {
 	char	*line;
@@ -390,7 +380,6 @@ int	parse_scene_file(int *fd, t_cub *cub)
 	while (line)
 	{
 		i = 0;
-		//ft_printf_fd(2, "%s", line);
 		while (line[i] == ' ' || line[i] == '\t')
 			i++;
 		if (!map_started && (line[i] == '\0' || line[i] == '\n'))
