@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   test_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfilipe- < hfilipe-@student.42porto.com    +#+  +:+       +#+        */
+/*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 21:00:00 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/04 10:07:11 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:53:17 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	test_array2(t_cub *cub)
+/* void	test_array2(t_cub *cub)
 {
 	cub->ceiling.r = 20;
 	cub->ceiling.g = 2;
@@ -50,3 +50,4 @@ char	**test_array(t_cub *cub)
 	test_array2(cub);
 	return (test);
 }
+ */

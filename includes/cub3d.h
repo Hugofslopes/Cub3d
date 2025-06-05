@@ -179,7 +179,7 @@ typedef struct s_cub
 	t_img_		texture[4];
 	t_img_		keys[12];
 	t_keys		keys_;
-	char		**textures;
+	char		*textures[4];
 	t_rgb		floor;
 	t_rgb		ceiling;
 	t_game		game;
