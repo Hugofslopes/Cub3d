@@ -424,6 +424,19 @@ int	normalize_map(t_cub *cub)
 	return (0);
 }
 
+/*int	parse_map(t_cub *cub)
+{
+	if (normalize_map(cub))
+		return (1);
+	if (validate_map_chars(cub))
+		return (1);
+	if (find_player_position(cub))
+		return (1);
+	if (check_map_closed(cub))
+		return (1);
+	return (0);
+}*/
+
 //function to parce the scene file PS
 int	parse_scene_file(int *fd, t_cub *cub)
 {
