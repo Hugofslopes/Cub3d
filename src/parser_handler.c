@@ -284,6 +284,7 @@ int	check_map_no_empty_lines(char **map)
 	return (1);
 }
 
+//Function to allocate memory for each new line, and clean the old one.
 char	**ft_realloc_2d(char **old, int new_size)
 {
 	char	**new_arr;
@@ -316,6 +317,7 @@ char	**ft_realloc_2d(char **old, int new_size)
 	return (new_arr);
 }
 
+//Function to add new lines to the map
 int	append_map_line(t_cub *cub, char *line)
 {
 	char	*trimmed;
@@ -334,6 +336,7 @@ int	append_map_line(t_cub *cub, char *line)
 	return (1);
 }
 
+//Function to check if all configs are OK
 int	all_config_flags_set(t_config_flags *flags, t_config *config)
 {
 	if (flags->no_set && flags->so_set && flags->we_set && flags->ea_set && flags->f_set && flags->c_set)
@@ -345,6 +348,7 @@ int	all_config_flags_set(t_config_flags *flags, t_config *config)
 	return (0);
 }
 
+//Function helper to print portions of the map
 void	print_map_part(t_cub *cub, int start, int end)
 {
 	int	i;
@@ -362,9 +366,63 @@ void	print_map_part(t_cub *cub, int start, int end)
 	}
 }
 
-//Function to make map copy to regular form XxY
+//Function to make map copy to regular form XxY and **map points to the new normalized map
+int	normalize_map(t_cub *cub)
+{
+	int		i;
+	int		j;
+	int		len;
+	int		max_width;
+	char	**normalized;
 
+	i = 0;
+	max_width = 0;
+	while (i < cub->map_height)
+	{
+		len = ft_strlen(cub->map[i]);
+		if (len > max_width)
+			max_width = len;
+		i++;
+	}
 
+	normalized = malloc(sizeof(char *) * (cub->map_height + 1));
+	if (!normalized)
+		return (ft_printf_fd(2, "Error normalize malloc\n", 1));
+	i = 0;
+	while (i < cub->map_height)
+	{
+		len = ft_strlen(cub->map[i]);
+		normalized[i] = malloc(max_width + 1);
+		if (!normalized[i])
+		{
+			while (--i >= 0)
+				free(normalized[i]);
+			free(normalized);
+			return (ft_printf_fd(2, "Error normalize malloc\n"), 1);
+		}
+		j = 0;
+		while (j < max_width)
+		{
+			if (j < len)
+			{
+				if (cub->map[i][j] == ' ')
+					normalized[i][j] = 'X';
+				else
+					normalized[i][j] = cub->map[i][j];
+			}
+			else
+				normalized[i][j] = 'X';
+			j++;
+		}
+		normalized[i][max_width] = '\0';
+		i++;
+	}
+	normalized[cub->map_height] = NULL;
+	free_map(cub->map);
+	cub->map = normalized;
+	cub->map_width = max_width;
+	return (0);
+}
 
 //function to parce the scene file PS
 int	parse_scene_file(int *fd, t_cub *cub)
@@ -434,6 +492,11 @@ int	parse_scene_file(int *fd, t_cub *cub)
 		cub->map = NULL;
 		return (1);
 	}
+	printf("ORIGINAL MAP\n------------\n");
+	print_map_part(cub, 0, 6);
+	if (normalize_map(cub))
+		return (1);
+	printf("\nNORMALIZED MAP\n--------------\n");
 	print_map_part(cub, 0, 6);
 	return (0);
 }

@@ -22,14 +22,14 @@ typedef struct s_player
 	int	rot_r;
 }	t_player;
 
-typedef struct s_rgb
+typedef struct s_rgb //added PS
 {
 	int	r;
 	int	g;
 	int	b;
 }	t_rgb;
 
-typedef struct s_config_flags
+typedef struct s_config_flags //added PS
 {
 	int	no_set;
 	int	so_set;
@@ -46,7 +46,7 @@ typedef struct s_config_flags
 	int	parsed_c;
 } t_config_flags;
 
-typedef struct s_config
+typedef struct s_config //added PS
 {
 	char	*no_path;
 	char	*so_path;
@@ -63,9 +63,10 @@ typedef struct s_cub
 	char		**map;
 	t_mlx		mlx_s;
 	t_player	t_player;
-	t_config	config;
-	t_config_flags	flags;
-	int		map_height;
+	t_config	config; //added PS
+	t_config_flags	flags; //added PS
+	int		map_height; //added PS
+	int		map_width; //added PS
 }	t_cub;
 
 # define MAX_COLOR 0xFFFFFF
@@ -73,9 +74,9 @@ typedef struct s_cub
 # define WHEIGHT 1080
 # define ERROF "Error\n"
 # define NOPERMISION "the map does not have permission"
-# define EXTENSION_ERR "Scene file must have .cub extension\n"
-# define READ_FILE_ERR "Failed opening file\n"
-# define CONF_ENTR_ERR "Missing or invalid config entries\n"
+# define EXTENSION_ERR "Scene file must have .cub extension\n" //added PS
+# define READ_FILE_ERR "Failed opening file\n" //added PS
+# define CONF_ENTR_ERR "Missing or invalid config entries\n" //added PS
 
 //				PARSE
 int		handle_input(int ac, char **av, t_cub *cub);
@@ -89,10 +90,10 @@ int		mouse_close(t_cub *cub);
 
 //				UTILS
 void	free_exit(t_cub *cub);
-void	free_config(t_config *cfg);
-void	free_map(char **map);
+void	free_config(t_config *cfg); //added PS
+void	free_map(char **map); //added PS
 
-//				PARSING_P
+//				PARSING_PAULO
 int	open_scene_file(const char *filename, int *fd);
 int	parse_scene_file(int *fd, t_cub *cub);
 #endif
