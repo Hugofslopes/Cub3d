@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 09:55:20 by hugo-lopes        #+#    #+#             */
-/*   Updated: 2025/05/24 08:54:09 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/05/28 10:24:15 by pauldos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		ft_isdigit(int c);
 int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);
-size_t	ft_strlen(const char *str);
+size_t	ft_strlen_libft(const char *str);
 void	*ft_memset(void *ptr, int c, size_t n);
 void	ft_bzero(void *ptr, size_t n);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
@@ -45,7 +45,7 @@ void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
 int		ft_atoi(const char *str);
-void	*ft_calloc(size_t nmemb, size_t size);
+void	*ft_calloc_libft(size_t nmemb, size_t size);
 char	*ft_strdup(char *src);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);

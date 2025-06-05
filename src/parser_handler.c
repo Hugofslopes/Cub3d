@@ -1,0 +1,286 @@
+#include "../includes/cub3d.h"
+
+// function to check whether it is a file with .cub extension
+int	check_cub_extension(const char *file)
+{
+	size_t	len;
+
+	len = ft_strlen(file);
+	if (len <= 4)
+		return (0);
+	if (ft_strncmp(file + len - 4, ".cub", 4))
+		return (0);
+	return (1);
+}
+
+// function to open .cub file
+int	open_scene_file(const char *filename, int *fd)
+{
+	if (!check_cub_extension(filename))
+		return (ft_printf_fd(2, "%s %s", ERROR, EXTENSION_ERR));
+	*fd = open(filename, O_RDONLY);
+	if (*fd < 0)
+		return (ft_printf_fd(2, "%s%s", ERROR, READ_FILE_ERR), 1);
+	return (0);
+}
+
+// function to check if it is space.
+int	is_space_char(char c)
+{
+	return (c == ' ' || (c >= 9 && c <= 13));
+}
+
+static int	parse_rgb(char *raw, t_rgb *color)
+{
+	char	*ptr;
+	int		vals[3];
+	int		i;
+
+	ptr = raw;
+	i = 0;
+	while (i < 3)
+	{
+		while (is_space_char(*ptr))
+			ptr++;
+		if (!ft_isdigit(*ptr))
+			return (0);
+		vals[i] = ft_atoi(ptr);
+		if (vals[i] < 0 || vals[i] > 255)
+			return (0);
+		while (ft_isdigit(*ptr))
+			ptr++;
+		while (is_space_char(*ptr))
+			ptr++;
+		if (i < 2 && *ptr++ != ',')
+			return (0);
+		i++;
+	}
+	while (is_space_char(*ptr))
+		ptr++;
+	if (*ptr != '\0')
+		return (0);
+	color->r = vals[0];
+	color->g = vals[1];
+	color->b = vals[2];
+	return (1);
+}
+
+// function to check if a line is empty
+int	is_line_empty(char *line)
+{
+	int	i;
+
+	i = 0;
+	if (!line)
+		return (1);
+	while (line[i])
+	{
+		if (!is_space_char(line[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+// function to check the expression at config file exists
+int	is_config_line(char *line)
+{
+	while (*line == ' ' || *line == '\t')
+		line++;
+	if (!ft_strncmp(line, "NO ", 3))
+		return (1);
+	if (!ft_strncmp(line, "SO ", 3))
+		return (1);
+	if (!ft_strncmp(line, "EA ", 3))
+		return (1);
+	if (!ft_strncmp(line, "WE ", 3))
+		return (1);
+	if (!ft_strncmp(line, "F ", 2))
+		return (1);
+	if (!ft_strncmp(line, "C ", 2))
+		return (1);
+	return (0);
+}
+
+static int	check_texture(const char *path, const char *name)
+{
+	if (!path)
+		return (ft_printf_fd(2, "%s%s %s", ERROR, name, TEXTURE), 1);
+	if (access(path, F_OK) == -1)
+		return (ft_printf_fd(2, "%s%s texture file not found\n", ERROR, name), 1);
+	return (0);
+}
+
+int	validate_config(t_config *cfg)
+{
+	if (check_texture(cfg->no_path, "NO "))
+		return (1);
+	if (check_texture(cfg->so_path, "SO "))
+		return (1);
+	if (check_texture(cfg->we_path, "WE "))
+		return (1);
+	if (check_texture(cfg->ea_path, "EA "))
+		return (1);
+	if (!cfg->floor_color_set)
+		return (ft_printf_fd(2, "%sfloor color not set\n", ERROR), 1);
+	if (!cfg->ceiling_color_set)
+		return (ft_printf_fd(2, "%sCeiling color not set\n", ERROR), 1);
+	return (0);
+}
+
+int	set_texture_path(char **dst, char *raw)
+{
+	char	*trimmed;
+
+	if (!raw)
+		return (0);
+	trimmed = ft_strtrim(raw, " \t\n");
+	if (!trimmed)
+		return (0);
+	free(*dst);
+	*dst = ft_strdup(trimmed);
+	free(trimmed);
+	if (!*dst)
+		return (0);
+	return (1);
+}
+
+static int	handle_no(t_config *cfg, t_config_flags *flags, char *value)
+{
+	if (flags->no_set)
+		return (ft_printf_fd(2, "Error: Duplicate NO texture\n"), 0);
+	flags->no_set = 1;
+	return (set_texture_path(&cfg->no_path, value));
+}
+
+static int	handle_so(t_config *cfg, t_config_flags *flags, char *value)
+{
+	if (flags->so_set)
+		return (ft_printf_fd(2, "Error: Duplicate SO texture\n"), 0);
+	flags->so_set = 1;
+	return (set_texture_path(&cfg->so_path, value));
+}
+
+static int	handle_we(t_config *cfg, t_config_flags *flags, char *value)
+{
+	if (flags->we_set)
+		return (ft_printf_fd(2, "Error: Duplicate WE texture\n"), 0);
+	flags->we_set = 1;
+	return (set_texture_path(&cfg->we_path, value));
+}
+
+static int	handle_ea(t_config *cfg, t_config_flags *flags, char *value)
+{
+	if (flags->ea_set)
+		return (ft_printf_fd(2, "Error: Duplicate EA texture\n"), 0);
+	flags->ea_set = 1;
+	return (set_texture_path(&cfg->ea_path, value));
+}
+
+static int	handle_floor(t_config *cfg, t_config_flags *flags, char *value)
+{
+	if (flags->f_set)
+		return (ft_printf_fd(2, "Error: Duplicate floor color\n"), 0);
+	if (!parse_rgb(value, &cfg->floor_color))
+		return (ft_printf_fd(2, "Error: Invalid floor RGB value\n"), 0);
+	cfg->floor_color_set = 1;
+	flags->f_set = 1;
+	return (1);
+}
+
+static int	handle_ceiling(t_config *cfg, t_config_flags *flags, char *value)
+{
+	if (flags->c_set)
+		return (ft_printf_fd(2, "Error: Duplicate ceiling color\n"), 0);
+	if (!parse_rgb(value, &cfg->ceiling_color))
+		return (ft_printf_fd(2, "Error: Invalid ceiling RGB value\n"), 0);
+	cfg->ceiling_color_set = 1;
+	flags->c_set = 1;
+	return (1);
+}
+
+int	parse_config_line(char *line, t_config *cfg, t_config_flags *flags)
+{
+	while (*line == ' ' || *line == '\t')
+		line++;
+	if (!ft_strncmp(line, "NO ", 3))
+		return (handle_no(cfg, flags, line + 3));
+	if (!ft_strncmp(line, "SO ", 3))
+		return (handle_so(cfg, flags, line + 3));
+	if (!ft_strncmp(line, "WE ", 3))
+		return (handle_we(cfg, flags, line + 3));
+	if (!ft_strncmp(line, "EA ", 3))
+		return (handle_ea(cfg, flags, line + 3));
+	if (!ft_strncmp(line, "F ", 2))
+		return (handle_floor(cfg, flags, line + 2));
+	if (!ft_strncmp(line, "C ", 2))
+		return (handle_ceiling(cfg, flags, line + 2));
+	return (0);
+}
+
+int	append_map_line(t_cub *cub, char *line)
+{
+	(void)cub;
+	(void)line;
+	return (1);
+}
+
+// base function to parse the scene file
+int	parse_scene_file(int *fd, t_cub *cub)
+{
+	char	*line;
+	char	*buffer;
+	int		map_started;
+
+	buffer = NULL;
+	map_started = 0;
+	line = get_next_line(*fd, &buffer);
+	while (line)
+	{
+		if (!map_started && is_line_empty(line))
+		{
+			free(line);
+			line = get_next_line(*fd, &buffer);
+			while (is_line_empty(line))
+			{
+				line = get_next_line(*fd, &buffer);
+				free(line);
+			}
+		}
+		if (is_line_empty(line) && map_started)
+		{
+			free(line);
+			break ;
+		}
+		if (!map_started && is_config_line(line))
+		{
+			if (!parse_config_line(line, &cub->config, &cub->flags))
+			{
+				free(line);
+				free(buffer);
+				buffer = NULL;
+				return (1);
+			}
+		}
+		else
+		{
+			map_started = 1;
+			if (!append_map_line(cub, line))
+			{
+				if (buffer)
+				{
+					free(buffer);
+					buffer = NULL;
+				}
+				return (free(line), 1);
+			}
+		}
+		free(line);
+		line = NULL;
+		line = get_next_line(*fd, &buffer);
+	}
+	free(buffer);
+	if (validate_config(&cub->config))
+		return (1);
+	return (0);
+}

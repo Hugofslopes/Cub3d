@@ -77,7 +77,29 @@ typedef struct s_f_c
 	int	r;
 	int	g;
 	int	b;
-}	t_f_c;
+}	t_rgb;
+
+typedef struct s_config_flags
+{
+	int	no_set;
+	int	so_set;
+	int	we_set;
+	int	ea_set;
+	int	f_set;
+	int	c_set;
+} t_config_flags;
+
+typedef struct s_config
+{
+	char	*no_path;
+	char	*so_path;
+	char	*we_path;
+	char	*ea_path;
+	int 	floor_color_set;
+	int		ceiling_color_set;
+	t_rgb	floor_color;
+	t_rgb	ceiling_color;
+}	t_config;
 
 typedef struct s_keys
 {
@@ -151,13 +173,16 @@ typedef struct s_cub
 	t_img_		keys[12];
 	t_keys		keys_;
 	char		**textures;
-	t_f_c		floor;
-	t_f_c		ceiling;
+	t_rgb		floor;
+	t_rgb		ceiling;
 	t_game		game;
 	t_mini		mini;
 	t_move		moves;
 	t_render	rend;
 	t_ray		rayc;
+	t_player	t_player;
+	t_config	config;
+	t_config_flags	flags;
 }	t_cub;
 
 # define MAX_COLOR 0xFF
@@ -174,9 +199,15 @@ typedef struct s_cub
 # define FOV_ANGLE 90.0 
 # define FIXED_POINT 256
 # define HALF_FIXED 128
+# define EXTENSION_ERR "Scene file must have .cub extension\n"
+# define READ_FILE_ERR "Failed opening file\n"
+# define CONF_ENTR_ERR "Missing or invalid config entries\n"
+# define TEXTURE "texture missing\n"
 
 //				PARSE
 int		handle_input(int ac, char **av, t_cub *cub);
+int		open_scene_file(const char *filename, int *fd);
+int		parse_scene_file(int *fd, t_cub *cub);
 
 //				INIT
 void	init(t_cub *cub);
@@ -193,6 +224,7 @@ int		mouse_close(t_cub *cub);
 void	free_exit(t_cub *cub, int value);
 void	free_exit_textures(t_cub *cub);
 void	free_exit_keys(t_cub *cub);
+void	free_config(t_config *cfg);
 
 //				GAME
 void	set_floor_ceiling(t_cub *cub);
@@ -219,5 +251,4 @@ double	deg_to_rad(double degrees);
 double	normalize_angle(double angle);
 void	set_wall_side(t_cub *cub, t_wall_direction *wall_side);
 int		is_out_of_map(t_cub *cub, double x, double y);
-
 #endif

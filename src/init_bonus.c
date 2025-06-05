@@ -6,13 +6,31 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:29:54 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/01 12:32:11 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:57:01 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 
-char	**test_array(t_cub *cub);
+void	init_player_pos(t_cub *cub, size_t i, size_t j)
+{
+	while (cub->map[i][j])
+	{
+		while (cub->map[i][j])
+		{
+			if (cub->map[i][j] == 'N' || cub->map[i][j] == 'S' 
+			|| cub->map[i][j] == 'O' || cub->map[i][j] == 'E')
+				break ;
+			j++;
+		}
+		i++;
+	}
+	if (cub->map[i][j])
+	{
+		cub->player.pos_x = j;
+		cub->player.pos_y = i;
+	}
+}
 
 void	init_player_angle(t_cub *cub)
 {
@@ -26,8 +44,17 @@ void	init_player_angle(t_cub *cub)
 		cub->player.angle = 180.0;
 }
 
+void	get_textures(t_cub *cub)
+{
+	cub->textures[0] = cub->config.no_path;
+	cub->textures[1] = cub->config.so_path;
+	cub->textures[2] = cub->config.we_path;
+	cub->textures[3] = cub->config.ea_path;
+}
+
 void	init_textures(t_cub *cub, size_t i)
 {
+	get_textures(cub);
 	while (i < 4)
 	{
 		cub->texture[i].img = mlx_xpm_file_to_image(cub->mlx_s.mlx, \
@@ -49,7 +76,8 @@ void	init(t_cub *cub)
 	cub->game.gamestarted = 0;
 	cub->game.cellsize = 3;
 	cub->player.speed = 0.3;
-	cub->map = test_array(cub);
+	init_player_pos(cub, 0 , 0);
+	//cub->map = test_array(cub);
 	cub->keys_.arms = 0;
 	init_player_angle(cub);
 	init_mlx(cub);

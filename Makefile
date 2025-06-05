@@ -5,7 +5,7 @@ SRC_DIR = src
 OBJ_DIR = obj
 SRC = main.c handle_input.c init_mlx.c free_exit.c keys.c draw.c floor_ceeling.c \
 raycast.c render.c player_rotates.c player_moves.c init.c build_image.c \
-check_walls.c raycast_utils.c\
+check_walls.c raycast_utils.c  parser_handler.c\
 test_map.c
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))

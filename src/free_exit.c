@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:25:34 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/05/31 10:22:42 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:00:14 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,15 @@ void	free_array(char **str)
 	free(str);
 }
 
+void	free_config(t_config *cfg)
+{
+	free(cfg->no_path);
+	free(cfg->so_path);
+	free(cfg->we_path);
+	free(cfg->ea_path);
+	ft_bzero(cfg, sizeof(*cfg));
+}
+
 void	free_exit(t_cub *cub, int value)
 {
 	size_t	i;
@@ -52,4 +61,5 @@ void	free_exit(t_cub *cub, int value)
 	free(cub->map);
 	free(cub->textures);
 	exit(value);
+	free_config(&cub->config);
 }
