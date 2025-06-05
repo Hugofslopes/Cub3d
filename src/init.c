@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:53:43 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/05 20:25:20 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/05 22:27:38 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	init_player_pos(t_cub *cub, size_t i, size_t j)
 		cub->player.pos_x = j;
 		cub->player.pos_y = i;
 		cub->player.start_position = cub->map[i][j];
+		cub->map[i][j] = 0;
 	}
 }
 
@@ -100,6 +101,11 @@ void	init_player_angle(t_cub *cub)
 
 void	init(t_cub *cub)
 {
+		for ( int i = 0 ; i < cub->game.map_height ; i++){
+		printf("\n");
+		for( int h = 0 ; h < cub->game.map_with ; h++)
+			printf("%c", cub->map[i][h]);
+	}
 	cub->game.gamestarted = 0;
 	cub->game.cellsize = 5;
 	cub->player.speed = 0.5;
