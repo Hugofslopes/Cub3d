@@ -179,7 +179,7 @@ typedef struct s_cub
 	t_img_		texture[4];
 	t_img_		keys[12];
 	t_keys		keys_;
-	char		*textures[4];
+	char		**textures;
 	t_rgb		floor;
 	t_rgb		ceiling;
 	t_game		game;
@@ -187,7 +187,6 @@ typedef struct s_cub
 	t_move		moves;
 	t_render	rend;
 	t_ray		rayc;
-	t_player	t_player;
 	t_config	config; //added PS
 	t_config_flags	flags; //added PS
 	int		map_height; //added PS

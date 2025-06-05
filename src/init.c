@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:53:43 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/05 14:00:56 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:25:20 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,29 @@
 
 void	get_textures(t_cub *cub)
 {
-	cub->textures[0] = cub->config.no_path;
-	cub->textures[1] = cub->config.so_path;
-	cub->textures[2] = cub->config.we_path;
-	cub->textures[3] = cub->config.ea_path;
+	cub->textures = malloc(sizeof(char *) * 5);
+	
+	if (ft_strnstr(cub->config.no_path, "./", ft_strlen(cub->config.no_path) - 1))
+		cub->textures[0] = ft_strtrim(cub->config.no_path, "./");
+	else
+		cub->textures[0] = ft_strdup(cub->config.no_path);
+
+	if (ft_strnstr(cub->config.so_path, "./", ft_strlen(cub->config.no_path) - 1))
+		cub->textures[1] = ft_strtrim(cub->config.so_path, "./");
+	else
+		cub->textures[1] = ft_strdup(cub->config.so_path);
+	
+	if (ft_strnstr(cub->config.we_path, "./", ft_strlen(cub->config.no_path) - 1))
+		cub->textures[2] = ft_strtrim(cub->config.we_path, "./");
+	else
+		cub->textures[2] = ft_strdup(cub->config.we_path);
+
+	if (ft_strnstr(cub->config.ea_path, "./", ft_strlen(cub->config.no_path) - 1))
+		cub->textures[3] = ft_strtrim(cub->config.ea_path, "./");
+	else
+		cub->textures[3] = ft_strdup(cub->config.ea_path);
+	cub->textures[4] = NULL;
+	
 }
 
 void	init_textures(t_cub *cub, size_t i)
@@ -46,16 +65,24 @@ void	init_player_pos(t_cub *cub, size_t i, size_t j)
 		while (cub->map[i][j])
 		{
 			if (cub->map[i][j] == 'N' || cub->map[i][j] == 'S' 
-			|| cub->map[i][j] == 'O' || cub->map[i][j] == 'E')
+			|| cub->map[i][j] == 'W' || cub->map[i][j] == 'E')
 				break ;
 			j++;
 		}
-		i++;
+		if (cub->map[i][j] == 'N' || cub->map[i][j] == 'S' 
+			|| cub->map[i][j] == 'W' || cub->map[i][j] == 'E')
+			{
+			break ;
+			}
+		j = 0;
+		if (cub->map[i][j])
+			i++;
 	}
 	if (cub->map[i][j])
 	{
 		cub->player.pos_x = j;
 		cub->player.pos_y = i;
+		cub->player.start_position = cub->map[i][j];
 	}
 }
 
@@ -65,19 +92,21 @@ void	init_player_angle(t_cub *cub)
 		cub->player.angle = 270.0;
 	else if (cub->player.start_position == 'S')
 		cub->player.angle = 90.0;
-	else if (cub->player.start_position == 'E')
-		cub->player.angle = 0.0;
 	else if (cub->player.start_position == 'W')
+		cub->player.angle = 0.0;
+	else if (cub->player.start_position == 'E')
 		cub->player.angle = 180.0;
 }
 
 void	init(t_cub *cub)
 {
 	cub->game.gamestarted = 0;
-	cub->game.cellsize = 3;
-	cub->player.speed = 0.3;
+	cub->game.cellsize = 5;
+	cub->player.speed = 0.5;
 	init_player_pos(cub, 0, 0);
 	init_player_angle(cub);
+	cub->player.pos_x = cub->player.pos_x * cub->game.cellsize + cub->game.cellsize / 2;
+	cub->player.pos_y = cub->player.pos_y * cub->game.cellsize + cub->game.cellsize / 2;
 	init_mlx(cub);
 	init_textures(cub, 0);
 	mlx_loop_hook(cub->mlx_s.mlx, build_next_frame, cub);

@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:46:01 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/01 21:14:00 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:20:43 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,11 @@ int	getcolor(t_cub *cub, char c)
 	int	color;
 
 	if (c == 'c')
-		color = (cub->ceiling.r << 16) | (cub->ceiling.g << 8) | cub->ceiling.b;
+		color = (cub->config.ceiling_color.r << 16) | 
+		(cub->config.ceiling_color.g << 8) | cub->config.ceiling_color.b;
 	if (c == 'f')
-		color = (cub->floor.r << 16) | (cub->floor.g << 8) | cub->floor.b;
+		color = (cub->config.floor_color.r << 16) |
+		(cub->config.floor_color.g << 8) | cub->config.floor_color.b;
 	return (color);
 }
 
