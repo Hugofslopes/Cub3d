@@ -424,18 +424,44 @@ int	normalize_map(t_cub *cub)
 	return (0);
 }
 
-/*int	parse_map(t_cub *cub)
+int     validate_map_chars(t_cub *cub)
+{
+        int             i;
+        int             j;
+        int             count;
+        char    c;  
+
+        i = 0;
+        count = 0;
+        while (i < cub->map_height)
+        {
+                j = 0;
+                while (j < cub->map_width)
+                {
+                        c = cub->map[i][j];
+				if (!ft_strchr("10NSEWX", c)) 
+                                return(ft_printf_fd(2, "ERROR: Not allowed character [%c] was found\n", c), 1); 
+                        if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
+                                count++;
+                        if (count > 1)
+                                return(ft_printf_fd(2, "ERROR: More than one player position was found!\n"), 1); 
+                        j++;
+                }
+                i++;
+        }
+        if (count == 0)
+                return(ft_printf_fd(2, "ERROR: No player position was found at the map!\n"), 1); 
+        return (0);    
+}
+
+int	parse_map(t_cub *cub)
 {
 	if (normalize_map(cub))
 		return (1);
 	if (validate_map_chars(cub))
 		return (1);
-	if (find_player_position(cub))
-		return (1);
-	if (check_map_closed(cub))
-		return (1);
 	return (0);
-}*/
+}
 
 //function to parce the scene file PS
 int	parse_scene_file(int *fd, t_cub *cub)
@@ -508,10 +534,10 @@ int	parse_scene_file(int *fd, t_cub *cub)
 		return (1);
 	}
 	printf("ORIGINAL MAP\n------------\n");
-	print_map_part(cub, 0, 6);
-	if (normalize_map(cub))
+	print_map_part(cub, 0, cub->map_height - 1);
+	if (parse_map(cub))
 		return (1);
 	printf("\nNORMALIZED MAP\n--------------\n");
-	print_map_part(cub, 0, 6);
+	print_map_part(cub, 0, cub->map_height - 1);
 	return (0);
 }
