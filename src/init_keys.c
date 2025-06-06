@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:56:20 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/06 12:04:41 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:13:50 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	test_key_files(t_cub *cub, char **key)
 	size_t	i;
 
 	i = 0;
-	while (i < 11)
+	while (i < 12)
 	{
 		fd = open(key[i], O_RDONLY);
 		if (fd == -1)
@@ -35,7 +35,7 @@ int	test_key_files(t_cub *cub, char **key)
 
 void	init_keys2(t_cub *cub, size_t i, char **key)
 {
-	while (i < 11)
+	while (i < 12)
 	{
 		cub->keys[i].img = mlx_xpm_file_to_image(cub->mlx_s.mlx, \
 		key[i], &cub->keys[i].width, &cub->keys[i].height);
@@ -64,6 +64,7 @@ void	init_keys(t_cub *cub, size_t i)
 	key[8] = "keys/bo";
 	key[9] = "keys/la";
 	key[10] = "keys/ra";
+	key[11] = "keys/do";
 	test_key_files(cub, key);
 	init_keys2(cub, i, key);
 }

@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 19:10:39 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/06 12:58:07 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:54:35 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	init_raycast_val(t_cub *cub, double angle_deg)
 	cub->rayc.deltadisty = fabs(1 / cub->rayc.raydiry);
 	cub->rayc.hit = 0;
 	cub->rayc.side = -1;
+	cub->rayc.is_exit = 0;
 }
 
 /*Prepare the stepping direction and initial distances to the first 
@@ -79,7 +80,14 @@ void	dda_loop(t_cub *cub)
 			cub->rayc.side = 1;
 		}
 		if (is_wall(cub, cub->rayc.mapx, cub->rayc.mapy))
+		{
 			cub->rayc.hit = 1;
+			//printf("%c\n", cub->map[cub->rayc.mapy][cub->rayc.mapx]);
+			if (cub->map[cub->rayc.mapy][cub->rayc.mapx] == 'D')
+				cub->rayc.is_exit = 1;
+			else
+				cub->rayc.is_exit = 0;
+		}
 	}
 }
 
@@ -91,25 +99,24 @@ fmod() to get the offset inside the current wall tile
 Divides by cellsize to normalize it to a 0.0–1.0 range
 If ray hit vertical wall (side==0), use Y coordinate
 If ray hit horizontal wall (side==1), use X coordinate*/
-double	cast_ray(t_cub *cub, double angle_deg, t_wall_direction *wall_side, \
-	int ray_index)
+double	cast_ray(t_cub *cub, double angle_deg, t_wall_direction *wall_side, int ray_index)
 {
 	init_raycast_val(cub, angle_deg);
 	cast_ray2(cub);
 	dda_loop(cub);
 	if (cub->rayc.side == 0)
-		cub->rayc.wall_dist = (cub->rayc.side_dstx - cub->rayc.deltadistx) * \
-		cub->game.cellsize;
+		cub->rayc.wall_dist = (cub->rayc.side_dstx - cub->rayc.deltadistx) * cub->game.cellsize;
 	else
-		cub->rayc.wall_dist = (cub->rayc.side_dsty - cub->rayc.deltadisty) * \
-		cub->game.cellsize;
+		cub->rayc.wall_dist = (cub->rayc.side_dsty - cub->rayc.deltadisty) * cub->game.cellsize;
+
 	if (cub->rayc.side == 0)
-		cub->rayc.wall_hit = fmod((cub->player.pos_y + cub->rayc.wall_dist * \
-			cub->rayc.raydiry), cub->game.cellsize) / cub->game.cellsize;
+		cub->rayc.wall_hit = fmod((cub->player.pos_y + cub->rayc.wall_dist * cub->rayc.raydiry), cub->game.cellsize) / cub->game.cellsize;
 	else
-		cub->rayc.wall_hit = fmod((cub->player.pos_x + cub->rayc.wall_dist * \
-			cub->rayc.raydirx), cub->game.cellsize) / cub->game.cellsize;
+		cub->rayc.wall_hit = fmod((cub->player.pos_x + cub->rayc.wall_dist * cub->rayc.raydirx), cub->game.cellsize) / cub->game.cellsize;
+
 	cub->game.hit_positions[ray_index] = cub->rayc.wall_hit;
+	cub->game.is_exit[ray_index] = cub->rayc.is_exit; // 🟩 Store exit info per-ray
+
 	set_wall_side(cub, wall_side);
 	return (cub->rayc.wall_dist);
 }
@@ -127,6 +134,7 @@ void	ray(t_cub *cub, int i)
 
 	start_angle = cub->player.angle - (FOV_ANGLE / 2.0);
 	angle_step = FOV_ANGLE / NUM_RAYS;
+	cub->rayc.is_exit = 0;
 	while (i < NUM_RAYS)
 	{
 		ray_angle = start_angle + i * angle_step;

@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 19:44:10 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/01 22:21:44 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:14:45 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,10 @@ void	render_frame(t_cub *cub, int x, double hit_pos)
 	{
 		cub->rend.dist = cub->game.ray_values[x];
 		if (cub->rend.dist <= 0)
+		{
+			x++;
 			continue ;
+		}
 		cub->rend.line_height = (int)(cub->rend.prj_pln_dt / cub->rend.dist);
 		cub->rend.draw_start = -cub->rend.line_height / 2 + WHEIGHT / 2;
 		cub->rend.draw_end = cub->rend.line_height / 2 + WHEIGHT / 2;
@@ -112,10 +115,12 @@ void	render_frame(t_cub *cub, int x, double hit_pos)
 		if (cub->rend.draw_end >= WHEIGHT)
 			cub->rend.draw_end = WHEIGHT - 1;
 		cub->rend.wall_side = cub->game.wall_directions[x];
-		cub->rend.texture_index = (int)cub->rend.wall_side;
+		if (cub->game.is_exit[x])
+			cub->rend.texture_index = 15;
+		else
+			cub->rend.texture_index = (int)cub->rend.wall_side;
 		hit_pos = cub->game.hit_positions[x];
-		cub->rend.texx = (int)(hit_pos * \
-		cub->texture[cub->rend.texture_index].width);
+		cub->rend.texx = (int)(hit_pos * cub->texture[cub->rend.texture_index].width);
 		if (cub->rend.texx < 0)
 			cub->rend.texx = 0;
 		if (cub->rend.texx >= cub->texture[cub->rend.texture_index].width)

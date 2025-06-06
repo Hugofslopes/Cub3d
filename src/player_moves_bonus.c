@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:33:20 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/06 11:09:06 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:34:32 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ void	move_back(t_cub *cub, double angle_rad)
 {
 	int		dir_x;
 	int		dir_y;
-
-	if (cub->player.faster)
-		cub->player.speed *= 2.0;
+	
 	cub->keys_.s = 1;
 	if (!cub->keys_.arms)
 		cub->keys_.arms = 1;

@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 18:27:00 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/06 13:01:30 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:05:03 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	is_wall_move(t_cub *cub, int dir_x, int dir_y)
 	if (check_mapx < 0 || check_mapx >= cub->map_width || \
 		check_mapy < 0 || check_mapy >= cub->map_height)
 		return (1);
-	if (cub->map[check_mapy][check_mapx] == '1')
+	if (cub->map[check_mapy][check_mapx] == '1' || \
+		cub->map[check_mapy][check_mapx] == 'D')
 		return (1);
 	return (0);
 }
@@ -43,7 +44,8 @@ int	is_wall(t_cub *cub, int mapX, int mapY)
 	if (mapX < 0 || mapX >= cub->map_width || \
 		mapY < 0 || mapY >= cub->map_height)
 		return (1);
-	if (cub->map[mapY][mapX] == '1')
+	if (cub->map[mapY][mapX] == '1' || \
+	cub->map[mapY][mapX] == 'D')
 		return (1);
 	else
 		return (0);

@@ -146,6 +146,7 @@ typedef struct s_ray
 	double	wall_dist;
 	double	side_dstx;
 	double	side_dsty;
+	int		is_exit; 
 }	t_ray;
 
 typedef struct s_game
@@ -159,6 +160,7 @@ typedef struct s_game
 	double				ray_values[1600];
 	float				hit_positions[1600];
 	t_wall_direction	wall_directions[1600];
+	int					is_exit[1600];
 }	t_game;	
 
 typedef struct s_cub
@@ -171,6 +173,8 @@ typedef struct s_cub
 	t_img_			keys[12];
 	t_keys			keys_;
 	char			**textures;
+	char			*door_text;
+	t_img_			door;
 	t_rgb			floor;
 	t_rgb			ceiling;
 	t_game			game;
