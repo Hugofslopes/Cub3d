@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 19:10:39 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/06 09:15:33 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:37:54 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,13 +125,8 @@ void	ray(t_cub *cub, int i)
 	double				distance;
 	t_wall_direction	wall_dir;
 
-/* 	for ( int i = 0 ; i < cub->game.map_height ; i++){
-		printf("\n");
-		for( int h = 0 ; h < cub->game.map_with ; h++)
-			printf("%c", cub->map[i][h]);
-	} 
-	printf("\n");
-	*/start_angle = cub->player.angle - (FOV_ANGLE / 2.0);
+
+	start_angle = cub->player.angle - (FOV_ANGLE / 2.0);
 	angle_step = FOV_ANGLE / NUM_RAYS;
 	while (i < NUM_RAYS)
 	{
