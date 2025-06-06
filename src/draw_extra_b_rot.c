@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:48:42 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/01 11:45:37 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:15:58 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,12 @@ void	check_put_rotation(t_cub *cub, size_t i, int x, int y)
 
 int	get_i_check_boot(t_cub *cub, int *i)
 {
-	if (!cub->keys_.b && !cub->keys_.nb)
-		return (1);
-	if (cub->keys_.b == 1)
+	if (cub->player.faster)
+	{
 		*i = 8;
-	else if (cub->keys_.nb == 1)
-		*i = 9;
-	return (0);
+		return (0);
+	}
+	return (1);
 }
 
 void	draw_boot(t_cub *cub, int i, int x, int y)

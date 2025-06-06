@@ -507,11 +507,11 @@ int	parse_scene_file(int *fd, t_cub *cub)
 		cub->map = NULL;
 		return (1);
 	}
-	printf("ORIGINAL MAP\n------------\n");
-	print_map_part(cub, 0, 6);
+	//printf("ORIGINAL MAP\n------------\n");
+	//print_map_part(cub, 0, 6);
 	if (normalize_map(cub))
 		return (1);
-	printf("\nNORMALIZED MAP\n--------------\n");
-	print_map_part(cub, 0, 6);
+	//printf("\nNORMALIZED MAP\n--------------\n");
+	//print_map_part(cub, 0, 6);
 	return (0);
 }

@@ -69,7 +69,8 @@ typedef struct s_player
 	double	ray_y;
 	double	ray_angle;
 	double	angle;
-	float	speed;	
+	float	speed;
+	int		faster; 
 }	t_player;
 
 typedef struct s_rgb //added PS
@@ -163,8 +164,6 @@ typedef struct s_game
 	int					mapx;
 	int					mapy;
 	int					cellsize;
-	int					map_with;
-	int					map_height;
 	double				ray_values[1600];
 	float				hit_positions[1600];
 	t_wall_direction	wall_directions[1600];
@@ -172,25 +171,25 @@ typedef struct s_game
 
 typedef struct s_cub
 {
-	char		**map;
-	t_mlx		mlx_s;
-	t_player	player;
-	t_img_		img;
-	t_img_		texture[4];
-	t_img_		keys[12];
-	t_keys		keys_;
-	char		**textures;
-	t_rgb		floor;
-	t_rgb		ceiling;
-	t_game		game;
-	t_mini		mini;
-	t_move		moves;
-	t_render	rend;
-	t_ray		rayc;
-	t_config	config; //added PS
-	t_config_flags	flags; //added PS
-	int		map_height; //added PS
-	int		map_width; //added PS
+	char			**map;
+	t_mlx			mlx_s;
+	t_player		player;
+	t_img_			img;
+	t_img_			texture[4];
+	t_img_			keys[12];
+	t_keys			keys_;
+	char			**textures;
+	t_rgb			floor;
+	t_rgb			ceiling;
+	t_game			game;
+	t_mini			mini;
+	t_move			moves;
+	t_render		rend;
+	t_ray			rayc;
+	t_config		config;
+	t_config_flags	flags;
+	int				map_height;
+	int				map_width;
 }	t_cub;
 
 # define MAX_COLOR 0xFF
@@ -230,6 +229,7 @@ void	init_mlx(t_cub *cub);
 //				KEYS
 int		key_pressed(int key, t_cub *cub);
 int		mouse_close(t_cub *cub);
+int		key_released(int key, t_cub *cub);
 
 //				CLOSE PROGRAM
 void	free_exit(t_cub *cub, int value);

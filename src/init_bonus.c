@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:29:54 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/05 20:27:23 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:14:40 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,16 +101,19 @@ void	init_player_pos(t_cub *cub, size_t i, size_t j)
 void	init(t_cub *cub)
 {
 	cub->game.gamestarted = 0;
-	cub->game.cellsize = 3;
+	cub->game.cellsize = 2;
 	cub->player.speed = 0.3;
 	init_player_pos(cub, 0 , 0);
 	cub->keys_.arms = 0;
 	init_player_angle(cub);
 	init_mlx(cub);
+	cub->player.pos_x = cub->player.pos_x * cub->game.cellsize + cub->game.cellsize / 2;
+	cub->player.pos_y = cub->player.pos_y * cub->game.cellsize + cub->game.cellsize / 2;
 	init_keys(cub, 0);
 	init_textures(cub, 0);
 	mlx_loop_hook(cub->mlx_s.mlx, build_next_frame, cub);
 	mlx_hook(cub->mlx_s.window, 2, 1L << 0, key_pressed, cub);
+	mlx_hook(cub->mlx_s.window, 3, 1L << 1, key_released, cub);
 	mlx_hook(cub->mlx_s.window, 17, 0, mouse_close, cub);
 	mlx_loop(cub->mlx_s.mlx);
 }

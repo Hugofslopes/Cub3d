@@ -1,4 +1,4 @@
-FLAGS = -Wall -Wextra -Werror -ggdb
+FLAGS = -Wall -Wextra -Werror -ggdb -lm
 CC = cc
 INCLUDES = -I includes
 SRC_DIR = src

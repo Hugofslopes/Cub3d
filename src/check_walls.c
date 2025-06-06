@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 18:27:00 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/01 11:13:48 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/06 10:59:45 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,19 @@ int	is_wall_move(t_cub *cub, int dir_x, int dir_y)
 	check_y = (cub->moves.ny / cub->game.cellsize) + (dir_y * offset);
 	check_mapx = (int)check_x;
 	check_mapy = (int)check_y;
-	if (check_mapx < 0 || check_mapx >= cub->game.map_with || \
-		check_mapy < 0 || check_mapy >= cub->game.map_height)
+	if (check_mapx < 0 || check_mapx >= cub->map_width || \
+		check_mapy < 0 || check_mapy >= cub->map_height )
 		return (1);
 	if (cub->map[check_mapy][check_mapx] == '1')
 		return (1);
 	return (0);
-}
+} 
 
 /*When i already have the full coordinates*/
 int	is_wall(t_cub *cub, int mapX, int mapY)
 {
-	if (mapX < 0 || mapX >= cub->game.map_with || \
-		mapY < 0 || mapY >= cub->game.map_height)
+	if (mapX < 0 || mapX >= cub->map_width || \
+		mapY < 0 || mapY >= cub->map_height)
 		return (1);
 	if (cub->map[mapY][mapX] == '1')
 		return (1);
@@ -60,8 +60,8 @@ int	is_out_of_map(t_cub *cub, double x, double y)
 
 	map_x = (int)(x / cub->game.cellsize);
 	map_y = (int)(y / cub->game.cellsize);
-	if (map_x < 0 || map_x >= cub->game.map_with || \
-		map_y < 0 || map_y >= cub->game.map_height)
+	if (map_x < 0 || map_x >= cub->map_width || \
+		map_y < 0 || map_y >= cub->map_height)
 		return (1);
 	if (cub->map[map_y][map_x] == '1')
 		return (1);

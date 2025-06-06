@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 19:33:08 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/01 12:39:05 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:04:09 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ void	check_put_key(t_cub *cub, size_t i, int x, int y)
 void	get_arms(t_cub *cub, size_t *i)
 {
 	if (cub->keys_.arms == 1)
-		*i = 10;
+		*i = 9;
 	else
-		*i = 11;
+		*i = 10;
 }
 
 void	check_put_arms(t_cub *cub, size_t i, int x, int y)
