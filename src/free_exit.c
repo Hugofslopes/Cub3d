@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:25:34 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/05 15:49:24 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/05 21:24:20 by pauldos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 void	free_exit_keys(t_cub *cub)
 {
 	free(cub->map);
-	free(cub->textures);
+//	free(cub->textures);
 	exit(1);
 }
 
 void	free_exit_textures(t_cub *cub)
 {
-	free(cub->textures);
+	(void)cub;
+//	free(cub->textures);
 	exit(1);
 }
 
@@ -72,7 +73,7 @@ void	free_exit(t_cub *cub, int value)
 	mlx_destroy_display(cub->mlx_s.mlx);
 	free(cub->mlx_s.mlx);
 	free(cub->map);
-	free(cub->textures);
+	//free(cub->textures);
 	exit(value);
 	free_config(&cub->config);
 }
