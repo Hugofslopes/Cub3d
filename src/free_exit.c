@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:25:34 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/05 22:21:30 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:55:23 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,4 @@ void	free_exit(t_cub *cub, int value)
 	free_textures(cub->textures);
 	free(cub->mlx_s.mlx);
 	exit(value);
-
 }
-

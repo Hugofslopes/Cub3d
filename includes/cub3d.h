@@ -70,7 +70,7 @@ typedef struct s_player
 	double	ray_angle;
 	double	angle;
 	float	speed;
-	int		faster; 
+	int		faster;
 }	t_player;
 
 typedef struct s_rgb //added PS
@@ -95,7 +95,7 @@ typedef struct s_config_flags //added PS
 	int	parsed_ea;
 	int	parsed_f;
 	int	parsed_c;
-} t_config_flags;
+}	t_config_flags;
 
 typedef struct s_config //added PS
 {
@@ -103,7 +103,7 @@ typedef struct s_config //added PS
 	char	*so_path;
 	char	*we_path;
 	char	*ea_path;
-	int 	floor_color_set;
+	int		floor_color_set;
 	int		ceiling_color_set;
 	t_rgb	floor_color;
 	t_rgb	ceiling_color;

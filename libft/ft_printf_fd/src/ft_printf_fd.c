@@ -6,10 +6,9 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:50:32 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/05 15:50:37 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:52:38 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../includes/ft_printf_fd.h"
 

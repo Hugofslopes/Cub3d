@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:53:43 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/06 12:20:39 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/06 13:01:05 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,27 @@
 void	get_textures(t_cub *cub)
 {
 	cub->textures = malloc(sizeof(char *) * 5);
-	
-	if (ft_strnstr(cub->config.no_path, "./", ft_strlen(cub->config.no_path) - 1))
+	if (ft_strnstr(cub->config.no_path, "./", \
+		ft_strlen(cub->config.no_path) - 1))
 		cub->textures[0] = ft_strtrim(cub->config.no_path, "./");
 	else
 		cub->textures[0] = ft_strdup(cub->config.no_path);
-
-	if (ft_strnstr(cub->config.so_path, "./", ft_strlen(cub->config.no_path) - 1))
+	if (ft_strnstr(cub->config.so_path, "./", \
+		ft_strlen(cub->config.no_path) - 1))
 		cub->textures[1] = ft_strtrim(cub->config.so_path, "./");
 	else
 		cub->textures[1] = ft_strdup(cub->config.so_path);
-	
-	if (ft_strnstr(cub->config.we_path, "./", ft_strlen(cub->config.no_path) - 1))
+	if (ft_strnstr(cub->config.we_path, "./", \
+		ft_strlen(cub->config.no_path) - 1))
 		cub->textures[2] = ft_strtrim(cub->config.we_path, "./");
 	else
 		cub->textures[2] = ft_strdup(cub->config.we_path);
-
-	if (ft_strnstr(cub->config.ea_path, "./", ft_strlen(cub->config.no_path) - 1))
+	if (ft_strnstr(cub->config.ea_path, "./", \
+		ft_strlen(cub->config.no_path) - 1))
 		cub->textures[3] = ft_strtrim(cub->config.ea_path, "./");
 	else
 		cub->textures[3] = ft_strdup(cub->config.ea_path);
 	cub->textures[4] = NULL;
-	
 }
 
 void	init_textures(t_cub *cub, size_t i)
@@ -64,16 +63,16 @@ void	init_player_pos(t_cub *cub, size_t i, size_t j)
 	{
 		while (cub->map[i][j])
 		{
-			if (cub->map[i][j] == 'N' || cub->map[i][j] == 'S' 
-			|| cub->map[i][j] == 'W' || cub->map[i][j] == 'E')
+			if (cub->map[i][j] == 'N' || cub->map[i][j] == 'S' || \
+				cub->map[i][j] == 'W' || cub->map[i][j] == 'E')
 				break ;
 			j++;
 		}
-		if (cub->map[i][j] == 'N' || cub->map[i][j] == 'S' 
-			|| cub->map[i][j] == 'W' || cub->map[i][j] == 'E')
-			{
+		if (cub->map[i][j] == 'N' || cub->map[i][j] == 'S' || \
+			cub->map[i][j] == 'W' || cub->map[i][j] == 'E')
+		{
 			break ;
-			}
+		}
 		j = 0;
 		if (cub->map[i][j])
 			i++;
@@ -101,18 +100,15 @@ void	init_player_angle(t_cub *cub)
 
 void	init(t_cub *cub)
 {
-	for (int i = 0; i < cub->map_height ; i++){
-		printf("\n");
-		for (int j = 0; j < cub->map_width ; j++)
-			printf("%c ", cub->map[i][j]);
-	}
 	cub->game.gamestarted = 0;
 	cub->game.cellsize = 5;
 	cub->player.speed = 0.5;
 	init_player_pos(cub, 0, 0);
 	init_player_angle(cub);
-	cub->player.pos_x = cub->player.pos_x * cub->game.cellsize + cub->game.cellsize / 2;
-	cub->player.pos_y = cub->player.pos_y * cub->game.cellsize + cub->game.cellsize / 2;
+	cub->player.pos_x = cub->player.pos_x * cub->game.cellsize + \
+	cub->game.cellsize / 2;
+	cub->player.pos_y = cub->player.pos_y * cub->game.cellsize + \
+	cub->game.cellsize / 2;
 	init_mlx(cub);
 	init_textures(cub, 0);
 	mlx_loop_hook(cub->mlx_s.mlx, build_next_frame, cub);

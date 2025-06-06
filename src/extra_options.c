@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 17:17:01 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/06 12:19:12 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:57:49 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	can_zoom(t_cub *cub, int n)
 	tmp_cellsize = cub->game.cellsize;
 	if (n)
 		tmp_cellsize++;
-	else 
+	else
 		tmp_cellsize--;
 	grid_x = (int)(cub->player.pos_x / tmp_cellsize);
 	grid_y = (int)(cub->player.pos_y / tmp_cellsize);
