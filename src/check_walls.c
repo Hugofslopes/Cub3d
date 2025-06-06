@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 18:27:00 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/06 13:01:30 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/06 19:20:58 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	is_wall_move(t_cub *cub, int dir_x, int dir_y)
 	int		check_mapx;
 	int		check_mapy;
 
-	offset = 0.25;
+	offset = 0.1;
 	check_x = (cub->moves.nx / cub->game.cellsize) + (dir_x * offset);
 	check_y = (cub->moves.ny / cub->game.cellsize) + (dir_y * offset);
-	check_mapx = (int)check_x;
-	check_mapy = (int)check_y;
+	check_mapx = (int)floor(check_x);
+	check_mapy = (int)floor(check_y);
 	if (check_mapx < 0 || check_mapx >= cub->map_width || \
 		check_mapy < 0 || check_mapy >= cub->map_height)
 		return (1);

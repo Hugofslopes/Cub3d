@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:39:48 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/06 17:56:33 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/06 19:31:12 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	free_exit(t_cub *cub, int value)
 		mlx_destroy_image(cub->mlx_s.mlx, cub->texture[i++].img);
 	i = 0;
 	free_map(cub->map);
-	while (i < 10)
+	while (i < 11)
 		mlx_destroy_image(cub->mlx_s.mlx, cub->keys[i++].img);
 	mlx_destroy_window(cub->mlx_s.mlx, cub->mlx_s.window);
 	mlx_destroy_display(cub->mlx_s.mlx);

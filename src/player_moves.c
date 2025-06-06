@@ -6,13 +6,13 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 17:43:37 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/01 21:18:14 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/06 19:20:05 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	get_direction(int dx, int dy, int *dir_x, int *dir_y)
+void	get_direction(double dx, double dy, int *dir_x, int *dir_y)
 {
 	if (dx > 0)
 		*dir_x = 1;
@@ -41,7 +41,7 @@ void	move_back(t_cub *cub, double angle_rad)
 	cub->moves.dy = sin(angle_rad) * cub->player.speed;
 	cub->moves.nx = cub->player.pos_x - cub->moves.dx;
 	cub->moves.ny = cub->player.pos_y - cub->moves.dy;
-	get_direction(cub->moves.dx, cub->moves.dy, &dir_x, &dir_y);
+	get_direction(-cub->moves.dx, -cub->moves.dy, &dir_x, &dir_y);
 	if (!is_out_of_map(cub, cub->moves.nx, cub->moves.ny))
 	{
 		cub->player.pos_x = cub->moves.nx;
