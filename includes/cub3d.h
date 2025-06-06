@@ -27,14 +27,6 @@ typedef struct s_move
 	double	ny;
 }	t_move;
 
-typedef enum e_textures
-{
-	N,
-	S,
-	w,
-	E
-}	t_textures;
-
 typedef enum e_wall_direction
 {
 	NORTH,
