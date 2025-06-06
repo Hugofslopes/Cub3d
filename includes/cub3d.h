@@ -175,6 +175,7 @@ typedef struct s_cub
 	char			**textures;
 	char			*door_text;
 	t_img_			door;
+	t_img_			end_screen;
 	t_rgb			floor;
 	t_rgb			ceiling;
 	t_game			game;
@@ -186,6 +187,7 @@ typedef struct s_cub
 	t_config_flags	flags;
 	int				map_height;
 	int				map_width;
+	
 }	t_cub;
 
 # define MAX_COLOR 0xFF

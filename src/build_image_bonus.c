@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:28:00 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/01 12:32:19 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/06 17:34:09 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,25 @@ void	set_keys(t_cub *cub)
 	cub->keys_.rr = 0;
 	cub->keys_.b = 0;
 	cub->keys_.nb = 0;
+}
+
+void	end_game(t_cub *cub)
+{
+	mlx_destroy_image(cub->mlx_s.mlx, cub->img.img);
+	cub->end_screen.img = mlx_xpm_file_to_image(cub->mlx_s.mlx, "keys/end", \
+		&cub->end_screen.width, &cub->end_screen.height);
+	if (cub->end_screen.img == NULL)
+	{
+		ft_printf_fd(2, "%s %s \n%s ", CIMAGE, "keys/end", CHECKFILE);
+		free_exit_textures(cub);
+	}
+	cub->end_screen.addr = mlx_get_data_addr(cub->end_screen.img, \
+	&cub->end_screen.bytes_p_pixel, &cub->end_screen.line_len, \
+	&cub->end_screen.endian);
+	mlx_put_image_to_window(cub->mlx_s.mlx, cub->mlx_s.window, \
+		cub->end_screen.img, 0, 0);
+	mlx_loop(cub->mlx_s.mlx);
+	exit(0);
 }
 
 void	first_render(t_cub *cub)
@@ -44,6 +63,8 @@ int	build_next_frame(t_cub *cub)
 		first_render(cub);
 	else
 	{
+		if (is_near_exit(cub, 0))
+			end_game(cub);
 		mlx_destroy_image(cub->mlx_s.mlx, cub->img.img);
 		cub->img.img = mlx_new_image(cub->mlx_s.mlx, WWIDTH, WHEIGHT);
 		cub->img.addr = mlx_get_data_addr(cub->img.img, \

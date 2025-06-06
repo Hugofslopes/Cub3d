@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 19:44:10 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/06 16:14:45 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/06 17:33:22 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,8 @@ void	render_frame(t_cub *cub, int x, double hit_pos)
 		else
 			cub->rend.texture_index = (int)cub->rend.wall_side;
 		hit_pos = cub->game.hit_positions[x];
-		cub->rend.texx = (int)(hit_pos * cub->texture[cub->rend.texture_index].width);
+		cub->rend.texx = (int)(hit_pos * \
+			cub->texture[cub->rend.texture_index].width);
 		if (cub->rend.texx < 0)
 			cub->rend.texx = 0;
 		if (cub->rend.texx >= cub->texture[cub->rend.texture_index].width)

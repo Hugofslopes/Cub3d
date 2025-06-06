@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_exit.c                                        :+:      :+:    :+:   */
+/*   free_exit_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/30 20:25:34 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/06 17:36:02 by hfilipe-         ###   ########.fr       */
+/*   Created: 2025/06/06 17:35:18 by hfilipe-          #+#    #+#             */
+/*   Updated: 2025/06/06 17:36:08 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	free_exit(t_cub *cub, int value)
 		mlx_destroy_image(cub->mlx_s.mlx, cub->texture[i++].img);
 	i = 0;
 	free_map(cub->map);
+	while (i < 10)
+		mlx_destroy_image(cub->mlx_s.mlx, cub->keys[i++].img);
 	mlx_destroy_window(cub->mlx_s.mlx, cub->mlx_s.window);
 	mlx_destroy_display(cub->mlx_s.mlx);
 	free_config(&cub->config);
