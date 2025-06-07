@@ -421,9 +421,6 @@ int	normalize_map(t_cub *cub)
 	free_map(cub->map);
 	cub->map = normalized;
 	cub->map_width = max_width;
-/*	for (i = 0; i < cub->map_height; i++)
-		free(normalized[i]);
-	free(normalized);*/
 	return (0);
 }
 
@@ -464,6 +461,46 @@ int	parse_map(t_cub *cub)
 	if (validate_map_chars(cub))
 		return (1);
 	return (0);
+}
+
+void	dup_map(t_cub *cub)
+{
+	int		i;
+	char	c;
+	
+	i = 0;
+	cub->map_copy = malloc(sizeof(char *) * (cub->map_height));
+	if (!cub->map_copy)
+		return ;
+	while (i < cub->map_height)
+	{
+		cub->map_copy[i] = malloc(sizeof(char) * (cub->map_width + 1));
+		if (!cub->map_copy[i])
+		{
+			while (--i >= 0)
+				free(cub->map_copy[i]);
+			free (cub->map_copy);
+			cub->map_copy = NULL;
+			return ;
+		}
+		ft_strlcpy(cub->map_copy[i], cub->map[i], cub->map_width + 1);
+		i++;
+	}
+}
+
+int	flood_fill(char **map, int i, int j)
+{
+	char	c;
+
+	if (i < 0 || j < 0 || map[i] == NULL || j >= ft_strlen(map[i]))
+		return (1);
+	c = map[i][j];
+	if (c == 'X')
+		return (1);
+	if (c == '1' || c == 'F')
+		return (0);
+	map[i][j] = 
+
 }
 
 //function to parce the scene file PS

@@ -192,6 +192,7 @@ typedef struct s_cub
 	t_config_flags	flags; //added PS
 	int		map_height; //added PS
 	int		map_width; //added PS
+	char		**map_copy //added PS
 }	t_cub;
 
 # define MAX_COLOR 0xFF
