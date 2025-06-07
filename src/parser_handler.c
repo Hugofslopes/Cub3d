@@ -421,6 +421,9 @@ int	normalize_map(t_cub *cub)
 	free_map(cub->map);
 	cub->map = normalized;
 	cub->map_width = max_width;
+/*	for (i = 0; i < cub->map_height; i++)
+		free(normalized[i]);
+	free(normalized);*/
 	return (0);
 }
 
@@ -536,7 +539,7 @@ int	parse_scene_file(int *fd, t_cub *cub)
 	printf("ORIGINAL MAP\n------------\n");
 	print_map_part(cub, 0, cub->map_height - 1);
 	if (parse_map(cub))
-		return (1);
+		return(free_map(cub->map),1);
 	printf("\nNORMALIZED MAP\n--------------\n");
 	print_map_part(cub, 0, cub->map_height - 1);
 	return (0);
