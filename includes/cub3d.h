@@ -161,8 +161,16 @@ typedef struct s_game
 	t_wall_direction	wall_directions[1600];
 }	t_game;	
 
+typedef struct s_pos_info
+{
+	int		i;
+	int		j;
+	char	c;
+}	t_pos_info;
+
 typedef struct s_cub
 {
+<<<<<<< HEAD
 	char			**map;
 	t_mlx			mlx_s;
 	t_player		player;
@@ -182,6 +190,31 @@ typedef struct s_cub
 	t_config_flags	flags;
 	int				map_height;
 	int				map_width;
+=======
+	char		**map;
+	t_mlx		mlx_s;
+	t_player	player;
+	t_img_		img;
+	t_img_		texture[4];
+	t_img_		keys[12];
+	t_keys		keys_;
+	char		*textures[4];
+	t_rgb		floor;
+	t_rgb		ceiling;
+	t_game		game;
+	t_mini		mini;
+	t_move		moves;
+	t_render	rend;
+	t_ray		rayc;
+	t_player	t_player;
+	t_config	config; //added PS
+	t_config_flags	flags; //added PS
+	int		map_height; //added PS
+	int		map_width; //added PS
+	char		**map_copy; //added PS
+	int		player_x; //added PS
+	int		player_y; //added PS
+>>>>>>> origin/PauloB
 }	t_cub;
 
 # define MAX_COLOR 0xFF
@@ -205,11 +238,55 @@ typedef struct s_cub
 # define EXTENSION_ERR "Scene file must have .cub extension\n" //added PS
 # define READ_FILE_ERR "Failed opening file\n" //added PS
 # define CONF_ENTR_ERR "Missing or invalid config entries\n" //added PS
+# define ZERO_PLAYER "More than one player position was found\n" //added PS
 
 //				PARSE
 int		handle_input(int ac, char **av, t_cub *cub);
 int		open_scene_file(const char *filename, int *fd);
 int		parse_scene_file(int *fd, t_cub *cub);
+int		parse_config_line(char *line, t_config *cfg, t_config_flags *flags);
+int		handle_no(t_config *cfg, t_config_flags *flags, char *value);
+int		handle_so(t_config *cfg, t_config_flags *flags, char *value);
+int		handle_we(t_config *cfg, t_config_flags *flags, char *value);
+int		handle_ea(t_config *cfg, t_config_flags *flags, char *value);
+int		handle_floor(t_config *cfg, t_config_flags *flags, char *value);
+int		handle_ceiling(t_config *cfg, t_config_flags *flags, char *value);
+int		parse_rgb(char *raw, t_rgb *color);
+int		check_cub_extension(const char *file);
+int		open_scene_file(const char *filename, int *fd);
+int		is_space_char(char c);
+int		is_line_empty(char *line);
+int		set_texture_path(char **dst, char *raw);
+int		is_config_line(char *line);
+int		check_texture(const char *path, const char *name);
+int		validate_config(t_config *cfg);
+int		check_map_no_empty_lines(char **map);
+int		get_max_width(char **map, int height);
+int		fill_normalized_row(char *src, char *dst, int width);
+void		free_partial_map(char **map, int until);
+int		normalize_map(t_cub *cub);
+void		free_2d_partial(char **arr, int until);
+char		**ft_realloc_2d(char **old, int new_size);
+int		append_map_line(t_cub *cub, char *line);
+int		all_config_flags_set(t_config_flags *flags, t_config *config);
+void		print_map_part(t_cub *cub, int start, int end);
+void		print_map_copy_part(t_cub *cub, int start, int end);
+int		validate_map_chars_support(t_cub *cub, int *count, t_pos_info *pos);
+int		validate_map_chars(t_cub *cub);
+void		dup_map(t_cub *cub);
+void		init_visited(t_cub *cub, int ***visited);
+int		check_unreachable_cells(t_cub *cub, int **visited);
+void		cube_flood_fill(t_cub *cub, int **visited, int x, int y);
+void		free_visited(int **visited, int height);
+int		map_is_close_support(t_cub *cub, int y, int x);
+int		map_is_closed(t_cub *cub);
+int		parse_map(t_cub *cub);
+int		handle_config_line(char *line, t_cub *cub, char **buffer);
+int		process_line(char *line, t_cub *cub, int *map_started, char **buffer);
+int		handle_map_empty_error(t_cub *cub);
+int		handle_parse_map_error(t_cub *cub);
+int		parse_scene_file(int *fd, t_cub *cub);
+
 
 //				INIT
 void	init(t_cub *cub);
@@ -229,6 +306,7 @@ void	free_exit_textures(t_cub *cub);
 void	free_exit_keys(t_cub *cub);
 void	free_config(t_config *cfg);
 void	free_map(char **map); //added PS
+void	free_map_copy(char **map_copy);
 
 //				GAME
 void	set_floor_ceiling(t_cub *cub);

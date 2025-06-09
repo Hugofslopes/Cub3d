@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:25:34 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/06 17:56:54 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/09 09:24:39 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 void	free_exit_keys(t_cub *cub)
 {
 	free(cub->map);
-	free(cub->textures);
+//	free(cub->textures);
 	exit(1);
 }
 
 void	free_exit_textures(t_cub *cub)
 {
-	free(cub->textures);
+	(void)cub;
+//	free(cub->textures);
 	exit(1);
 }
 
@@ -46,9 +47,22 @@ void	free_map(char **map)
 	free(map);
 }
 
+void	free_map_copy(char **map_copy)
+{
+	int	i;
+
+	i = 0;
+	if (!map_copy)
+		return ;
+	while (map_copy[i])
+		free(map_copy[i++]);
+	free(map_copy);
+}
+
 void	free_exit(t_cub *cub, int value)
 {
 	size_t	i;
+	printf("Entered here\n");
 
 	i = 0;
 	mlx_destroy_image(cub->mlx_s.mlx, cub->img.img);
@@ -60,6 +74,11 @@ void	free_exit(t_cub *cub, int value)
 	mlx_destroy_display(cub->mlx_s.mlx);
 	free_config(&cub->config);
 	free_map(cub->textures);
+	free(cub->mlx_s.mlx);
+	free_config(&cub->config);
+	free_map_copy(cub->map_copy);
+	mlx_destroy_window(cub->mlx_s.mlx, cub->mlx_s.window);
+	mlx_destroy_display(cub->mlx_s.mlx);
 	free(cub->mlx_s.mlx);
 	exit(value);
 }
