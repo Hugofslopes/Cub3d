@@ -71,7 +71,7 @@ int	normalize_map(t_cub *cub)
 		fill_normalized_row(cub->map[i], normalized[i], width);
 	}
 	normalized[cub->map_height] = NULL;
-	free_map(cub->map);
+	free_array(cub->map);
 	cub->map = normalized;
 	cub->map_width = width;
 	return (0);

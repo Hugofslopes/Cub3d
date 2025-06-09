@@ -74,7 +74,7 @@ int	parse_map(t_cub *cub)
 	if (validate_map_chars(cub))
 		return (1);
 	if (cub->map_copy)
-		free_map(cub->map_copy);
+		free_array(cub->map_copy);
 	dup_map(cub);
 	if (!cub->map_copy)
 		return (1);

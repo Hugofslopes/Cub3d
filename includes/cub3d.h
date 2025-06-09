@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/09 10:08:12 by hfilipe-          #+#    #+#             */
+/*   Updated: 2025/06/09 10:29:49 by hfilipe-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -170,7 +182,6 @@ typedef struct s_pos_info
 
 typedef struct s_cub
 {
-<<<<<<< HEAD
 	char			**map;
 	t_mlx			mlx_s;
 	t_player		player;
@@ -190,47 +201,26 @@ typedef struct s_cub
 	t_config_flags	flags;
 	int				map_height;
 	int				map_width;
-=======
-	char		**map;
-	t_mlx		mlx_s;
-	t_player	player;
-	t_img_		img;
-	t_img_		texture[4];
-	t_img_		keys[12];
-	t_keys		keys_;
-	char		*textures[4];
-	t_rgb		floor;
-	t_rgb		ceiling;
-	t_game		game;
-	t_mini		mini;
-	t_move		moves;
-	t_render	rend;
-	t_ray		rayc;
-	t_player	t_player;
-	t_config	config; //added PS
-	t_config_flags	flags; //added PS
-	int		map_height; //added PS
-	int		map_width; //added PS
-	char		**map_copy; //added PS
-	int		player_x; //added PS
-	int		player_y; //added PS
->>>>>>> origin/PauloB
+	char			**map_copy;
+	int				player_x;
+	int				player_y;
 }	t_cub;
 
 # define MAX_COLOR 0xFF
 # define WWIDTH 1600
 # define WHEIGHT 900
-# define ERROR "Error\n"
-# define NOPERMISION "the map does not have permission"
-# define IFILE "Invalid file: "
-# define CIMAGE "Failed to creat new image: "
-# define CHECKFILE "Check if the file exists and is in the right folder!\n"
 # define PI 3.14159
 # define ROTATION_SPEED 45
 # define NUM_RAYS 1600
 # define FOV_ANGLE 90.0 
 # define FIXED_POINT 256
 # define HALF_FIXED 128
+# define ERROR "Error\n"
+# define ARGNB "Wrong number of arguments\n"
+# define NOPERMISION "the map does not have permission"
+# define IFILE "Invalid file: "
+# define CIMAGE "Failed to creat new image: "
+# define CHECKFILE "Check if the file exists and is in the right folder!\n"
 # define EXTENSION_ERR "Scene file must have .cub extension\n"
 # define READ_FILE_ERR "Failed opening file\n"
 # define CONF_ENTR_ERR "Missing or invalid config entries\n"
@@ -263,21 +253,20 @@ int		validate_config(t_config *cfg);
 int		check_map_no_empty_lines(char **map);
 int		get_max_width(char **map, int height);
 int		fill_normalized_row(char *src, char *dst, int width);
-void		free_partial_map(char **map, int until);
+void	free_partial_map(char **map, int until);
 int		normalize_map(t_cub *cub);
-void		free_2d_partial(char **arr, int until);
-char		**ft_realloc_2d(char **old, int new_size);
+void	free_2d_partial(char **arr, int until);
+char	**ft_realloc_2d(char **old, int new_size);
 int		append_map_line(t_cub *cub, char *line);
 int		all_config_flags_set(t_config_flags *flags, t_config *config);
-void		print_map_part(t_cub *cub, int start, int end);
-void		print_map_copy_part(t_cub *cub, int start, int end);
+void	print_map_copy_part(t_cub *cub, int start, int end);
 int		validate_map_chars_support(t_cub *cub, int *count, t_pos_info *pos);
 int		validate_map_chars(t_cub *cub);
-void		dup_map(t_cub *cub);
-void		init_visited(t_cub *cub, int ***visited);
+void	dup_map(t_cub *cub);
+void	init_visited(t_cub *cub, int ***visited);
 int		check_unreachable_cells(t_cub *cub, int **visited);
-void		cube_flood_fill(t_cub *cub, int **visited, int x, int y);
-void		free_visited(int **visited, int height);
+void	cube_flood_fill(t_cub *cub, int **visited, int x, int y);
+void	free_visited(int **visited, int height);
 int		map_is_close_support(t_cub *cub, int y, int x);
 int		map_is_closed(t_cub *cub);
 int		parse_map(t_cub *cub);
@@ -286,7 +275,6 @@ int		process_line(char *line, t_cub *cub, int *map_started, char **buffer);
 int		handle_map_empty_error(t_cub *cub);
 int		handle_parse_map_error(t_cub *cub);
 int		parse_scene_file(int *fd, t_cub *cub);
-
 
 //				INIT
 void	init(t_cub *cub);
@@ -305,8 +293,7 @@ void	free_exit(t_cub *cub, int value);
 void	free_exit_textures(t_cub *cub);
 void	free_exit_keys(t_cub *cub);
 void	free_config(t_config *cfg);
-void	free_map(char **map); //added PS
-void	free_map_copy(char **map_copy);
+void	free_array(char **map);
 
 //				GAME
 void	set_floor_ceiling(t_cub *cub);

@@ -41,15 +41,15 @@ int	process_line(char *line, t_cub *cub, int *map_started, char **buffer)
 int	handle_map_empty_error(t_cub *cub)
 {
 	ft_printf_fd(2, "%sThere is an empty line at the map\n", ERROR);
-	free_map(cub->map);
+	free_array(cub->map);
 	cub->map = NULL;
 	return (1);
 }
 
 int	handle_parse_map_error(t_cub *cub)
 {
-	free_map(cub->map);
-	free_map_copy(cub->map_copy);
+	free_array(cub->map);
+	free_array(cub->map_copy);
 	free_config(&cub->config);
 	return (1);
 }
@@ -72,13 +72,7 @@ int	parse_scene_file(int *fd, t_cub *cub)
 	free(buffer);
 	if (!check_map_no_empty_lines(cub->map))
 		return (handle_map_empty_error(cub));
-	printf("ORIGINAL MAP\n------------\n");
-	print_map_part(cub, 0, cub->map_height - 1);
 	if (parse_map(cub))
 		return (handle_parse_map_error(cub));
-	printf("\nNORMALIZED MAP\n--------------\n");
-	print_map_part(cub, 0, cub->map_height - 1);
-	printf("\nMAP COPY\n--------------\n");
-	print_map_part(cub, 0, cub->map_height - 1);
 	return (0);
 }

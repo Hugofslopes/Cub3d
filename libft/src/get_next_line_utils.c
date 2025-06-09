@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:58:55 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/03 20:20:43 by pauldos-         ###   ########.fr       */
+/*   Updated: 2025/06/09 09:29:14 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ char	*alloc_for_nl(size_t j, size_t len, char **strgs)
 
 	if ((*strgs) == NULL || **strgs == '\0')
 		return (NULL);
-	//if ((*strgs) == NULL)
-	//	return (malloc(0));
 	i = 0;
 	temp = ft_calloc((j + 2), sizeof(char));
 	while ((*strgs)[i])
@@ -62,8 +60,6 @@ char	*verify_newline(char **strgs)
 	j = 0;
 	if (*strgs == NULL || **strgs == '\0')
 		return (NULL);
-	//if (*strgs == NULL)
-	//	return (malloc(0));
 	len = ft_strlen(*strgs);
 	while ((*strgs)[j] != '\0')
 	{
