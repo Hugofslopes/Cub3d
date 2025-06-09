@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:31:08 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/06 12:40:00 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/09 11:08:04 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,8 @@ void	check_put_rotation(t_cub *cub, size_t i, int x, int y);
 void	draw_boot(t_cub *cub, int i, int x, int y);
 void	init_keys(t_cub *cub, size_t i);
 void	check_put_arms(t_cub *cub, size_t i, int x, int y);
+
+//              EXTRA CLOSE
+void	free_exit_keys(t_cub *cub, size_t i, int flag);
 
 #endif

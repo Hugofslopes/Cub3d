@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 10:08:12 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/09 10:29:49 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/09 11:01:13 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,7 +248,7 @@ int		is_space_char(char c);
 int		is_line_empty(char *line);
 int		set_texture_path(char **dst, char *raw);
 int		is_config_line(char *line);
-int		check_texture(const char *path, const char *name);
+int		check_texture(const char *path);
 int		validate_config(t_config *cfg);
 int		check_map_no_empty_lines(char **map);
 int		get_max_width(char **map, int height);
@@ -259,7 +259,6 @@ void	free_2d_partial(char **arr, int until);
 char	**ft_realloc_2d(char **old, int new_size);
 int		append_map_line(t_cub *cub, char *line);
 int		all_config_flags_set(t_config_flags *flags, t_config *config);
-void	print_map_copy_part(t_cub *cub, int start, int end);
 int		validate_map_chars_support(t_cub *cub, int *count, t_pos_info *pos);
 int		validate_map_chars(t_cub *cub);
 void	dup_map(t_cub *cub);
@@ -290,8 +289,7 @@ int		key_released(int key, t_cub *cub);
 
 //				CLOSE PROGRAM
 void	free_exit(t_cub *cub, int value);
-void	free_exit_textures(t_cub *cub);
-void	free_exit_keys(t_cub *cub);
+void	free_exit_textures(t_cub *cub, size_t i);
 void	free_config(t_config *cfg);
 void	free_array(char **map);
 

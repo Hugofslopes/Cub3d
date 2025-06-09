@@ -6,11 +6,11 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:56:20 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/06 12:04:41 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/09 11:08:15 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 int	test_key_files(t_cub *cub, char **key)
 {
@@ -24,7 +24,7 @@ int	test_key_files(t_cub *cub, char **key)
 		if (fd == -1)
 		{
 			ft_printf_fd(2, "%s %s \n%s ", IFILE, key[i], CHECKFILE);
-			free_exit_keys(cub);
+			free_exit_keys(cub, i, 0);
 		}
 		else
 			close (fd);
@@ -41,7 +41,7 @@ void	init_keys2(t_cub *cub, size_t i, char **key)
 		key[i], &cub->keys[i].width, &cub->keys[i].height);
 		if (cub->keys[i].img == NULL)
 			return (ft_printf_fd(2, "%s %s \n%s ", CIMAGE, key[i], CHECKFILE), \
-			free_exit_keys(cub));
+			free_exit_keys(cub, i, 1));
 		cub->keys[i].addr = mlx_get_data_addr(cub->keys[i].img, \
 		&cub->keys[i].bytes_p_pixel, &cub->keys[i].line_len, \
 		&cub->keys[i].endian);

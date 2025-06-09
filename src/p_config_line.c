@@ -20,25 +20,29 @@ int	is_config_line(char *line)
 	return (0);
 }
 
-int	check_texture(const char *path, const char *name)
+int	check_texture(const char *path)
 {
-	(void)name;
+	int	fd;
+
 	if (!path)
 		return (ft_printf_fd(2, "%sTexture missing\n", ERROR), 1);
-	if (access(path, F_OK) == -1)
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
 		return (ft_printf_fd(2, "%sTexture file not found\n", ERROR), 1);
+	else
+		close(fd);
 	return (0);
 }
 
 int	validate_config(t_config *cfg)
 {
-	if (check_texture(cfg->no_path, "NO "))
+	if (check_texture(cfg->no_path))
 		return (1);
-	if (check_texture(cfg->so_path, "SO "))
+	if (check_texture(cfg->so_path))
 		return (1);
-	if (check_texture(cfg->we_path, "WE "))
+	if (check_texture(cfg->we_path))
 		return (1);
-	if (check_texture(cfg->ea_path, "EA "))
+	if (check_texture(cfg->ea_path))
 		return (1);
 	if (!cfg->floor_color_set)
 		return (ft_printf_fd(2, "%sFloor color not set\n", ERROR), 1);

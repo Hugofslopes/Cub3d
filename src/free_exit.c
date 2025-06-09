@@ -6,20 +6,22 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:25:34 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/09 10:07:17 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/09 11:04:14 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	free_exit_keys(t_cub *cub)
+void	free_exit_textures(t_cub *cub, size_t i)
 {
-	free(cub->map);
-	exit(1);
-}
+	size_t	j;
 
-void	free_exit_textures(t_cub *cub)
-{
+	j = 0;
+	while (j < i)
+		mlx_destroy_image(cub->mlx_s.mlx, cub->texture[j++].img);
+	mlx_destroy_image(cub->mlx_s.mlx, cub->img.img);
+	mlx_destroy_window(cub->mlx_s.mlx, cub->mlx_s.window);
+	mlx_destroy_display(cub->mlx_s.mlx);
 	free_array(cub->map);
 	free_array(cub->map_copy);
 	free_array(cub->textures);
