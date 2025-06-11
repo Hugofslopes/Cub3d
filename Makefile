@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/06/11 19:38:46 by hfilipe-          #+#    #+#              #
+#    Updated: 2025/06/11 20:00:46 by hfilipe-         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 FLAGS = -Wall -Wextra -Werror -ggdb
 CC = cc
 INCLUDES = -I includes
@@ -37,22 +49,20 @@ NAME_BONUS = cub3D_bonus
 all: $(LIBFT_ARC) $(MLX_ARC) $(FT_PRINTF_ARC) $(NAME)
 
 $(FT_PRINTF_ARC):
-	@$(MAKE) -C $(FT_PRINTF_DIR)
+	$(MAKE) -C $(FT_PRINTF_DIR)
 
 $(LIBFT_ARC):
-	@$(MAKE) -C $(LIBFT_DIR)
+	$(MAKE) -C $(LIBFT_DIR)
 
 $(MLX_ARC):
-	@if [ ! -d "$(MLX_DIR)" ]; then \
-		git clone https://github.com/42Paris/minilibx-linux.git $(MLX_DIR); \
-	fi
-	@$(MAKE) -C $(MLX_DIR)
+	if [ ! -d "$(MLX_DIR)" ]; then git clone https://github.com/42Paris/minilibx-linux.git $(MLX_DIR); fi
+	$(MAKE) -C $(MLX_DIR)
 
 $(NAME): $(OBJS) $(LIBFT_ARC) $(MLX_ARC) $(FT_PRINTF_ARC)
-	$(CC) $(FLAGS) $(OBJS) -o $(NAME) $(MLX_FLAGS) -L$(LIBFT_DIR) -lft -L$(FT_PRINTF_DIR) -l:ft_printf_fd.a
+	$(CC) $(FLAGS) $(OBJS) -o $(NAME) $(MLX_FLAGS) $(LIBFT_ARC) $(FT_PRINTF_ARC)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR)
 	$(CC) $(FLAGS) $(INCLUDES) -MMD -c $< -o $@
 
 -include $(DEPS)
@@ -60,10 +70,10 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 bonus: $(LIBFT_ARC) $(MLX_ARC) $(FT_PRINTF_ARC) $(NAME_BONUS)
 
 $(NAME_BONUS): $(OBJS_BONUS)
-	$(CC) $(FLAGS) $(OBJS_BONUS) -o $(NAME_BONUS) $(MLX_FLAGS) -L$(LIBFT_DIR) -lft -L$(FT_PRINTF_DIR) -l:ft_printf_fd.a
+	$(CC) $(FLAGS) $(OBJS_BONUS) -o $(NAME_BONUS) $(MLX_FLAGS) $(LIBFT_ARC) $(FT_PRINTF_ARC)
 
 $(OBJ_BONUS_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_BONUS_DIR)
+	mkdir -p $(OBJ_BONUS_DIR)
 	$(CC) $(FLAGS) $(INCLUDES) -MMD -c $< -o $@
 
 -include $(DEPS_BONUS)
@@ -72,20 +82,16 @@ clean:
 	rm -rf $(OBJ_DIR) $(OBJ_BONUS_DIR)
 	$(MAKE) -C $(LIBFT_DIR) clean
 	$(MAKE) -C $(FT_PRINTF_DIR) clean
-	@if [ -d "$(MLX_DIR)" ]; then \
-		rm -rf mlx/obj; \
-	fi
+	if [ -d "$(MLX_DIR)" ]; then rm -rf mlx/obj; fi
 
 fclean: clean
 	rm -f $(NAME)
 	rm -f $(NAME_BONUS)
-	@if [ -d "$(MLX_DIR)" ]; then \
-		$(MAKE) -C $(MLX_DIR) clean ; \
-		fi
-	@$(MAKE) -C $(LIBFT_DIR) fclean
-	@$(MAKE) -C $(FT_PRINTF_DIR) fclean
+	if [ -d "$(MLX_DIR)" ]; then $(MAKE) -C $(MLX_DIR) clean ; fi
+	$(MAKE) -C $(LIBFT_DIR) fclean
+	$(MAKE) -C $(FT_PRINTF_DIR) fclean
 
 re: fclean all
 
-delete_mlx: 
+delete: 
 	rm -rf mlx
