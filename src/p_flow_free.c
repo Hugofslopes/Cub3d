@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   p_flow_free.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/11 09:41:56 by pauldos-          #+#    #+#             */
+/*   Updated: 2025/06/11 10:12:43 by hfilipe-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 void	cube_flood_fill(t_cub *cub, int **visited, int x, int y)
@@ -80,11 +92,6 @@ int	parse_map(t_cub *cub)
 		return (1);
 	init_visited(cub, &visited);
 	cube_flood_fill(cub, visited, cub->player_x, cub->player_y);
-	if (check_unreachable_cells(cub, visited))
-	{
-		free_visited(visited, cub->map_height);
-		return (1);
-	}
 	if (map_is_closed(cub))
 	{
 		free_visited(visited, cub->map_height);

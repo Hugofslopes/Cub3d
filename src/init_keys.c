@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:56:20 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/09 11:08:15 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/11 12:34:12 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	test_key_files(t_cub *cub, char **key)
 		fd = open(key[i], O_RDONLY);
 		if (fd == -1)
 		{
-			ft_printf_fd(2, "%s %s \n%s ", IFILE, key[i], CHECKFILE);
+			ft_printf_fd(2, "%s%s %s \n%s ", ERROR, IFILE, key[i], CHECKFILE);
 			free_exit_keys(cub, i, 0);
 		}
 		else
@@ -40,8 +40,8 @@ void	init_keys2(t_cub *cub, size_t i, char **key)
 		cub->keys[i].img = mlx_xpm_file_to_image(cub->mlx_s.mlx, \
 		key[i], &cub->keys[i].width, &cub->keys[i].height);
 		if (cub->keys[i].img == NULL)
-			return (ft_printf_fd(2, "%s %s \n%s ", CIMAGE, key[i], CHECKFILE), \
-			free_exit_keys(cub, i, 1));
+			return (ft_printf_fd(2, "%s%s %s \n%s ", ERROR, CIMAGE, key[i], \
+				CHECKFILE), free_exit_keys(cub, i, 1));
 		cub->keys[i].addr = mlx_get_data_addr(cub->keys[i].img, \
 		&cub->keys[i].bytes_p_pixel, &cub->keys[i].line_len, \
 		&cub->keys[i].endian);

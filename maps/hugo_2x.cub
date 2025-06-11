@@ -5,8 +5,8 @@ SO ./textures/S
 WE ./textures/W
 
 EA ./textures/E
-F 0,    200,       10
-C 50,0,150
+F 75,  0,       130
+C        150,75,0
 
       11               11
      1001             1001

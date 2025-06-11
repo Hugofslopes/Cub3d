@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:53:43 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/09 10:45:54 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/11 12:33:43 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	init_textures(t_cub *cub, size_t i)
 		cub->textures[i], &cub->texture[i].width, &cub->texture[i].height);
 		if (cub->texture[i].img == NULL)
 		{
-			ft_printf_fd(2, "%s %s \n%s ", CIMAGE, cub->textures[i], CHECKFILE);
+			ft_printf_fd(2, "%s%s %s \n%s ", ERROR, CIMAGE, cub->textures[i], \
+				CHECKFILE);
 			free_exit_textures(cub, i);
 		}
 		cub->texture[i].addr = mlx_get_data_addr(cub->texture[i].img, \
@@ -101,7 +102,7 @@ void	init_player_angle(t_cub *cub)
 void	init(t_cub *cub)
 {
 	cub->game.gamestarted = 0;
-	cub->game.cellsize = 5;
+	cub->game.cellsize = 3;
 	cub->player.speed = 0.5;
 	init_player_pos(cub, 0, 0);
 	init_player_angle(cub);

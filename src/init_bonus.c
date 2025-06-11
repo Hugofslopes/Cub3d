@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:29:54 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/09 11:08:25 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/11 12:33:55 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	init_textures(t_cub *cub, size_t i)
 		cub->textures[i], &cub->texture[i].width, &cub->texture[i].height);
 		if (cub->texture[i].img == NULL)
 		{
-			ft_printf_fd(2, "%s %s \n%s ", CIMAGE, cub->textures[i], CHECKFILE);
+			ft_printf_fd(2, "%s%s %s \n%s ", ERROR, CIMAGE, cub->textures[i], \
+				CHECKFILE);
 			free_exit_textures(cub, i);
 		}
 		cub->texture[i].addr = mlx_get_data_addr(cub->texture[i].img, \

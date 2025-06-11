@@ -14,7 +14,7 @@ OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 NAME = cub3D
 DEPS = $(OBJS:.o=.d)
 MLX_DIR = mlx
-MLX_ARC = $(MLX_DIR)/libmlx.a
+MLX_ARC = $(MLX_DIR)/libmlx_Linux.a
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 LIBFT_DIR = libft
 LIBFT_ARC = $(LIBFT_DIR)/libft.a
@@ -31,7 +31,6 @@ p_append_line.c p_dup_check_map_cells.c p_flow_free.c
 SRCS_BONUS = $(addprefix $(SRC_DIR)/, $(SRC_BONUS))
 OBJ_BONUS_DIR = obj_bonus
 OBJS_BONUS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_BONUS_DIR)/%.o, $(SRCS_BONUS))
-DEPS_BONUS = $(OBJS_BONUS:.o=.d)
 DEPS_BONUS = $(OBJS_BONUS:.o=.d)
 NAME_BONUS = cub3D_bonus
 
@@ -72,13 +71,17 @@ $(OBJ_BONUS_DIR)/%.o: $(SRC_DIR)/%.c
 clean:
 	rm -rf $(OBJ_DIR) $(OBJ_BONUS_DIR)
 	$(MAKE) -C $(LIBFT_DIR) clean
-	$(MAKE) -C $(MLX_DIR) clean
-	rm -rf $(MLX_DIR)
 	$(MAKE) -C $(FT_PRINTF_DIR) clean
+	@if [ -d "$(MLX_DIR)" ]; then \
+		rm -rf mlx/obj; \
+	fi
 
 fclean: clean
 	rm -f $(NAME)
 	rm -f $(NAME_BONUS)
+	@if [ -d "$(MLX_DIR)" ]; then \
+		$(MAKE) -C $(MLX_DIR) clean ; \
+		fi
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 	@$(MAKE) -C $(FT_PRINTF_DIR) fclean
 

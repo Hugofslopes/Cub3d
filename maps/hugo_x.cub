@@ -2,8 +2,8 @@ NO ./textures/N
 SO ./textures/S
 WE ./textures/W
 EA ./textures/E
-F 0,10,10
-C 50,0,10
+F 0,210,10
+C 50,0,200
 
      1               1
     101             101

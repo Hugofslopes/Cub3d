@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 10:08:12 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/09 11:01:13 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/11 13:34:43 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,6 +274,7 @@ int		process_line(char *line, t_cub *cub, int *map_started, char **buffer);
 int		handle_map_empty_error(t_cub *cub);
 int		handle_parse_map_error(t_cub *cub);
 int		parse_scene_file(int *fd, t_cub *cub);
+void	check_map_first(t_cub *cub, char *line, char **buffer);
 
 //				INIT
 void	init(t_cub *cub);
@@ -317,5 +318,4 @@ void	rotate_left(t_cub *cub);
 double	deg_to_rad(double degrees);
 double	normalize_angle(double angle);
 void	set_wall_side(t_cub *cub, t_wall_direction *wall_side);
-int		is_out_of_map(t_cub *cub, double x, double y);
 #endif

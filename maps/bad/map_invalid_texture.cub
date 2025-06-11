@@ -1,0 +1,14 @@
+NO textures/invalid_xpm.xpm
+SO textures/S
+WE textures/W
+EA textures/E
+
+F 20,20,215
+C 200,200,200
+
+11111
+10001
+10S01
+10001
+10111
+11111

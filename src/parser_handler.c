@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_handler.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/11 09:43:14 by pauldos-          #+#    #+#             */
+/*   Updated: 2025/06/11 12:29:59 by hfilipe-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 int	handle_config_line(char *line, t_cub *cub, char **buffer)
@@ -25,6 +37,7 @@ int	process_line(char *line, t_cub *cub, int *map_started, char **buffer)
 	{
 		if (is_config_line(line))
 			return (handle_config_line(line, cub, buffer));
+		check_map_first(cub, line, buffer);
 		if (validate_config(&cub->config))
 			return (free(line), free(*buffer), 1);
 		if (all_config_flags_set(&cub->flags, &cub->config))
@@ -70,6 +83,11 @@ int	parse_scene_file(int *fd, t_cub *cub)
 		line = get_next_line(*fd, &buffer);
 	}
 	free(buffer);
+	if (!cub->config.no_path && !cub->config.so_path && !cub->config.ea_path && \
+	!cub->config.we_path && !cub->map)
+		return (ft_printf_fd(2, "%sEmpty file or is a folder\n", ERROR), 1);
+	if (!cub->map)
+		return (ft_printf_fd(2, "%sMissing map\n", ERROR), 1);
 	if (!check_map_no_empty_lines(cub->map))
 		return (handle_map_empty_error(cub));
 	if (parse_map(cub))

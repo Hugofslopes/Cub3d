@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 18:27:00 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/06 19:20:58 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/11 10:52:30 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,23 +47,4 @@ int	is_wall(t_cub *cub, int mapX, int mapY)
 		return (1);
 	else
 		return (0);
-}
-
-/* Receives x/y that form the direction vector
-Calculates the new position
-Cheks if it is inside of the map, an then if it is a wall
-Uses offset to block the player from getting to close to the wall */
-int	is_out_of_map(t_cub *cub, double x, double y)
-{
-	int	map_x;
-	int	map_y;
-
-	map_x = (int)(x / cub->game.cellsize);
-	map_y = (int)(y / cub->game.cellsize);
-	if (map_x < 0 || map_x >= cub->map_width || \
-		map_y < 0 || map_y >= cub->map_height)
-		return (1);
-	if (cub->map[map_y][map_x] == '1')
-		return (1);
-	return (0);
 }
