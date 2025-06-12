@@ -217,14 +217,14 @@ typedef struct s_cub
 # define HALF_FIXED 128
 # define ERROR "Error\n"
 # define ARGNB "Wrong number of arguments\n"
-# define NOPERMISION "the map does not have permission"
+# define NOPERMISION "The map does not have permission"
 # define IFILE "Invalid file: "
-# define CIMAGE "Failed to creat new image: "
+# define CIMAGE "Failed to create new image: "
 # define CHECKFILE "Check if the file exists and is in the right folder!\n"
 # define EXTENSION_ERR "Scene file must have .cub extension\n"
 # define READ_FILE_ERR "Failed opening file\n"
 # define CONF_ENTR_ERR "Missing or invalid config entries\n"
-# define TEXTURE "texture missing\n"
+# define TEXTURE "Texture missing\n"
 # define EXTENSION_ERR "Scene file must have .cub extension\n" //added PS
 # define READ_FILE_ERR "Failed opening file\n" //added PS
 # define CONF_ENTR_ERR "Missing or invalid config entries\n" //added PS
