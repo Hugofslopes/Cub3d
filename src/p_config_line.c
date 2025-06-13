@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 09:41:14 by pauldos-          #+#    #+#             */
-/*   Updated: 2025/06/13 11:48:17 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/13 17:18:02 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,42 +61,4 @@ int	validate_config(t_config *cfg)
 	if (!cfg->ceiling_color_set)
 		return (ft_printf_fd(2, "%sCeiling color not set\n", ERROR), 1);
 	return (0);
-}
-
-int	check_map_no_empty_lines2(char **map, int i, int j)
-{
-	while (map && map[i])
-	{
-		if (map[i][j] == '\0')
-			i++;
-		else
-			return (0);
-	}
-	return (1);
-}
-
-int	check_map_no_empty_lines(char **map)
-{
-	int	i;
-	int	j;
-	int	check;
-
-	check = 0;
-	i = 0;
-	while (map && map[i])
-	{
-		j = 0;
-		while (map[i][j] && (map[i][j] == ' ' || map[i][j] == '\t'))
-			j++;
-		if (map[i][j] == '\0' && j == 0)
-		{
-			i++;
-			check++;
-			break ;
-		}
-		if (check)
-			break ;
-		i++;
-	}
-	return (check_map_no_empty_lines2(map, i, j));
 }

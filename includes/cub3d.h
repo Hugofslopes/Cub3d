@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 10:08:12 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/11 13:34:43 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:37:42 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,7 @@ typedef struct s_cub
 # define READ_FILE_ERR "Failed opening file\n"
 # define CONF_ENTR_ERR "Missing or invalid config entries\n"
 # define TEXTURE "Texture missing\n"
+# define EMPTYL "There is an empty line at the map\n"
 # define EXTENSION_ERR "Scene file must have .cub extension\n" //added PS
 # define READ_FILE_ERR "Failed opening file\n" //added PS
 # define CONF_ENTR_ERR "Missing or invalid config entries\n" //added PS
@@ -250,7 +251,7 @@ int		set_texture_path(char **dst, char *raw);
 int		is_config_line(char *line);
 int		check_texture(const char *path);
 int		validate_config(t_config *cfg);
-int		check_map_no_empty_lines(char **map);
+int		check_map_no_empty_lines(char **map, size_t i);
 int		get_max_width(char **map, int height);
 int		fill_normalized_row(char *src, char *dst, int width);
 void	free_partial_map(char **map, int until);

@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:25:56 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/05 20:05:34 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/13 17:13:50 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 
 void	init_mlx(t_cub *cub)
 {
-	cub->mlx_s.mlx = NULL;
-	cub->mlx_s.window = NULL;
-	cub->img.img = NULL;
-	cub->img.addr = NULL;
 	cub->mlx_s.mlx = mlx_init();
 	cub->mlx_s.window = mlx_new_window(cub->mlx_s.mlx, WWIDTH, WHEIGHT, "Cub");
 	cub->img.img = mlx_new_image(cub->mlx_s.mlx, WWIDTH, WHEIGHT);

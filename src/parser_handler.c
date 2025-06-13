@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 09:43:14 by pauldos-          #+#    #+#             */
-/*   Updated: 2025/06/11 12:29:59 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/13 17:21:54 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	process_line(char *line, t_cub *cub, int *map_started, char **buffer)
 
 int	handle_map_empty_error(t_cub *cub)
 {
-	ft_printf_fd(2, "%sThere is an empty line at the map\n", ERROR);
 	free_array(cub->map);
 	cub->map = NULL;
 	return (1);
@@ -88,7 +87,7 @@ int	parse_scene_file(int *fd, t_cub *cub)
 		return (ft_printf_fd(2, "%sEmpty file or is a folder\n", ERROR), 1);
 	if (!cub->map)
 		return (ft_printf_fd(2, "%sMissing map\n", ERROR), 1);
-	if (!check_map_no_empty_lines(cub->map))
+	if (!check_map_no_empty_lines(cub->map, 0))
 		return (handle_map_empty_error(cub));
 	if (parse_map(cub))
 		return (handle_parse_map_error(cub));
