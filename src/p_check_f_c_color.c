@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 09:41:04 by pauldos-          #+#    #+#             */
-/*   Updated: 2025/06/13 11:15:36 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/13 11:25:51 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	cub_atoi(const char *str)
 	char	**nstr;
 	char	*n_str;
 	char	*n_str2;
-	
+
 	nstr = ft_split(str, ',');
 	n_str2 = ft_strtrim(*nstr, " ");
 	n_str = ft_strtrim(n_str2, "\t");
@@ -34,9 +34,8 @@ int	cub_atoi(const char *str)
 			sign *= -1;
 	while (*str && *str >= '0' && *str <= '9')
 		result = (result * 10) + (*str++ - '0');
-	return (free(n_str), free(n_str2), free_array(nstr),result * sign);
+	return (free(n_str), free(n_str2), free_array(nstr), result * sign);
 }
-
 
 int	handle_floor(t_config *cfg, t_config_flags *flags, char *value)
 {
