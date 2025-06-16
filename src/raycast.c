@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 19:10:39 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/06 12:58:07 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/16 13:22:47 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ void	ray(t_cub *cub, int i)
 	{
 		ray_angle = start_angle + i * angle_step;
 		distance = cast_ray(cub, ray_angle, &wall_dir, i);
+		distance = distance * cos(deg_to_rad(ray_angle - cub->player.angle));
 		cub->game.ray_values[i] = distance;
 		cub->game.wall_directions[i] = wall_dir;
 		i++;

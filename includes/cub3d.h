@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 10:08:12 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/14 08:22:37 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/16 14:04:57 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,16 @@ typedef struct s_pos_info
 	char	c;
 }	t_pos_info;
 
+typedef struct s_keys_p
+{
+	int	f_key;
+	int	b_key;
+	int	r_key;
+	int	l_key;
+	int	rtl_key;
+	int	rtr_key;
+}	t_keys_p;
+
 typedef struct s_cub
 {
 	char			**map;
@@ -199,6 +209,7 @@ typedef struct s_cub
 	t_ray			rayc;
 	t_config		config;
 	t_config_flags	flags;
+	t_keys_p		keys_p;
 	int				map_height;
 	int				map_width;
 	char			**map_copy;
@@ -210,9 +221,9 @@ typedef struct s_cub
 # define WWIDTH 1600
 # define WHEIGHT 900
 # define PI 3.14159
-# define ROTATION_SPEED 45
+# define ROTATION_SPEED 10
 # define NUM_RAYS 1600
-# define FOV_ANGLE 90.0 
+# define FOV_ANGLE 60.0 
 # define FIXED_POINT 256
 # define HALF_FIXED 128
 # define ERROR "Error\n"
@@ -288,6 +299,7 @@ void	init_mlx(t_cub *cub);
 int		key_pressed(int key, t_cub *cub);
 int		mouse_close(t_cub *cub);
 int		key_released(int key, t_cub *cub);
+void	change_player_pos(t_cub *cub);
 
 //				CLOSE PROGRAM
 void	free_exit(t_cub *cub, int value);

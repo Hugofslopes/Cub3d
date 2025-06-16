@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 15:56:05 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/06 12:07:55 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/16 14:10:10 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ void	draw_player_line(t_cub *cub)
 
 void	draw_minimap(t_cub *cub, int y, int x, unsigned int color)
 {
+	draw_minimap_border(cub, 0x0000FFFF, MINIMAP_MARGIN - 1, \
+		MINIMAP_MARGIN - 1);
 	while (y < cub->map_height)
 	{
 		while (x < cub->map_width)

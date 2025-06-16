@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:31:08 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/09 11:08:04 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/16 14:11:03 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,10 @@
 # define MINIMAP_SCALE 8
 # define MINIMAP_MARGIN 10
 
-//			EXTRA OPTIONS
-void	i_speed(t_cub *cub);
-void	d_speed(t_cub *cub);
-void	zoom_in(t_cub *cub);
-void	zoom_out(t_cub *cub);
-
 //				MINI
 void	draw_minimap(t_cub *cub, int y, int x, unsigned int color);
+void	draw_minimap_border(t_cub *cub, unsigned int color, int border_x, \
+	int border_y);
 
 //				EXTRA IMAGE
 void	check_put_key(t_cub *cub, size_t i, int x, int y);

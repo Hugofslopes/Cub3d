@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:28:00 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/01 12:32:19 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/16 13:54:00 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	build_next_frame(t_cub *cub)
 		ft_memset(cub->img.addr, 0, WHEIGHT * cub->img.line_len);
 		set_floor_ceiling(cub);
 		draw_c_f(cub, 0, 0);
+		change_player_pos(cub);
 		ray(cub, 0);
 		render_frame(cub, 0, 0);
 		check_put_key(cub, 0, 0, 0);

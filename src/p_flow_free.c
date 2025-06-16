@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 09:41:56 by pauldos-          #+#    #+#             */
-/*   Updated: 2025/06/11 10:12:43 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/16 14:55:16 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	map_is_close_support(t_cub *cub, int y, int x)
 		|| cub->map_copy[y + 1][x] == 'X'
 		|| cub->map_copy[y][x - 1] == 'X'
 		|| cub->map_copy[y][x + 1] == 'X')
-		return (ft_printf_fd(2, "%sMap not closed\n", ERROR), 1);
+		return (ft_printf_fd(2, "%sThere is a hole on the map\n", ERROR), 1);
 	return (0);
 }
 
