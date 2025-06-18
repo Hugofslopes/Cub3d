@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:53:43 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/16 13:48:10 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:53:59 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	init_player_angle(t_cub *cub)
 void	init(t_cub *cub)
 {
 	cub->game.gamestarted = 0;
-	cub->game.cellsize = 3;
+	cub->game.cellsize = 1;
 	cub->player.speed = 0.2;
 	init_player_pos(cub, 0, 0);
 	init_player_angle(cub);
@@ -110,6 +110,10 @@ void	init(t_cub *cub)
 	cub->game.cellsize / 2;
 	cub->player.pos_y = cub->player.pos_y * cub->game.cellsize + \
 	cub->game.cellsize / 2;
+	cub->game.floor = (cub->config.ceiling_color.r << 16) | \
+		(cub->config.ceiling_color.g << 8) | cub->config.ceiling_color.b;
+	cub->game.ceiling = (cub->config.floor_color.r << 16) | \
+		(cub->config.floor_color.g << 8) | cub->config.floor_color.b;
 	init_mlx(cub);
 	init_textures(cub, 0);
 	mlx_loop_hook(cub->mlx_s.mlx, build_next_frame, cub);

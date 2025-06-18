@@ -6,16 +6,16 @@
 #    By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/11 19:38:46 by hfilipe-          #+#    #+#              #
-#    Updated: 2025/06/16 14:11:19 by hfilipe-         ###   ########.fr        #
+#    Updated: 2025/06/18 18:30:21 by hfilipe-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FLAGS = -Wall -Wextra -Werror -ggdb
+FLAGS = -Wall -Wextra -Werror -ggdb -pg
 CC = cc
 INCLUDES = -I includes
 SRC_DIR = src
 OBJ_DIR = obj
-SRC = main.c handle_input.c init_mlx.c free_exit.c keys.c draw.c floor_ceeling.c \
+SRC = main.c handle_input.c init_mlx.c free_exit.c keys.c floor_ceeling.c \
 raycast.c render.c player_rotates.c player_moves.c init.c build_image.c \
 check_walls.c raycast_utils.c  parser_handler.c check_map.c\
 p_check_f_c_color.c p_handle_textures.c \
@@ -33,7 +33,7 @@ LIBFT_ARC = $(LIBFT_DIR)/libft.a
 FT_PRINTF_DIR = libft/ft_printf_fd
 FT_PRINTF_ARC = $(FT_PRINTF_DIR)/ft_printf_fd.a
 
-SRC_BONUS = main.c handle_input.c init_mlx.c free_exit_bonus.c keys_bonus.c draw.c floor_ceeling.c \
+SRC_BONUS = main.c handle_input.c init_mlx.c free_exit_bonus.c keys_bonus.c floor_ceeling.c \
 raycast.c render.c player_rotates.c player_moves_bonus.c init_bonus.c build_image_bonus.c \
 check_walls.c raycast_utils.c draw_mini.c draw_extra_keys.c \
 init_keys.c draw_extra_b_rot.c parser_handler.c check_map.c \

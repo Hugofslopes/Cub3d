@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 10:08:12 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/16 14:04:57 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/18 19:11:48 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,8 @@ typedef struct s_rend
 	int					draw_start;
 	double				prj_pln_dt;
 	double				dist;
+	int					d;
+	char				*pxl;
 	t_wall_direction	wall_side;
 }	t_render;
 
@@ -167,7 +169,7 @@ typedef struct s_game
 	int					ceiling;
 	int					mapx;
 	int					mapy;
-	int					cellsize;
+	float				cellsize;
 	double				ray_values[1600];
 	float				hit_positions[1600];
 	t_wall_direction	wall_directions[1600];
@@ -244,39 +246,34 @@ typedef struct s_cub
 
 //				PARSE
 int		handle_input(int ac, char **av, t_cub *cub);
-int		open_scene_file(const char *filename, int *fd);
-int		parse_scene_file(int *fd, t_cub *cub);
 int		parse_config_line(char *line, t_config *cfg, t_config_flags *flags);
+int		is_config_line(char *line);
+int		open_scene_file(const char *filename, int *fd);
+int		is_space_char(char c);
+int		validate_config(t_config *cfg);
+int		all_config_flags_set(t_config_flags *flags, t_config *config);
+void	init_visited(t_cub *cub, int ***visited);
+
+
+//				PARSE TEXTURES
 int		handle_no(t_config *cfg, t_config_flags *flags, char *value);
 int		handle_so(t_config *cfg, t_config_flags *flags, char *value);
 int		handle_we(t_config *cfg, t_config_flags *flags, char *value);
 int		handle_ea(t_config *cfg, t_config_flags *flags, char *value);
+int		set_texture_path(char **dst, char *raw);
+int		append_map_line(t_cub *cub, char *line);
+
+//				PARSE FLOOR AND CEILING
 int		handle_floor(t_config *cfg, t_config_flags *flags, char *value);
 int		handle_ceiling(t_config *cfg, t_config_flags *flags, char *value);
 int		parse_rgb(char *raw, t_rgb *color);
-int		check_cub_extension(const char *file);
-int		open_scene_file(const char *filename, int *fd);
-int		is_space_char(char c);
-int		is_line_empty(char *line);
-int		set_texture_path(char **dst, char *raw);
-int		is_config_line(char *line);
-int		check_texture(const char *path);
-int		validate_config(t_config *cfg);
-int		check_map_no_empty_lines(char **map, size_t i);
-int		get_max_width(char **map, int height);
-int		fill_normalized_row(char *src, char *dst, int width);
-void	free_partial_map(char **map, int until);
-int		normalize_map(t_cub *cub);
-void	free_2d_partial(char **arr, int until);
-char	**ft_realloc_2d(char **old, int new_size);
-int		append_map_line(t_cub *cub, char *line);
-int		all_config_flags_set(t_config_flags *flags, t_config *config);
-int		validate_map_chars_support(t_cub *cub, int *count, t_pos_info *pos);
-int		validate_map_chars(t_cub *cub);
+
+//				PARSE MAP
 void	dup_map(t_cub *cub);
-void	init_visited(t_cub *cub, int ***visited);
-int		check_unreachable_cells(t_cub *cub, int **visited);
-void	cube_flood_fill(t_cub *cub, int **visited, int x, int y);
+int		check_map_no_empty_lines(char **map, size_t i);
+int		normalize_map(t_cub *cub);
+int		validate_map_chars(t_cub *cub);
+
 void	free_visited(int **visited, int height);
 int		map_is_close_support(t_cub *cub, int y, int x);
 int		map_is_closed(t_cub *cub);
@@ -310,7 +307,7 @@ void	free_array(char **map);
 //				GAME
 void	set_floor_ceiling(t_cub *cub);
 void	put_pixel(t_cub *cub, int x, int y, int color);
-void	draw_c_f(t_cub *cub, size_t x, size_t y);
+void	draw_c_f(t_cub *cub, size_t x, size_t y, char *pxl);
 
 //				RAYCAST/ RENDER
 void	ray(t_cub *cub, int i);
