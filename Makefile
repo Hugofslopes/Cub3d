@@ -6,11 +6,11 @@
 #    By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/11 19:38:46 by hfilipe-          #+#    #+#              #
-#    Updated: 2025/06/18 18:30:21 by hfilipe-         ###   ########.fr        #
+#    Updated: 2025/06/18 19:47:03 by hfilipe-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FLAGS = -Wall -Wextra -Werror -ggdb -pg
+FLAGS = -Wall -Wextra -Werror -ggdb -O3
 CC = cc
 INCLUDES = -I includes
 SRC_DIR = src
@@ -20,7 +20,7 @@ raycast.c render.c player_rotates.c player_moves.c init.c build_image.c \
 check_walls.c raycast_utils.c  parser_handler.c check_map.c\
 p_check_f_c_color.c p_handle_textures.c \
 p_validate_open_file.c p_set_texture_path.c p_config_line.c p_normalize_map.c \
-p_append_line.c p_dup_check_map_cells.c p_flow_free.c
+p_append_line.c p_dup_check_map_cells.c p_flood_fill.c
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 NAME = cub3D
@@ -39,7 +39,7 @@ check_walls.c raycast_utils.c draw_mini.c draw_extra_keys.c \
 init_keys.c draw_extra_b_rot.c parser_handler.c check_map.c \
 p_validate_open_file.c p_set_texture_path.c p_config_line.c p_normalize_map.c \
 p_check_f_c_color.c p_handle_textures.c draw_mini2.c \
-p_append_line.c p_dup_check_map_cells.c p_flow_free.c
+p_append_line.c p_dup_check_map_cells.c p_flood_fill.c
 SRCS_BONUS = $(addprefix $(SRC_DIR)/, $(SRC_BONUS))
 OBJ_BONUS_DIR = obj_bonus
 OBJS_BONUS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_BONUS_DIR)/%.o, $(SRCS_BONUS))

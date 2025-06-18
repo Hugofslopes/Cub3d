@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 11:28:59 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/16 13:52:35 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/18 21:15:45 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,35 @@ int	mouse_close(t_cub *cub)
 {
 	free_exit(cub, 0);
 	return (0);
+}
+
+int	mouse_move(int x, int y, void *param)
+{
+	t_cub	*cub;
+	int		new_pos;
+	int		delta;
+
+	cub = (t_cub *)param;
+	cub->mouse.mouse = 0;
+	if (x == cub->mouse.mouse_pos)
+		return (0);
+	if (x > WWIDTH - 10 || x < 10)
+	{
+		mlx_mouse_move(cub->mlx_s.mlx, cub->mlx_s.window,
+			WWIDTH >> 1, WHEIGHT >> 1);
+		cub->mouse.mouse_pos = WWIDTH >> 1;
+		return (0);
+	}
+	else
+	{
+		new_pos = x - (WWIDTH >> 1);
+		delta = new_pos - cub->mouse.mouse_pos;
+		if (delta > -2 && delta < 2)
+			delta = 0;
+		cub->mouse.mouse = delta;
+		cub->mouse.mouse_pos = new_pos;
+	}
+	return ((void) y, 0);
 }
 
 int	key_pressed(int key, t_cub *cub)
@@ -79,4 +108,6 @@ void	change_player_pos(t_cub *cub)
 		rotate_left(cub);
 	if (cub->keys_p.rtr_key == 1)
 		rotate_right(cub);
+	if (cub->mouse.mouse != 0)
+		ft_player_rotm(cub);
 }

@@ -6,11 +6,11 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 19:33:08 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/06 12:04:09 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/18 19:39:42 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 void	get_i_key(t_cub *cub, size_t *i)
 {
@@ -24,6 +24,18 @@ void	get_i_key(t_cub *cub, size_t *i)
 		*i = 3;
 	else
 		*i = 4;
+}
+
+void	put_pixel(t_cub *cub, int x, int y, int color)
+{
+	char	*pxl;
+
+	if (x >= 0 && x < WWIDTH && y >= 0 && y < WHEIGHT)
+	{
+		pxl = cub->img.addr + (y * cub->img.line_len + x * \
+		(cub->img.bytes_p_pixel / 8));
+		*(unsigned int *)pxl = color;
+	}
 }
 
 void	check_put_key(t_cub *cub, size_t i, int x, int y)

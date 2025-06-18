@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 15:56:05 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/16 14:10:10 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/18 20:55:09 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ w =6, h=6, draws 6x6 square
 	*/
 void	draw_player_posi(t_cub *cub, int w, int h, unsigned int color)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	*pxl;
 
 	i = cub->mini.player_y - 3;
 	j = cub->mini.player_x - 3;
@@ -26,7 +27,12 @@ void	draw_player_posi(t_cub *cub, int w, int h, unsigned int color)
 	{
 		while (j < cub->mini.player_x - 3 + w)
 		{
-			put_pixel(cub, j, i, color);
+			if (j >= 0 && j < WWIDTH && i >= 0 && i < WHEIGHT)
+			{
+				pxl = cub->img.addr + (i * cub->img.line_len + j * \
+			(cub->img.bytes_p_pixel / 8));
+				*(unsigned int *)pxl = color;
+			}
 			j++;
 		}
 		j = cub->mini.player_x - 3;
@@ -37,8 +43,9 @@ void	draw_player_posi(t_cub *cub, int w, int h, unsigned int color)
 /*Draws the minimap base rectangle*/
 void	draw_mini_rect(t_cub *cub, int w, int h, unsigned int color)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	*pxl;
 
 	i = cub->mini.rect_y;
 	j = cub->mini.rect_x;
@@ -46,7 +53,12 @@ void	draw_mini_rect(t_cub *cub, int w, int h, unsigned int color)
 	{
 		while (j < cub->mini.rect_x + w)
 		{
-			put_pixel(cub, j, i, color);
+			if (j >= 0 && j < WWIDTH && i >= 0 && i < WHEIGHT)
+			{
+				pxl = cub->img.addr + (i * cub->img.line_len + j * \
+			(cub->img.bytes_p_pixel / 8));
+				*(unsigned int *)pxl = color;
+			}
 			j++;
 		}
 		j = cub->mini.rect_x;
@@ -61,19 +73,17 @@ loops stops when it reachs the endpoint
 */
 void	draw_line(t_cub *cub, int x1, int y1, int dx)
 {
-	if (cub->mini.player_x < x1)
-		cub->mini.sx = 1;
-	else
-		cub->mini.sx = -1;
-	if (cub->mini.player_y < y1)
-		cub->mini.sy = 1;
-	else
-		cub->mini.sy = -1;
+	char	*pxl;
+
+	set_line_values(cub, x1, y1);
 	while (1)
 	{
-		put_pixel(cub, cub->mini.player_x, cub->mini.player_y, 0xFFFF00FF);
 		if (cub->mini.player_x == x1 && cub->mini.player_y == y1)
 			break ;
+		pxl = cub->img.addr + (cub->mini.player_y * cub->img.line_len + \
+			cub->mini.player_x * \
+			(cub->img.bytes_p_pixel / 8));
+		*(unsigned int *)pxl = 0xFFFF00FF;
 		cub->mini.e2 = 2 * cub->mini.err;
 		if (cub->mini.e2 >= cub->mini.dy)
 		{

@@ -6,11 +6,11 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:48:42 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/06 11:15:58 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/18 19:39:01 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 void	get_i_rotation(t_cub *cub, size_t *i)
 {

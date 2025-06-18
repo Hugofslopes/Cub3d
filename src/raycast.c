@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 19:10:39 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/18 18:45:53 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/18 19:15:29 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	ray(t_cub *cub, int i)
 	double				ray_angle;
 	double				distance;
 	t_wall_direction	wall_dir;
-	
+
 	start_angle = cub->player.angle - (FOV_ANGLE / 2.0);
 	angle_step = FOV_ANGLE / NUM_RAYS;
 	while (i < NUM_RAYS)

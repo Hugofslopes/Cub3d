@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 10:08:12 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/18 19:11:48 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/18 20:39:39 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,12 @@ typedef struct s_keys_p
 	int	rtr_key;
 }	t_keys_p;
 
+typedef struct s_mouse
+{
+	int	mouse;
+	int	mouse_pos;
+}	t_mouse;
+
 typedef struct s_cub
 {
 	char			**map;
@@ -212,6 +218,7 @@ typedef struct s_cub
 	t_config		config;
 	t_config_flags	flags;
 	t_keys_p		keys_p;
+	t_mouse			mouse;
 	int				map_height;
 	int				map_width;
 	char			**map_copy;
@@ -253,7 +260,7 @@ int		is_space_char(char c);
 int		validate_config(t_config *cfg);
 int		all_config_flags_set(t_config_flags *flags, t_config *config);
 void	init_visited(t_cub *cub, int ***visited);
-
+int		parse_scene_file(int *fd, t_cub *cub);
 
 //				PARSE TEXTURES
 int		handle_no(t_config *cfg, t_config_flags *flags, char *value);
@@ -273,16 +280,7 @@ void	dup_map(t_cub *cub);
 int		check_map_no_empty_lines(char **map, size_t i);
 int		normalize_map(t_cub *cub);
 int		validate_map_chars(t_cub *cub);
-
-void	free_visited(int **visited, int height);
-int		map_is_close_support(t_cub *cub, int y, int x);
-int		map_is_closed(t_cub *cub);
 int		parse_map(t_cub *cub);
-int		handle_config_line(char *line, t_cub *cub, char **buffer);
-int		process_line(char *line, t_cub *cub, int *map_started, char **buffer);
-int		handle_map_empty_error(t_cub *cub);
-int		handle_parse_map_error(t_cub *cub);
-int		parse_scene_file(int *fd, t_cub *cub);
 void	check_map_first(t_cub *cub, char *line, char **buffer);
 
 //				INIT
@@ -305,8 +303,6 @@ void	free_config(t_config *cfg);
 void	free_array(char **map);
 
 //				GAME
-void	set_floor_ceiling(t_cub *cub);
-void	put_pixel(t_cub *cub, int x, int y, int color);
 void	draw_c_f(t_cub *cub, size_t x, size_t y, char *pxl);
 
 //				RAYCAST/ RENDER

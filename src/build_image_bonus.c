@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:28:00 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/18 18:27:41 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/18 21:06:25 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ void	set_keys(t_cub *cub)
 	cub->keys_.rr = 0;
 	cub->keys_.b = 0;
 	cub->keys_.nb = 0;
+}
+
+void	ft_player_rotm(t_cub *cub)
+{
+	cub->player.angle += (int)(1.20 * cub->mouse.mouse);
 }
 
 void	first_render(t_cub *cub)

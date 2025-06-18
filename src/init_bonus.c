@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:29:54 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/18 18:24:12 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/18 20:55:38 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ void	init_player_pos(t_cub *cub, size_t i, size_t j)
 void	init(t_cub *cub)
 {
 	cub->game.gamestarted = 0;
-	cub->game.cellsize = 3;
+	cub->game.cellsize = 1;
+	cub->mouse.mouse_pos = WWIDTH / 2;
 	cub->player.speed = 0.2;
 	init_player_pos(cub, 0, 0);
 	cub->keys_.arms = 0;
@@ -117,6 +118,7 @@ void	init(t_cub *cub)
 		(cub->config.floor_color.g << 8) | cub->config.floor_color.b;
 	init_keys(cub, 0);
 	init_textures(cub, 0);
+	mlx_hook(cub->mlx_s.window, 6, 1L << 6, mouse_move, cub);
 	mlx_loop_hook(cub->mlx_s.mlx, build_next_frame, cub);
 	mlx_hook(cub->mlx_s.window, KeyPress, KeyPressMask, key_pressed, cub);
 	mlx_hook(cub->mlx_s.window, KeyRelease, KeyRelease, key_released, cub);

@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:09:19 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/16 14:10:37 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/18 20:55:25 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,16 @@ void	draw_minimap_border(t_cub *cub, unsigned int color, int border_x, \
 		put_pixel(cub, border_x + border_width - 1, y, color);
 		y++;
 	}
+}
+
+void	set_line_values(t_cub *cub, int x1, int y1)
+{
+	if (cub->mini.player_x < x1)
+		cub->mini.sx = 1;
+	else
+		cub->mini.sx = -1;
+	if (cub->mini.player_y < y1)
+		cub->mini.sy = 1;
+	else
+		cub->mini.sy = -1;
 }
