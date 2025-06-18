@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:46:01 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/06 12:57:37 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/18 15:13:39 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 void	draw_c_f(t_cub *cub, size_t x, size_t y)
 {
-	while (x < WWIDTH)
-	{
-		y = 0;
-		while (y < WHEIGHT / 2)
-			put_pixel(cub, x, y++, cub->game.ceiling);
-		x++;
-	}
-	x = 0;
 	y = WHEIGHT;
 	while (x < WWIDTH)
 	{
 		y = WHEIGHT;
 		while (y > WHEIGHT / 2)
-			put_pixel(cub, x, y--, cub->game.floor);
+			put_pixel(cub, x, y--, cub->game.ceiling);
+		x++;
+	}
+	x = 0;
+	while (x < WWIDTH)
+	{
+		y = 0;
+		while (y < WHEIGHT / 2)
+			put_pixel(cub, x, y++, cub->game.floor);
 		x++;
 	}
 }
