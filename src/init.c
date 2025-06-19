@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:53:43 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/18 19:27:00 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/19 09:59:48 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	init(t_cub *cub)
 {
 	cub->game.gamestarted = 0;
 	cub->game.cellsize = 1;
-	cub->player.speed = 0.2;
+	cub->player.speed = 0.05;
 	init_player_pos(cub, 0, 0);
 	init_player_angle(cub);
 	cub->player.pos_x = cub->player.pos_x * cub->game.cellsize + \

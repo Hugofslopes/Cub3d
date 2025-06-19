@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 10:08:12 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/18 20:39:39 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/19 10:05:49 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ typedef struct s_cub
 	t_player		player;
 	t_img_			img;
 	t_img_			texture[4];
-	t_img_			keys[12];
+	t_img_			keys[15];
 	t_keys			keys_;
 	char			**textures;
 	t_rgb			floor;
@@ -230,7 +230,7 @@ typedef struct s_cub
 # define WWIDTH 1600
 # define WHEIGHT 900
 # define PI 3.14159
-# define ROTATION_SPEED 10
+# define ROTATION_SPEED 3
 # define NUM_RAYS 1600
 # define FOV_ANGLE 60.0 
 # define FIXED_POINT 256

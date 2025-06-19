@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:29:54 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/18 20:55:38 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/19 09:59:57 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,8 @@ void	init(t_cub *cub)
 	cub->game.gamestarted = 0;
 	cub->game.cellsize = 1;
 	cub->mouse.mouse_pos = WWIDTH / 2;
-	cub->player.speed = 0.2;
+	cub->keys_.arms = 0;
+	cub->player.speed = 0.05;
 	init_player_pos(cub, 0, 0);
 	cub->keys_.arms = 0;
 	init_player_angle(cub);

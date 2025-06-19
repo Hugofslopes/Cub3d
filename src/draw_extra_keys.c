@@ -6,7 +6,7 @@
 /*   By: hfilipe- <hfilipe-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 19:33:08 by hfilipe-          #+#    #+#             */
-/*   Updated: 2025/06/18 19:39:42 by hfilipe-         ###   ########.fr       */
+/*   Updated: 2025/06/19 10:02:08 by hfilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,27 @@ void	check_put_key(t_cub *cub, size_t i, int x, int y)
 
 void	get_arms(t_cub *cub, size_t *i)
 {
-	if (cub->keys_.arms == 1)
+	if (cub->keys_.arms >= 0 && cub->keys_.arms <= 4)
 		*i = 9;
-	else
+	else if (cub->keys_.arms >= 5 && cub->keys_.arms <= 9)
 		*i = 10;
+	else if (cub->keys_.arms >= 10 && cub->keys_.arms <= 14)
+		*i = 11;
+	else if (cub->keys_.arms >= 15 && cub->keys_.arms <= 19)
+		*i = 12;
+	else if (cub->keys_.arms >= 20 && cub->keys_.arms <= 24)
+		*i = 13;
+	else if (cub->keys_.arms >= 25 && cub->keys_.arms <= 29)
+		*i = 12;
+	else if (cub->keys_.arms >= 30 && cub->keys_.arms <= 34)
+		*i = 11;
+	else if (cub->keys_.arms >= 35 && cub->keys_.arms <= 39)
+	{
+		*i = 10;
+		cub->keys_.arms = 0;
+	}
+	else
+		*i = 9;
 }
 
 void	check_put_arms(t_cub *cub, size_t i, int x, int y)
